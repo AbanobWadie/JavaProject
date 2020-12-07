@@ -46,11 +46,10 @@ public class SignUpViewController implements Initializable {
      
     @FXML
     public void signUP(ActionEvent event){
-          if(txt_nameS.getText().equals("") && txt_passS.getText().equals(""))
-        {
-               // JOptionPane.showConfirmDialog(null, "Enter all data, please", "OK",JOptionPane.DEFAULT_OPTION);
-            
+          if(txt_nameS.getText().equals("") || txt_passS.getText().equals(""))
+        {   
             showAlert("Rigistration Failed, Enter all data, please");
+            
         }else
         {
             showAlert("Rigistration Successeded");
@@ -66,11 +65,6 @@ public class SignUpViewController implements Initializable {
             }  
         }
     }
-    
-    
-    
-    
-  
     
     
      @FXML
