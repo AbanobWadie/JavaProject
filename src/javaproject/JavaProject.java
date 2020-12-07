@@ -29,7 +29,7 @@ public class JavaProject extends Application {
             public void handle(ActionEvent event) {
                 System.out.println("Hello World!");
             }
-        });j
+        });
         
         StackPane root = new StackPane();
         root.getChildren().add(btn);
