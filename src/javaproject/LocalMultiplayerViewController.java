@@ -211,10 +211,13 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
         ((Stage) reset.getScene().getWindow()).close(); // Close the recent window so that there remains only one window
         // Running a new instance of the start method
         try {
-             
+                 Parent root = FXMLLoader.load(getClass().getResource("LocalMultiplayerView.fxml"));
+                 Scene scene = new Scene(root);
+                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 stage.setScene(scene);
+                 stage.show();
+                 Result.clearMoves();
             
-           new JavaProject().start((Stage)((Node)event.getSource()).getScene().getWindow());
-            Result.clearMoves();
         } catch (IOException ex) {
             ex.getMessage();
         } catch (Exception ex) {

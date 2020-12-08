@@ -211,8 +211,13 @@ public class SinglePlayerViewController extends Turn implements Initializable {
         ((Stage) reset.getScene().getWindow()).close(); // Close the recent window so that there remains only one window
         // Running a new instance of the start method
         try {
-            new JavaProject().start(new Stage());
+           
             Result.clearMoves();
+                 Parent root = FXMLLoader.load(getClass().getResource("SinglePlayerView.fxml"));
+                 Scene scene = new Scene(root);
+                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 stage.setScene(scene);
+                 stage.show();
         } catch (IOException ex) {
             ex.getMessage();
         } catch (Exception ex) {
