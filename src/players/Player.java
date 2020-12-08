@@ -5,8 +5,6 @@
  */
 package players;
 
-import javaproject.SymbolsEnum;
-
 /**
  *
  * @author SoHa

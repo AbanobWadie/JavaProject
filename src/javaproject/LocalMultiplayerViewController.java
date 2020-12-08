@@ -5,6 +5,7 @@
  */
 package javaproject;
 
+import players.SymbolsEnum;
 import players.Result;
 import players.Draw;
 import players.Turn;
@@ -148,11 +149,15 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
         setAllDisable(false);
         if (X1.isSelected()) {
             O2.setSelected(true);
+            X2.setVisible(false);
+            O1.setVisible(false);
             // Setting Symbols for players
             player1.setSymbol(SymbolsEnum.CROSS);
             player2.setSymbol(SymbolsEnum.ROUND);
         } else if (O1.isSelected()) {
             X2.setSelected(true);
+            X1.setVisible(false);
+            O2.setVisible(false);
             // Setting Symbols for players
             player1.setSymbol(SymbolsEnum.ROUND);
             player2.setSymbol(SymbolsEnum.CROSS);
@@ -183,11 +188,15 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
         setAllDisable(false);
         if (X2.isSelected()) {
             O1.setSelected(true);
+            X1.setVisible(false);
+            O2.setVisible(false);
             // Setting Symbols for players
             player1.setSymbol(SymbolsEnum.CROSS);
             player2.setSymbol(SymbolsEnum.ROUND);
         } else if (O2.isSelected()) {
             X1.setSelected(true);
+            X2.setVisible(false);
+            O1.setVisible(false);
             // Setting Symbols for players
             player1.setSymbol(SymbolsEnum.ROUND);
             player2.setSymbol(SymbolsEnum.CROSS);
