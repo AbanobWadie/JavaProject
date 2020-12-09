@@ -114,6 +114,8 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
+            
+        
               player1 = new Player();
               player2 = new Player();
               gc = canvas.getGraphicsContext2D();

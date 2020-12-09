@@ -17,6 +17,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
@@ -27,12 +30,31 @@ public class SinglePlayerViewController implements Initializable{
 	private Button button00, button01, button02, button10, button11, button12, button20, button21, button22, restartButton;
 	private String[][] ticTacToeTable;
 	private ArrayList<Button> buttonsList = new ArrayList<>();
+    @FXML
+    private Label lbl_player;
+    @FXML
+    private Label lbl_AI;
+    @FXML
+    private TextField txt_player;
+    @FXML
+    private RadioButton X1;
+    @FXML
+    private RadioButton O1;
+    @FXML
+    private Button btn_record;
+    @FXML
+    private Button btn_back;
+    @FXML
+    private RadioButton X2;
+    @FXML
+    private RadioButton O2;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		loadGame();
 	}
 
+    @FXML
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == button00) {
 			move(button00);
@@ -63,9 +85,8 @@ public class SinglePlayerViewController implements Initializable{
 		}
 		
 	}
-        
         @FXML
-    void resetButton(ActionEvent event)
+        void resetButton(ActionEvent event)
     {
         ((Stage) restartButton.getScene().getWindow()).close(); // Close the recent window so that there remains only one window
         // Running a new instance of the start method
