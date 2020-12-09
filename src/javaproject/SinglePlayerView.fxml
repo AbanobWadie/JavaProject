@@ -91,7 +91,7 @@
                      </font>
                   </Button>
                   <Button fx:id="btn_record" layoutX="14.0" layoutY="96.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="23.0" style="-fx-background-color: #ff000d;" textFill="#ff000d" />
-                  <Button fx:id="btn_back" layoutX="638.0" layoutY="99.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="54.0" text="Back" textFill="#3b0aeb">
+                  <Button fx:id="btn_back" layoutX="638.0" layoutY="99.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="54.0" text="Back" textFill="#3b0aeb">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>

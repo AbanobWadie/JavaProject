@@ -21,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import players.SymbolsEnum;
+import static players.Turn.setTurn;
 
 
 
@@ -37,17 +39,17 @@ public class SinglePlayerViewController implements Initializable{
     @FXML
     private TextField txt_player;
     @FXML
-    private RadioButton X1;
+    public RadioButton X1;
     @FXML
-    private RadioButton O1;
+    public RadioButton O1;
     @FXML
     private Button btn_record;
     @FXML
     private Button btn_back;
     @FXML
-    private RadioButton X2;
+    public RadioButton X2;
     @FXML
-    private RadioButton O2;
+    public RadioButton O2;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -85,6 +87,31 @@ public class SinglePlayerViewController implements Initializable{
 		}
 		
 	}
+        
+         @FXML
+    void back(ActionEvent event)
+    {
+          try {
+              
+                 Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+                 Scene scene = new Scene(root);
+                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 stage.setScene(scene);
+                 stage.show();
+              
+                /* Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 Scene scene = (Scene)((Node)event.getSource()).getScene();
+                 Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+                 scene.setRoot(root);
+                 stage.setScene(scene);
+                 stage.show();*/
+                
+            } catch (IOException ex) {
+                Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+
+    
         @FXML
         void resetButton(ActionEvent event)
     {
@@ -104,11 +131,49 @@ public class SinglePlayerViewController implements Initializable{
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+        
+   /*     @FXML
+    void player1Symbol(ActionEvent event)
+    {
+        
+            
+        
+           
+        }
+        // Set initial turn for player with symbol CROSS
+        if (player1.getSymbol() == SymbolsEnum.CROSS) {
+            setTurn(player1);
+            // Setting underlines visible or invisible acc to player turn
+            lbl_player.setVisible(true);
+            lbl_AI.setVisible(false);
+        } else {
+            setTurn(player2);
+            lbl_player.setVisible(true);
+            lbl_AI.setVisible(false);
+        }
+    }*/
+
+        
 	
 	private void move(Button button) {
 		if(button.getText() == "") {
-			
+                     button.setText("");
+                if (X1.isSelected()) {
+                O2.setSelected(true);
+                X2.setVisible(false);
+                O1.setVisible(false);
                 button.setText("X");
+                }else if (O1.isSelected()) {
+                X2.setSelected(true);
+                X1.setVisible(false);
+                O2.setVisible(false);
+                 button.setText("O");
+                }
+                
+                
+          
+			
+              //  button.setText("X");
                 if(updateGame()) {
                         GameController.playController(buttonsList, ticTacToeTable);
                 }
