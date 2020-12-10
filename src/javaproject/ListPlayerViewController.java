@@ -114,6 +114,8 @@ public class ListPlayerViewController implements Initializable {
              public void changed(ObservableValue<? extends String> ov, 
                     String old_val, String new_val) {
                    try {
+                       
+                       
             //Load second scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
             Parent root = loader.load();
@@ -123,10 +125,14 @@ public class ListPlayerViewController implements Initializable {
             //Pass whatever data you want. You can have multiple method calls here
             o.transferMessage(new_val);
  
+                Stage stage=(Stage)(list_persons).getScene().getWindow();
+                 //stage.setScene(new Scene(root));
+               
             //Show scene 2 in new window            
-            Stage stage = new Stage();
+          //  Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+            
         } catch (IOException ex) {
             System.err.println(ex);
         }

@@ -48,6 +48,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     GraphicsContext gc;
     Player player1=new Player();
     Player player2=new Player();
+    String name;
     boolean win;
     
      @FXML
@@ -122,7 +123,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     {
           try {
               
-                 Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
@@ -205,11 +206,25 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
       @FXML
     void resetButton(ActionEvent event)
     {
-        ((Stage) reset.getScene().getWindow()).close(); // Close the recent window so that there remains only one window
+         // Close the recent window so that there remains only one window
         // Running a new instance of the start method
         try {
-            new JavaProject().start(new Stage());
-            Result.clearMoves();
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+            Parent root = loader.load();
+             
+            //Get controller of scene2
+            OnlineMultiplayerViewController o = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            o.transferMessage(name);
+                 
+                 Scene scene = new Scene(root);
+                 ((Stage) reset.getScene().getWindow()).close();
+                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 stage.setScene(scene);
+                 stage.show();
+                 
+                 
+            
         } catch (IOException ex) {
             ex.getMessage();
         } catch (Exception ex) {
@@ -438,6 +453,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
 
     void transferMessage(String new_val) {
         p2.setText(new_val);
+        name = new_val;
     }
     
     
