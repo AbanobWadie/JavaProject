@@ -59,7 +59,7 @@ public class StartViewController implements Initializable {
     void online(ActionEvent event)
     {
         try {            
-                 Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("IpNetworkView.fxml"));
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);

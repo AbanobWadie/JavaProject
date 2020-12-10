@@ -58,7 +58,7 @@ public class LoginViewController implements Initializable {
            
            try {
                 
-                 Parent root = FXMLLoader.load(getClass().getResource("IpNetworkView.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
