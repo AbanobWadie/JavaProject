@@ -91,7 +91,7 @@ public class IpNetworkViewController implements Initializable {
      //return true;
       try {
              Parent root;
-             root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+             root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
              Scene scene = new Scene(root);
              Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
              stage.setScene(scene);
