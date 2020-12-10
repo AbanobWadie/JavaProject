@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -36,7 +38,9 @@ import javafx.stage.Stage;
 public class ListPlayerViewController implements Initializable {
     
     
-      ObservableList list=FXCollections.observableArrayList();
+     ObservableList list=FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
+              "soha", "shimaa", "abanob", "ahmed",
+              "soha", "shimaa", "abanob", "ahmed");
     
 
     @FXML
@@ -47,6 +51,12 @@ public class ListPlayerViewController implements Initializable {
     private ListView<String> list_persons;
     @FXML
     private Button btn_back;
+    
+    
+    
+    
+    
+
     
     
     
@@ -68,28 +78,19 @@ public class ListPlayerViewController implements Initializable {
     
     private void loadData()
     {
-        list.remove(list);
-        String a="soha";
-        String b="shimaa";
-        String c="abanob";
-        String d="ahmed";
-        
-        list.addAll(a,b,c,d);
-        
-        list_persons.getItems().addAll(list);
-        
+     
+        list_persons.setItems(list);
     }
     
-    public void displayed(MouseEvent event)
+  /*  public void displayed(MouseEvent event)
     {
         String person=list_persons.getSelectionModel().getSelectedItem();
-        
         if(person==null||person.isEmpty())
         {
            showAlert("Cell is Empty.");
         }
         
-    }
+    }*/
 
             private void showAlert(String mess) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
@@ -106,6 +107,35 @@ public class ListPlayerViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
          loadData();
+         
+          list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>()
+        {
+             @Override
+             public void changed(ObservableValue<? extends String> ov, 
+                    String old_val, String new_val) {
+                   try {
+            //Load second scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+            Parent root = loader.load();
+             
+            //Get controller of scene2
+            OnlineMultiplayerViewController o = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            o.transferMessage(new_val);
+ 
+            //Show scene 2 in new window            
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+                       
+            }
+            
+        });
+
     }    
+
     
 }
