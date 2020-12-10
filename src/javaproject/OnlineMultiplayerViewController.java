@@ -122,7 +122,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     {
           try {
               
-                 Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+                 Parent root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
