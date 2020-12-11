@@ -6,9 +6,9 @@
 package javaproject;
 
 import players.SymbolsEnum;
+import players.Turn;
 import players.Result;
 import players.Draw;
-import players.Turn;
 import players.Player;
 import java.io.IOException;
 import java.net.URL;
@@ -30,15 +30,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.StrokeLineCap;
 import javafx.stage.Stage;
-
+import static players.SymbolsEnum.CROSS;
+import static players.SymbolsEnum.ROUND;
+import static players.Turn.getTurn;
+import static players.Turn.setTurn;
 
 
 /**
@@ -46,16 +45,16 @@ import javafx.stage.Stage;
  *
  * @author SoHa
  */
-public class LocalMultiplayerViewController extends Turn implements Initializable {
+public class LocalMultiplayerViewController extends LocalViewController implements Initializable {
     
-    GraphicsContext gc;
-    Player player1=new Player();
-    Player player2=new Player();
-    boolean win;
+  
+  
     
-     @FXML
+    LocalViewController l=new LocalViewController();
+    
+    @FXML
     private Canvas canvas;
-     @FXML // 9 boxes to draw 
+    @FXML // 9 boxes to draw 
     private Button b1;
     @FXML
     private Button b2;
@@ -75,10 +74,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     private Button b9;
 
     // TextFields for players
-    @FXML
-    private TextField p1;
-    @FXML
-    private TextField p2;
+ 
 
     // Labels for underline
     @FXML
@@ -88,16 +84,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     private Label u2;
 
     // JFXRadiobuttons for symbol choice of player1
-    @FXML
-    private RadioButton X1;
-    @FXML
-    private RadioButton O1;
-
-    // JFXRadiobuttons for symbol choice of player2
-    @FXML
-    private RadioButton X2;
-    @FXML
-    private RadioButton O2;
+ 
 
 
     @FXML // Reset or NewGame button
@@ -106,20 +93,28 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
      @FXML
     private Button btn_back;
      
+      String name1;
+      String name2;
       
+      SymbolsEnum w;
+      SymbolsEnum z;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         // TODO
-        
-            
-        
-              player1 = new Player();
-              player2 = new Player();
-              gc = canvas.getGraphicsContext2D();
-              gc = Draw.draw_basic_skeleton(gc);
+     
+         
+                 l.player1.setSymbol(CROSS);
+                 l.player2.setSymbol(ROUND);
+           
+       
+             
+         
+              l.gc = canvas.getGraphicsContext2D();
+              l.gc = Draw.draw_basic_skeleton(l.gc);
     }  
     
     @FXML
@@ -145,37 +140,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
             }
     }
     
-    @FXML
-    void player1Symbol(ActionEvent event)
-    {
-        setAllDisable(false);
-        if (X1.isSelected()) {
-            O2.setSelected(true);
-            X2.setVisible(false);
-            O1.setVisible(false);
-            // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.CROSS);
-            player2.setSymbol(SymbolsEnum.ROUND);
-        } else if (O1.isSelected()) {
-            X2.setSelected(true);
-            X1.setVisible(false);
-            O2.setVisible(false);
-            // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.ROUND);
-            player2.setSymbol(SymbolsEnum.CROSS);
-        }
-        // Set initial turn for player with symbol CROSS
-        if (player1.getSymbol() == SymbolsEnum.CROSS) {
-            setTurn(player1);
-            // Setting underlines visible or invisible acc to player turn
-            u1.setVisible(true);
-            u2.setVisible(false);
-        } else {
-            setTurn(player2);
-            u2.setVisible(true);
-            u1.setVisible(false);
-        }
-    }
+    
 
 
     /**
@@ -184,57 +149,31 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
      *
      * @param event OnClick Action Event
      */
-    @FXML
-    void player2Symbol(ActionEvent event)
-    {
-        setAllDisable(false);
-        if (X2.isSelected()) {
-            O1.setSelected(true);
-            X1.setVisible(false);
-            O2.setVisible(false);
-            // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.CROSS);
-            player2.setSymbol(SymbolsEnum.ROUND);
-        } else if (O2.isSelected()) {
-            X1.setSelected(true);
-            X2.setVisible(false);
-            O1.setVisible(false);
-            // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.ROUND);
-            player2.setSymbol(SymbolsEnum.CROSS);
-        }
-        // Set initial turn for player with symbol CROSS
-        if (player1.getSymbol() == SymbolsEnum.CROSS) {
-            setTurn(player1);
-            // Setting underlines visible or invisible acc to player turn
-            u1.setVisible(true);
-            u2.setVisible(false);
-        } else {
-            setTurn(player2);
-            u2.setVisible(true);
-            u1.setVisible(false);
-        }
-    }
-    
-    @FXML
+  
+      @FXML
     void resetButton(ActionEvent event)
     {
-        ((Stage) reset.getScene().getWindow()).close(); // Close the recent window so that there remains only one window
-        // Running a new instance of the start method
-        try {
-                 Parent root = FXMLLoader.load(getClass().getResource("LocalMultiplayerView.fxml"));
+          try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiplayerView.fxml"));
+            Parent root = loader.load();
+             
+            //Get controller of scene2
+            LocalMultiplayerViewController p = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            p.transferMessage(name1,name2);
+                 
                  Scene scene = new Scene(root);
+                 ((Stage) reset.getScene().getWindow()).close();
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
                  stage.show();
-                 Result.clearMoves();
-            
-        } catch (IOException ex) {
+          } catch (IOException ex) {
             ex.getMessage();
         } catch (Exception ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     /*
      * --------------- This is same for all 9 buttonEvents ---------------
      *
@@ -246,102 +185,102 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb1(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 1);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 1);
         draw(50 + 15, 50 + 15 + 15);
         ChangeTurn();
-        b1.setDisable(true);
+        b1.setDisable(false);
     }
 
     @FXML
     void eventb2(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 2);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 2);
         draw(50 + 15 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
-        b2.setDisable(true);
+        b2.setDisable(false);
     }
 
     @FXML
     void eventb3(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 3);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 3);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
-        b3.setDisable(true);
+        b3.setDisable(false);
     }
 
     @FXML
     void eventb4(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 4);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 4);
         draw(50 + 15, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
-        b4.setDisable(true);
+        b4.setDisable(false);
     }
 
     @FXML
     void eventb5(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 5);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 5);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
-        b5.setDisable(true);
+        b5.setDisable(false);
     }
 
     @FXML
     void eventb6(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 6);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 6);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
-        b6.setDisable(true);
+        b6.setDisable(false);
     }
 
     @FXML
     void eventb7(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 7);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 7);
         draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
-        b7.setDisable(true);
+        b7.setDisable(false);
     }
 
     @FXML
     void eventb8(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 8);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 8);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
-        b8.setDisable(true);
+        b8.setDisable(false);
     }
 
     @FXML
     void eventb9(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 9);
+        setAllDisable(false);
+        l.win = Result.add(l.player1, l.player2, 9);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
-        b9.setDisable(true);
+        b9.setDisable(false);
     }
     
        private void ChangeTurn()
     {
-        if (getTurn() == player1) {
-            setTurn(player2);
+        if (getTurn() == l.player1) {
+            setTurn(l.player2);
             // Setting underlines visible or invisible acc to player turn
             u1.setVisible(true);
             u2.setVisible(false);
         } else {
-            setTurn(player1);
+            setTurn(l.player1);
             u2.setVisible(true);
             u1.setVisible(false);
         }
@@ -356,29 +295,29 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
      */
     private void draw(int startX, int startY)
     {
-        if (getTurn() == player1) {
-            if (player1.getSymbol() == SymbolsEnum.CROSS) {
-                Draw.draw_cross(gc, startX, startY);
+        if (getTurn() == l.player1) {
+            if (l.player1.getSymbol() == SymbolsEnum.CROSS) {
+                Draw.draw_cross(l.gc, startX, startY);
             } else {
-                Draw.draw_circle(gc, startX, startY);
+                Draw.draw_circle(l.gc, startX, startY);
             }
-        } else if (getTurn() == player2) {
-            if (player2.getSymbol() == SymbolsEnum.CROSS) {
-                Draw.draw_cross(gc, startX, startY);
+        } else if (getTurn() == l.player2) {
+            if (l.player2.getSymbol() == SymbolsEnum.CROSS) {
+                Draw.draw_cross(l.gc, startX, startY);
             } else {
-                Draw.draw_circle(gc, startX, startY);
+                Draw.draw_circle(l.gc, startX, startY);
             }
         }
 
         // Check if there is win and if yes draw a line and show alert 
-        if (win) {
+        if (l.win) {
 
-            if (Turn.getTurn() == player1) {
+            if (Turn.getTurn() == l.player1) {
                 drawLine();
-                showAlert(p1.getText());
+                showAlert(u1.getText());
             } else {
                 drawLine();
-                showAlert(p2.getText());
+                showAlert(u2.getText());
             }
             // Disables all buttons to stop the game
             setAllDisable(true);
@@ -408,15 +347,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
      *
      * @param option This could be true or false
      */
-    private void disableChoices(boolean option)
-    {
-        X1.setDisable(option);
-        O1.setDisable(option);
-        X2.setDisable(option);
-        O2.setDisable(option);
-        p1.setDisable(option);
-        p2.setDisable(option);
-    }
+    
 
   
 
@@ -427,7 +358,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     private void drawLine()
     {
         List<Integer> winningMoves;
-        if (getTurn() == player1) {
+        if (getTurn() == l.player1) {
             winningMoves = Result.getPlayer1moves();
         } else {
             winningMoves = Result.getPlayer2moves();
@@ -441,18 +372,32 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
         endX = 35 + (50 + 15) + (winningMoves.get(2) - 1) % 3 * (70 + 30);
         endY = 35 + (50 + 15 + 15) + (winningMoves.get(2) - 1) / 3 * (70 + 30);
 
-        Draw.draw_winning_line(gc, startX, startY, endX, endY);
+        Draw.draw_winning_line(l.gc, startX, startY, endX, endY);
     }
     
    
     
-        private void showAlert(String mess) {
+      /*  private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("Succedded");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
+    }*/
+
+    void transferMessage(String text,String text0) {
+        u1.setText(text);
+        u2.setText(text0);
+        name1 = text;
+        name2 = text0;
     }
+
+    void trnsfer(SymbolsEnum e, SymbolsEnum a) {
+        w=e;
+        a=a;
+    }
+    
+    
     
     
 }

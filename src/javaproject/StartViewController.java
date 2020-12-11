@@ -73,8 +73,8 @@ public class StartViewController implements Initializable {
     @FXML
      void localPlayer(ActionEvent event)
     {
-         try {            
-                 Parent root = FXMLLoader.load(getClass().getResource("LocalMultiplayerView.fxml"));
+          try {            
+                 Parent root = FXMLLoader.load(getClass().getResource("LocalView.fxml"));
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);

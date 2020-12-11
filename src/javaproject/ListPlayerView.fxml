@@ -9,21 +9,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="568.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.ListPlayerViewController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.ListPlayerViewController">
    <children>
-      <ImageView fitHeight="471.0" fitWidth="568.0" nodeOrientation="INHERIT" opacity="0.67" pickOnBounds="true" smooth="false">
+      <ImageView fitHeight="550.0" fitWidth="750.0" nodeOrientation="INHERIT" opacity="0.67" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../Images/xox.png" />
          </image>
       </ImageView>
-      <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="31.0" layoutY="11.0" prefHeight="434.0" prefWidth="236.0">
+      <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="31.0" layoutY="14.0" prefHeight="500.0" prefWidth="280.0">
          <children>
-            <Text fx:id="txt_list" fill="#182af5" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends" textAlignment="CENTER">
+            <Text fx:id="txt_list" fill="#182af5" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Online Friends" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <ListView fx:id="list_persons" prefHeight="412.0" prefWidth="269.0" />
+            <ListView fx:id="list_persons" prefHeight="500.0" prefWidth="280.0" />
          </children>
       </VBox>
       <Button fx:id="btn_back" layoutX="495.0" layoutY="414.0" mnemonicParsing="false" onAction="#back" text="BACK" textFill="#0d00ff">

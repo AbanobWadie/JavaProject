@@ -455,6 +455,8 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
         p2.setText(new_val);
         name = new_val;
     }
+
+   
     
     
 }
