@@ -5,6 +5,9 @@
  */
 package javaproject;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,16 +22,20 @@ import javafx.stage.Stage;
  *
  * @author Abanob wadie
  */
-public class JavaProject extends Application{
-    
-     @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-        
-        Scene scene = new Scene(root);
-        
-        stage.setScene(scene);
-        stage.show();
+public class JavaProject extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+            Scene scene = new Scene(root);
+
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(JavaProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 
