@@ -44,7 +44,7 @@ public class StartViewController implements Initializable {
         
         try {
              Parent root;
-             root = FXMLLoader.load(getClass().getResource("SinglePlayerView.fxml"));
+             root = FXMLLoader.load(getClass().getResource("SingleView.fxml"));
              Scene scene = new Scene(root);
              Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
              stage.setScene(scene);

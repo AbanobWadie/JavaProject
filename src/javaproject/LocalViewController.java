@@ -62,9 +62,9 @@ public class LocalViewController implements Initializable {
       GraphicsContext gc;
         
         SymbolsEnum e;
-SymbolsEnum a;
-SymbolsEnum b;
-SymbolsEnum c;
+        SymbolsEnum a;
+        SymbolsEnum b;
+        SymbolsEnum c;
 
     /**
      * Initializes the controller class.
@@ -73,7 +73,7 @@ SymbolsEnum c;
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         
-         X1.setToggleGroup(group1);
+            X1.setToggleGroup(group1);
             O1.setToggleGroup(group1);
             X2.setToggleGroup(group2);
             O2.setToggleGroup(group2);
@@ -95,6 +95,7 @@ SymbolsEnum c;
                     //Pass whatever data you want. You can have multiple method calls here
                     o.transferMessage(txt_player1.getText(),txt_player2.getText());
                     o.trnsfer(e,a);
+                    o.transferMessage(player1, player2);
 
                         Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                         stage.setScene(new Scene(root));

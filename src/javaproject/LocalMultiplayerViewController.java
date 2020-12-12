@@ -51,6 +51,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
   
     
     LocalViewController l=new LocalViewController();
+    Player p1=new Player();
+    Player p2=new Player();
     
     @FXML
     private Canvas canvas;
@@ -107,8 +109,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
         // TODO
      
          
-                 l.player1.setSymbol(CROSS);
-                 l.player2.setSymbol(ROUND);
+                 p1.setSymbol(CROSS);
+                 p2.setSymbol(ROUND);
            
        
              
@@ -185,28 +187,28 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb1(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 1);
+       
+        l.win = Result.add(p1, p2, 1);
         draw(50 + 15, 50 + 15 + 15);
         ChangeTurn();
-        b1.setDisable(false);
+        b1.setDisable(true);
     }
 
     @FXML
     void eventb2(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 2);
+        
+        l.win = Result.add(p1, p2, 2);
         draw(50 + 15 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
-        b2.setDisable(false);
+        b2.setDisable(true);
     }
 
     @FXML
     void eventb3(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 3);
+       
+        l.win = Result.add(p1, p2, 3);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
         b3.setDisable(false);
@@ -215,72 +217,72 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb4(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 4);
+        
+        l.win = Result.add(p1, p2, 4);
         draw(50 + 15, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
-        b4.setDisable(false);
+        b4.setDisable(true);
     }
 
     @FXML
     void eventb5(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 5);
+       
+        l.win = Result.add(p1, p2, 5);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
-        b5.setDisable(false);
+        b5.setDisable(true);
     }
 
     @FXML
     void eventb6(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 6);
+        
+        l.win = Result.add(p1, p2, 6);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
-        b6.setDisable(false);
+        b6.setDisable(true);
     }
 
     @FXML
     void eventb7(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 7);
+       
+        l.win = Result.add(p1, p2, 7);
         draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
-        b7.setDisable(false);
+        b7.setDisable(true);
     }
 
     @FXML
     void eventb8(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 8);
+       
+        l.win = Result.add(p1, p2, 8);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
-        b8.setDisable(false);
+        b8.setDisable(true);
     }
 
     @FXML
     void eventb9(ActionEvent event)
     {
-        setAllDisable(false);
-        l.win = Result.add(l.player1, l.player2, 9);
+       
+        l.win = Result.add(p1, p2, 9);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
-        b9.setDisable(false);
+        b9.setDisable(true);
     }
     
        private void ChangeTurn()
     {
-        if (getTurn() == l.player1) {
-            setTurn(l.player2);
+        if (getTurn() == p1) {
+            setTurn(p2);
             // Setting underlines visible or invisible acc to player turn
             u1.setVisible(true);
             u2.setVisible(false);
         } else {
-            setTurn(l.player1);
+            setTurn(p1);
             u2.setVisible(true);
             u1.setVisible(false);
         }
@@ -295,14 +297,14 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
      */
     private void draw(int startX, int startY)
     {
-        if (getTurn() == l.player1) {
-            if (l.player1.getSymbol() == SymbolsEnum.CROSS) {
+        if (getTurn() == p1) {
+            if (p1.getSymbol() == SymbolsEnum.CROSS) {
                 Draw.draw_cross(l.gc, startX, startY);
             } else {
                 Draw.draw_circle(l.gc, startX, startY);
             }
-        } else if (getTurn() == l.player2) {
-            if (l.player2.getSymbol() == SymbolsEnum.CROSS) {
+        } else if (getTurn() == p2) {
+            if (p2.getSymbol() == SymbolsEnum.CROSS) {
                 Draw.draw_cross(l.gc, startX, startY);
             } else {
                 Draw.draw_circle(l.gc, startX, startY);
@@ -312,7 +314,7 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
         // Check if there is win and if yes draw a line and show alert 
         if (l.win) {
 
-            if (Turn.getTurn() == l.player1) {
+            if (Turn.getTurn() ==p1) {
                 drawLine();
                 showAlert(u1.getText());
             } else {
@@ -358,7 +360,7 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     private void drawLine()
     {
         List<Integer> winningMoves;
-        if (getTurn() == l.player1) {
+        if (getTurn() == p1) {
             winningMoves = Result.getPlayer1moves();
         } else {
             winningMoves = Result.getPlayer2moves();
@@ -395,6 +397,11 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     void trnsfer(SymbolsEnum e, SymbolsEnum a) {
         w=e;
         a=a;
+    }
+
+    void transferMessage(Player player1, Player player2) {
+        p1=player1;
+        p2=player2;
     }
     
     

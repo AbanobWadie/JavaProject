@@ -209,7 +209,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
          // Close the recent window so that there remains only one window
         // Running a new instance of the start method
         try {
-                 FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
             Parent root = loader.load();
              
             //Get controller of scene2
