@@ -65,6 +65,28 @@ public class LoginViewController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
                 }
+     
+     @FXML
+    public void login(ActionEvent event){
+        if(txt_name.getText().equals("user") && txt_pass.getText().equals("1"))
+        { 
+           
+           try {
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
+                        Parent root = loader.load();
+
+                        //Get controller of scene2
+                        ListPlayerViewController o = loader.getController();
+                        //Pass whatever data you want. You can have multiple method calls here
+                        o.transferMessageName1(txt_name.getText());
+                      
+
+                            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                            stage.setScene(new Scene(root));
+                            stage.show();
+                
+
             } catch (IOException ex) {
                 Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
             }

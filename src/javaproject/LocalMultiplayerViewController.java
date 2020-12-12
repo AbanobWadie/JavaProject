@@ -12,7 +12,6 @@ import players.Draw;
 import players.Player;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,10 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import static players.SymbolsEnum.CROSS;
-import static players.SymbolsEnum.ROUND;
 import static players.Turn.getTurn;
 import static players.Turn.setTurn;
 
@@ -45,14 +41,16 @@ import static players.Turn.setTurn;
  *
  * @author SoHa
  */
-public class LocalMultiplayerViewController extends LocalViewController implements Initializable {
-    
-  
-  
-    
-    LocalViewController l=new LocalViewController();
-    Player p1=new Player();
-    Player p2=new Player();
+public class LocalMultiplayerViewController extends Turn implements Initializable {
+    Player p1;
+    Player p2;
+    RadioButton X10;
+    RadioButton O10;
+    RadioButton X20;
+    RadioButton O20;
+    boolean win;
+    GraphicsContext gc;
+        
     
     @FXML
     private Canvas canvas;
@@ -75,9 +73,6 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     private Button b9;
 
-    // TextFields for players
- 
-
     // Labels for underline
     @FXML
     private Label u1;
@@ -98,8 +93,6 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
       String name1;
       String name2;
       
-      SymbolsEnum w;
-      SymbolsEnum z;
     /**
      * Initializes the controller class.
      */
@@ -107,35 +100,26 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     public void initialize(URL url, ResourceBundle rb) {
         
         // TODO
-     
-         
-                 p1.setSymbol(CROSS);
-                 p2.setSymbol(ROUND);
-           
-       
-             
-         
-              l.gc = canvas.getGraphicsContext2D();
-              l.gc = Draw.draw_basic_skeleton(l.gc);
+             p1=new Player();
+             p2=new Player();  
+             X10=new RadioButton();
+             O10=new RadioButton();
+             X20=new RadioButton();
+             O20=new RadioButton();
+             gc = canvas.getGraphicsContext2D();
+             gc = Draw.draw_basic_skeleton(gc);
     }  
     
     @FXML
     void back(ActionEvent event)
     {
           try {
-              
-                 Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-                 Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-              
-                /* Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  Scene scene = (Scene)((Node)event.getSource()).getScene();
                  Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                  scene.setRoot(root);
                  stage.setScene(scene);
-                 stage.show();*/
+                 stage.show();
                 
             } catch (IOException ex) {
                 Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,20 +143,80 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
                  FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiplayerView.fxml"));
             Parent root = loader.load();
              
-            //Get controller of scene2
             LocalMultiplayerViewController p = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
-            p.transferMessage(name1,name2);
-                 
-                 Scene scene = new Scene(root);
-                 ((Stage) reset.getScene().getWindow()).close();
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
+    
+            p.transferMessageText(name1, name2);
+            p.transferMessagePlayers(p1, p2);
+            p.transferMessageButtons(X10, O10, X20, O20);
+            Result.clearMoves();
+            Scene scene = new Scene(root);
+            ((Stage) reset.getScene().getWindow()).close();
+            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+            p1=new Player();
+           
           } catch (IOException ex) {
             ex.getMessage();
         } catch (Exception ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    @FXML
+    void player1Symbol(ActionEvent event)
+    {
+        setAllDisable(false);
+        if (X10.isSelected()) {
+            O20.setSelected(true);
+            // Setting Symbols for players
+            p1.setSymbol(SymbolsEnum.CROSS);
+            p2.setSymbol(SymbolsEnum.ROUND);
+        } else if (O10.isSelected()) {
+            X20.setSelected(true);
+            // Setting Symbols for players
+            p1.setSymbol(SymbolsEnum.ROUND);
+            p2.setSymbol(SymbolsEnum.CROSS);
+        }
+        // Set initial turn for player with symbol CROSS
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            setTurn(p1);
+            // Setting underlines visible or invisible acc to player turn
+            u1.setVisible(true);
+            u2.setVisible(false);
+        } else {
+            setTurn(p2);
+            u2.setVisible(true);
+            u1.setVisible(false);
+        }
+    }
+    
+     @FXML
+    void player2Symbol(ActionEvent event)
+    {
+        setAllDisable(false);
+        if (X20.isSelected()) {
+            O10.setSelected(true);
+            // Setting Symbols for players
+            p1.setSymbol(SymbolsEnum.CROSS);
+            p2.setSymbol(SymbolsEnum.ROUND);
+        } else if (O20.isSelected()) {
+            X10.setSelected(true);
+            // Setting Symbols for players
+            p1.setSymbol(SymbolsEnum.ROUND);
+            p2.setSymbol(SymbolsEnum.CROSS);
+        }
+        // Set initial turn for player with symbol CROSS
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            setTurn(p1);
+            // Setting underlines visible or invisible acc to player turn
+            u1.setVisible(true);
+            u2.setVisible(false);
+        } else {
+            setTurn(p2);
+            u2.setVisible(true);
+            u1.setVisible(false);
         }
     }
 
@@ -187,8 +231,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb1(ActionEvent event)
     {
-       
-        l.win = Result.add(p1, p2, 1);
+       disableChoices(true);
+        win = Result.add(p1, p2, 1);
         draw(50 + 15, 50 + 15 + 15);
         ChangeTurn();
         b1.setDisable(true);
@@ -197,8 +241,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb2(ActionEvent event)
     {
-        
-        l.win = Result.add(p1, p2, 2);
+        disableChoices(true);
+        win = Result.add(p1, p2, 2);
         draw(50 + 15 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
         b2.setDisable(true);
@@ -207,8 +251,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb3(ActionEvent event)
     {
-       
-        l.win = Result.add(p1, p2, 3);
+       disableChoices(true);
+        win = Result.add(p1, p2, 3);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
         b3.setDisable(false);
@@ -217,8 +261,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb4(ActionEvent event)
     {
-        
-        l.win = Result.add(p1, p2, 4);
+        disableChoices(true);
+        win = Result.add(p1, p2, 4);
         draw(50 + 15, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
         b4.setDisable(true);
@@ -227,8 +271,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb5(ActionEvent event)
     {
-       
-        l.win = Result.add(p1, p2, 5);
+        disableChoices(true);
+        win = Result.add(p1, p2, 5);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
         b5.setDisable(true);
@@ -237,8 +281,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb6(ActionEvent event)
     {
-        
-        l.win = Result.add(p1, p2, 6);
+        disableChoices(true);
+        win = Result.add(p1, p2, 6);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
         b6.setDisable(true);
@@ -247,8 +291,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb7(ActionEvent event)
     {
-       
-        l.win = Result.add(p1, p2, 7);
+        disableChoices(true);
+        win = Result.add(p1, p2, 7);
         draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
         b7.setDisable(true);
@@ -257,8 +301,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb8(ActionEvent event)
     {
-       
-        l.win = Result.add(p1, p2, 8);
+        disableChoices(true);
+        win = Result.add(p1, p2, 8);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
         b8.setDisable(true);
@@ -267,8 +311,8 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     @FXML
     void eventb9(ActionEvent event)
     {
-       
-        l.win = Result.add(p1, p2, 9);
+        disableChoices(true);
+        win = Result.add(p1, p2, 9);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
         b9.setDisable(true);
@@ -287,6 +331,15 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
             u1.setVisible(false);
         }
     }
+       
+         private void disableChoices(boolean option)
+    {
+        X10.setDisable(option);
+        O10.setDisable(option);
+        X20.setDisable(option);
+        O20.setDisable(option);
+       
+    }
 
     /**
      * Calls the appropriate draw function as per the players turn and symbol.
@@ -299,27 +352,27 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
     {
         if (getTurn() == p1) {
             if (p1.getSymbol() == SymbolsEnum.CROSS) {
-                Draw.draw_cross(l.gc, startX, startY);
+                Draw.draw_cross(gc, startX, startY);
             } else {
-                Draw.draw_circle(l.gc, startX, startY);
+                Draw.draw_circle(gc, startX, startY);
             }
         } else if (getTurn() == p2) {
             if (p2.getSymbol() == SymbolsEnum.CROSS) {
-                Draw.draw_cross(l.gc, startX, startY);
+                Draw.draw_cross(gc, startX, startY);
             } else {
-                Draw.draw_circle(l.gc, startX, startY);
+                Draw.draw_circle(gc, startX, startY);
             }
         }
 
         // Check if there is win and if yes draw a line and show alert 
-        if (l.win) {
+        if (win) {
 
             if (Turn.getTurn() ==p1) {
                 drawLine();
-                showAlert(u1.getText());
+                showAlert(u1.getText()+" is Winner.");
             } else {
                 drawLine();
-                showAlert(u2.getText());
+                showAlert(u2.getText()+" is Winner.");
             }
             // Disables all buttons to stop the game
             setAllDisable(true);
@@ -344,14 +397,7 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
         b9.setDisable(option);
     }
 
-    /**
-     * Disables or enables all radio buttons and the textfields
-     *
-     * @param option This could be true or false
-     */
-    
-
-  
+   
 
     /**
      * Sets coordinates for the draw_winning_line function and calls the
@@ -374,39 +420,38 @@ public class LocalMultiplayerViewController extends LocalViewController implemen
         endX = 35 + (50 + 15) + (winningMoves.get(2) - 1) % 3 * (70 + 30);
         endY = 35 + (50 + 15 + 15) + (winningMoves.get(2) - 1) / 3 * (70 + 30);
 
-        Draw.draw_winning_line(l.gc, startX, startY, endX, endY);
+        Draw.draw_winning_line(gc, startX, startY, endX, endY);
     }
     
    
     
-      /*  private void showAlert(String mess) {
+        private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
-        alert.setTitle("Succedded");
+        alert.setTitle("Winner");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
-    }*/
+    }
 
-    void transferMessage(String text,String text0) {
+        
+    void transferMessageText(String text, String text0) {
         u1.setText(text);
         u2.setText(text0);
         name1 = text;
         name2 = text0;
     }
 
-    void trnsfer(SymbolsEnum e, SymbolsEnum a) {
-        w=e;
-        a=a;
+    void transferMessagePlayers(Player player1, Player player2) {
+         p1=player1;
+         p2=player2;
     }
 
-    void transferMessage(Player player1, Player player2) {
-        p1=player1;
-        p2=player2;
-    }
-    
-    
-    
-    
+    void transferMessageButtons(RadioButton X1, RadioButton O1, RadioButton X2, RadioButton O2) {
+        X10=X1;
+        O10=O1;
+        X20=X2;
+        O20=O2;
+    }   
 }
 
  

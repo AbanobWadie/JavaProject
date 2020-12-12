@@ -12,7 +12,6 @@ import players.Draw;
 import players.Player;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -32,7 +31,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import static players.Turn.getTurn;
 import static players.Turn.setTurn;
@@ -44,16 +42,19 @@ import static players.Turn.setTurn;
  * @author SoHa
  */
 public class OnlineMultiplayerViewController extends Turn implements Initializable {
-    
-    GraphicsContext gc;
-    Player player1=new Player();
-    Player player2=new Player();
-    String name;
+    Player p1;
+    Player p2;
+    RadioButton X10;
+    RadioButton O10;
+    RadioButton X20;
+    RadioButton O20;
     boolean win;
+    GraphicsContext gc;
+        
     
-     @FXML
+    @FXML
     private Canvas canvas;
-     @FXML // 9 boxes to draw 
+    @FXML // 9 boxes to draw 
     private Button b1;
     @FXML
     private Button b2;
@@ -72,12 +73,6 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     @FXML
     private Button b9;
 
-    // TextFields for players
-    @FXML
-    private TextField p1;
-    @FXML
-    private TextField p2;
-
     // Labels for underline
     @FXML
     private Label u1;
@@ -86,16 +81,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     private Label u2;
 
     // JFXRadiobuttons for symbol choice of player1
-    @FXML
-    private RadioButton X1;
-    @FXML
-    private RadioButton O1;
-
-    // JFXRadiobuttons for symbol choice of player2
-    @FXML
-    private RadioButton X2;
-    @FXML
-    private RadioButton O2;
+ 
 
 
     @FXML // Reset or NewGame button
@@ -104,70 +90,43 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
      @FXML
     private Button btn_back;
      
+      String name1;
+      String name2;
       
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         
-              player1 = new Player();
-              player2 = new Player();
-              gc = canvas.getGraphicsContext2D();
-              gc = Draw.draw_basic_skeleton(gc);
+        // TODO
+             p1=new Player();
+             p2=new Player();  
+             X10=new RadioButton();
+             O10=new RadioButton();
+             X20=new RadioButton();
+             O20=new RadioButton();
+             gc = canvas.getGraphicsContext2D();
+             gc = Draw.draw_basic_skeleton(gc);
     }  
     
     @FXML
     void back(ActionEvent event)
     {
           try {
-              
-                 Parent root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
-                 Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-              
-                /* Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  Scene scene = (Scene)((Node)event.getSource()).getScene();
                  Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                  scene.setRoot(root);
                  stage.setScene(scene);
-                 stage.show();*/
+                 stage.show();
                 
             } catch (IOException ex) {
                 Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
     
-    @FXML
-    void player1Symbol(ActionEvent event)
-    {
-        setAllDisable(false);
-        if (X1.isSelected()) {
-            O2.setSelected(true);
-            // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.CROSS);
-            player2.setSymbol(SymbolsEnum.ROUND);
-        } else if (O1.isSelected()) {
-            X2.setSelected(true);
-            // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.ROUND);
-            player2.setSymbol(SymbolsEnum.CROSS);
-        }
-        // Set initial turn for player with symbol CROSS
-        if (player1.getSymbol() == SymbolsEnum.CROSS) {
-            setTurn(player1);
-            // Setting underlines visible or invisible acc to player turn
-            u1.setVisible(true);
-            u2.setVisible(false);
-        } else {
-            setTurn(player2);
-            u2.setVisible(true);
-            u1.setVisible(false);
-        }
-    }
+    
 
 
     /**
@@ -176,59 +135,88 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
      *
      * @param event OnClick Action Event
      */
+  
+      @FXML
+    void resetButton(ActionEvent event)
+    {
+          try {
+                 FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+            Parent root = loader.load();
+             
+            OnlineMultiplayerViewController p = loader.getController();
+    
+            p.transferMessageText(u1.getText(), u2.getText());
+            p.transferMessagePlayers(p1, p2);
+            p.transferMessageButtons(X10, O10, X20, O20);
+            Result.clearMoves();
+            Scene scene = new Scene(root);
+            ((Stage) reset.getScene().getWindow()).close();
+            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+         
+           
+          } catch (IOException ex) {
+            ex.getMessage();
+        } catch (Exception ex) {
+            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     @FXML
-    void player2Symbol(ActionEvent event)
+    void player1Symbol(ActionEvent event)
     {
         setAllDisable(false);
-        if (X2.isSelected()) {
-            O1.setSelected(true);
+        if (X10.isSelected()) {
+            O20.setSelected(true);
             // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.CROSS);
-            player2.setSymbol(SymbolsEnum.ROUND);
-        } else if (O2.isSelected()) {
-            X1.setSelected(true);
+            p1.setSymbol(SymbolsEnum.CROSS);
+            p2.setSymbol(SymbolsEnum.ROUND);
+        } else if (O10.isSelected()) {
+            X20.setSelected(true);
             // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.ROUND);
-            player2.setSymbol(SymbolsEnum.CROSS);
+            p1.setSymbol(SymbolsEnum.ROUND);
+            p2.setSymbol(SymbolsEnum.CROSS);
         }
         // Set initial turn for player with symbol CROSS
-        if (player1.getSymbol() == SymbolsEnum.CROSS) {
-            setTurn(player1);
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            setTurn(p1);
             // Setting underlines visible or invisible acc to player turn
             u1.setVisible(true);
             u2.setVisible(false);
         } else {
-            setTurn(player2);
+            setTurn(p2);
             u2.setVisible(true);
             u1.setVisible(false);
         }
     }
-      @FXML
-    void resetButton(ActionEvent event)
+    
+     @FXML
+    void player2Symbol(ActionEvent event)
     {
-         // Close the recent window so that there remains only one window
-        // Running a new instance of the start method
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
-            Parent root = loader.load();
-             
-            //Get controller of scene2
-            OnlineMultiplayerViewController o = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
-            o.transferMessage(name);
-                 
-                 Scene scene = new Scene(root);
-                 ((Stage) reset.getScene().getWindow()).close();
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-                 
-                 
-            
-        } catch (IOException ex) {
-            ex.getMessage();
-        } catch (Exception ex) {
-            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+        setAllDisable(false);
+        if (X20.isSelected()) {
+            O10.setSelected(true);
+            // Setting Symbols for players
+            p1.setSymbol(SymbolsEnum.CROSS);
+            p2.setSymbol(SymbolsEnum.ROUND);
+        } else if (O20.isSelected()) {
+            X10.setSelected(true);
+            // Setting Symbols for players
+            p1.setSymbol(SymbolsEnum.ROUND);
+            p2.setSymbol(SymbolsEnum.CROSS);
+        }
+        // Set initial turn for player with symbol CROSS
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            setTurn(p1);
+            // Setting underlines visible or invisible acc to player turn
+            u1.setVisible(true);
+            u2.setVisible(false);
+        } else {
+            setTurn(p2);
+            u2.setVisible(true);
+            u1.setVisible(false);
         }
     }
 
@@ -243,8 +231,8 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     @FXML
     void eventb1(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 1);
+       disableChoices(true);
+        win = Result.add(p1, p2, 1);
         draw(50 + 15, 50 + 15 + 15);
         ChangeTurn();
         b1.setDisable(true);
@@ -254,7 +242,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void eventb2(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 2);
+        win = Result.add(p1, p2, 2);
         draw(50 + 15 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
         b2.setDisable(true);
@@ -263,18 +251,18 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     @FXML
     void eventb3(ActionEvent event)
     {
-        disableChoices(true);
-        win = Result.add(player1, player2, 3);
+       disableChoices(true);
+        win = Result.add(p1, p2, 3);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
         ChangeTurn();
-        b3.setDisable(true);
+        b3.setDisable(false);
     }
 
     @FXML
     void eventb4(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 4);
+        win = Result.add(p1, p2, 4);
         draw(50 + 15, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
         b4.setDisable(true);
@@ -284,7 +272,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void eventb5(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 5);
+        win = Result.add(p1, p2, 5);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
         b5.setDisable(true);
@@ -294,7 +282,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void eventb6(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 6);
+        win = Result.add(p1, p2, 6);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
         ChangeTurn();
         b6.setDisable(true);
@@ -304,7 +292,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void eventb7(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 7);
+        win = Result.add(p1, p2, 7);
         draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
         b7.setDisable(true);
@@ -314,7 +302,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void eventb8(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 8);
+        win = Result.add(p1, p2, 8);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
         b8.setDisable(true);
@@ -324,7 +312,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void eventb9(ActionEvent event)
     {
         disableChoices(true);
-        win = Result.add(player1, player2, 9);
+        win = Result.add(p1, p2, 9);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
         ChangeTurn();
         b9.setDisable(true);
@@ -332,16 +320,25 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     
        private void ChangeTurn()
     {
-        if (getTurn() == player1) {
-            setTurn(player2);
+        if (getTurn() == p1) {
+            setTurn(p2);
             // Setting underlines visible or invisible acc to player turn
             u1.setVisible(true);
             u2.setVisible(false);
         } else {
-            setTurn(player1);
+            setTurn(p1);
             u2.setVisible(true);
             u1.setVisible(false);
         }
+    }
+       
+         private void disableChoices(boolean option)
+    {
+        X10.setDisable(option);
+        O10.setDisable(option);
+        X20.setDisable(option);
+        O20.setDisable(option);
+       
     }
 
     /**
@@ -353,14 +350,14 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
      */
     private void draw(int startX, int startY)
     {
-        if (getTurn() == player1) {
-            if (player1.getSymbol() == SymbolsEnum.CROSS) {
+        if (getTurn() == p1) {
+            if (p1.getSymbol() == SymbolsEnum.CROSS) {
                 Draw.draw_cross(gc, startX, startY);
             } else {
                 Draw.draw_circle(gc, startX, startY);
             }
-        } else if (getTurn() == player2) {
-            if (player2.getSymbol() == SymbolsEnum.CROSS) {
+        } else if (getTurn() == p2) {
+            if (p2.getSymbol() == SymbolsEnum.CROSS) {
                 Draw.draw_cross(gc, startX, startY);
             } else {
                 Draw.draw_circle(gc, startX, startY);
@@ -370,12 +367,12 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
         // Check if there is win and if yes draw a line and show alert 
         if (win) {
 
-            if (Turn.getTurn() == player1) {
+            if (Turn.getTurn() ==p1) {
                 drawLine();
-                showAlert(p1.getText());
+                showAlert(u1.getText()+" is Winner.");
             } else {
                 drawLine();
-                showAlert(p2.getText());
+                showAlert(u2.getText()+" is Winner.");
             }
             // Disables all buttons to stop the game
             setAllDisable(true);
@@ -400,22 +397,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
         b9.setDisable(option);
     }
 
-    /**
-     * Disables or enables all radio buttons and the textfields
-     *
-     * @param option This could be true or false
-     */
-    private void disableChoices(boolean option)
-    {
-        X1.setDisable(option);
-        O1.setDisable(option);
-        X2.setDisable(option);
-        O2.setDisable(option);
-        p1.setDisable(option);
-        p2.setDisable(option);
-    }
-
-  
+   
 
     /**
      * Sets coordinates for the draw_winning_line function and calls the
@@ -424,7 +406,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     private void drawLine()
     {
         List<Integer> winningMoves;
-        if (getTurn() == player1) {
+        if (getTurn() == p1) {
             winningMoves = Result.getPlayer1moves();
         } else {
             winningMoves = Result.getPlayer2moves();
@@ -445,20 +427,31 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     
         private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
-        alert.setTitle("Succedded");
+        alert.setTitle("Winner");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
     }
 
-    void transferMessage(String new_val) {
-        p2.setText(new_val);
-        name = new_val;
+        
+    void transferMessageText(String text, String text0) {
+        u1.setText(text);
+        u2.setText(text0);
+        name1 = text;
+        name2 = text0;
     }
 
-   
-    
-    
+    void transferMessagePlayers(Player player1, Player player2) {
+         p1=player1;
+         p2=player2;
+    }
+
+    void transferMessageButtons(RadioButton X1, RadioButton O1, RadioButton X2, RadioButton O2) {
+        X10=X1;
+        O10=O1;
+        X20=X2;
+        O20=O2;
+    }   
 }
 
  
