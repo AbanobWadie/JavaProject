@@ -36,9 +36,6 @@ public class JavaProject extends Application {
         } catch (IOException ex) {
             Logger.getLogger(JavaProject.class.getName()).log(Level.SEVERE, null, ex);
         }
-        I
-        
-        
     }
     
 
