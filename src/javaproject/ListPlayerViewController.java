@@ -51,6 +51,7 @@ public class ListPlayerViewController implements Initializable {
     private ListView<String> list_persons;
     @FXML
     private Button btn_back;
+    String name1;
     
     
     
@@ -117,13 +118,13 @@ public class ListPlayerViewController implements Initializable {
                        
                        
             //Load second scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
             Parent root = loader.load();
              
             //Get controller of scene2
-            OnlineMultiplayerViewController o = loader.getController();
+            OnlineViewController o = loader.getController();
             //Pass whatever data you want. You can have multiple method calls here
-            o.transferMessage(new_val);
+            o.transferMessageNames(name1,new_val);
  
                 Stage stage=(Stage)(list_persons).getScene().getWindow();
                  //stage.setScene(new Scene(root));
@@ -142,6 +143,10 @@ public class ListPlayerViewController implements Initializable {
         });
 
     }    
+
+    void transferMessageName1(String text) {
+            name1=text;
+        }
 
     
 }
