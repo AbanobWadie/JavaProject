@@ -132,7 +132,7 @@ public class ListPlayerViewController implements Initializable {
                     //Get controller of scene2
                     OnlineMultiplayerViewController o = loader.getController();
                     //Pass whatever data you want. You can have multiple method calls here
-                    o.transferMessage(new_val);
+                    //o.transferMessage(new_val);
 
                     Stage stage = (Stage) (list_persons).getScene().getWindow();
                     //stage.setScene(new Scene(root));
