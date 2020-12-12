@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,24 +20,24 @@ import java.util.logging.Logger;
  * @author Abanob wadie
  */
 public class ServerConnection {
-    private BufferedReader in;
-    private PrintWriter out;
+
+    static private BufferedReader in;
+    static private PrintWriter out;
 
     public boolean init(String ip) {
         try {
-            Socket mySocket = new Socket(ip, 5555);
+            Socket mySocket = new Socket(ip, 5005);
             in = new BufferedReader(new InputStreamReader(
                     mySocket.getInputStream()));
             out = new PrintWriter(
                     mySocket.getOutputStream());
 
+            return true;
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
             return false;
 
         }
-
-        return true;
     }
 
     public boolean SignIn(String userName, String password) {
@@ -66,6 +67,18 @@ public class ServerConnection {
         }
         return false;
     }
+    
+    public void readThread(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    
+                }
+            }
+        }).start();
+
+    }
 
     public void exit() {
         out.println("exit");
@@ -78,11 +91,18 @@ public class ServerConnection {
         out.flush();
     }
 
-    public HashSet<String> getOnlineUsers() {
-        HashSet<String> arr = new HashSet<>();
+    public ArrayList<String> getOnlineUsers() {
+        ArrayList<String> arr = new ArrayList<>();
         try {
             while (in.ready()) {
-                arr.add(in.readLine());
+                String str = in.readLine();
+                
+                if(!str.equals("end")){
+                    arr.add(str);
+                    System.out.println(arr);
+                }else{
+                    break;
+                }
             }
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);

@@ -29,70 +29,66 @@ import javafx.stage.Stage;
  * @author SoHa
  */
 public class SignUpViewController implements Initializable {
-    
-     
-     // Sign up Screen
+
+    // Sign up Screen
     @FXML
     private TextField txt_nameS;
-    
+
     @FXML
     private TextField txt_passS;
-     
+
     @FXML
     private Button btn_sign;
-    
-    
-    
-     
+
     @FXML
-    public void signUP(ActionEvent event){
-          if(txt_nameS.getText().equals("") || txt_passS.getText().equals(""))
-        {   
+    public void signUP(ActionEvent event) {
+        if (txt_nameS.getText().equals("") || txt_passS.getText().equals("")) {
             showAlert("Rigistration Failed, Enter all data, please");
-            
-        }else
-        {
+
+        } else {
             showAlert("Rigistration Successeded");
-             try {
-                
-                 Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
+
+            try {
+
+                ServerConnection con = new ServerConnection();
+                boolean result = con.SignUp(txt_nameS.getText(), txt_passS.getText());
+
+                if (result) {
+                    Parent root;
+                    root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
+                }
             } catch (IOException ex) {
-                Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
+                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-    
-    
-     @FXML
-    public void loginLink(ActionEvent event)
-    {
-        try {
-                
-                 Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
-    }
-    
-  
-    
+
     @FXML
-        private void showAlert(String mess) {
+    public void loginLink(ActionEvent event) {
+        try {
+
+            Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("Succedded");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
     }
-      
 
     /**
      * Initializes the controller class.
@@ -100,6 +96,6 @@ public class SignUpViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

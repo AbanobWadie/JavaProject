@@ -38,26 +38,22 @@ public class IpNetworkViewController implements Initializable {
     private Button btn_play;
     @FXML
     private Hyperlink btn_back;
-    
-    
+
     @FXML
-    void back(ActionEvent event)
-    {
-                
+    void back(ActionEvent event) {
+
         try {
             Parent root;
             root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-             Scene scene = new Scene(root);
-             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-             stage.setScene(scene);
-             stage.show();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException ex) {
             Logger.getLogger(IpNetworkViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-                
+
     }
-    
-    
 
     /**
      * Initializes the controller class.
@@ -65,43 +61,49 @@ public class IpNetworkViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-     @FXML 
-    void play(ActionEvent event){
-    StringTokenizer st;
-        st = new StringTokenizer(txt_ip.getText(),".");
-        
-    for(int i = 0; i < 4; i++){ 
-      if(!st.hasMoreTokens()){
-        //return false;
-          showAlert("Ip"+txt_ip.getText()+"Not Valid, please enter another one.");
-      }
-     int num = Integer.parseInt(st.nextToken());
-     if(num < 0 || num > 255){
-       //return false;
-       showAlert("Ip"+txt_ip.getText()+"Not Valid, please enter another one.");
     }
-    }
-     if(st.hasMoreTokens()||txt_ip.getText()==""){
-       //return false;
-        showAlert("Ip"+txt_ip.getText()+"Not Valid, please enter another one.");
 
-     }
-     //return true;
-      try {
-             Parent root;
-             root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
-             Scene scene = new Scene(root);
-             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-             stage.setScene(scene);
-             stage.show();
+    @FXML
+    void play(ActionEvent event) {
+        StringTokenizer st;
+        st = new StringTokenizer(txt_ip.getText(), ".");
+
+        for (int i = 0; i < 4; i++) {
+            if (!st.hasMoreTokens()) {
+                //return false;
+                showAlert("Ip" + txt_ip.getText() + "Not Valid, please enter another one.");
+            }
+            int num = Integer.parseInt(st.nextToken());
+            if (num < 0 || num > 255) {
+                //return false;
+                showAlert("Ip" + txt_ip.getText() + "Not Valid, please enter another one.");
+            }
+        }
+        if (st.hasMoreTokens() || txt_ip.getText() == "") {
+            //return false;
+            showAlert("Ip" + txt_ip.getText() + "Not Valid, please enter another one.");
+
+        }
+        //return true;
+        try {
+
+            ServerConnection con = new ServerConnection();
+            boolean result = con.init(txt_ip.getText());
+
+            if (result) {
+                Parent root;
+                root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            }
         } catch (IOException ex) {
             Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
-   }
-    
+
+    }
+
     private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("Succedded");
@@ -109,9 +111,5 @@ public class IpNetworkViewController implements Initializable {
         alert.setContentText(mess);
         alert.show();
     }
-    
+
 }
-
-
-    
-

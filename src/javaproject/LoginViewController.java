@@ -31,78 +31,77 @@ import javafx.stage.Stage;
  * @author SoHa
  */
 public class LoginViewController implements Initializable {
-    
-    
-       
-       //Login Screen
-  
+
+    //Login Screen
     @FXML
     private TextField txt_name;
-    
+
     @FXML
     private TextField txt_pass;
-    
+
     @FXML
     private Button btn_login;
-    
+
     @FXML
     private Hyperlink link_signUp;
-    
-     @FXML
+
+    @FXML
     private Hyperlink link_pass;
-     
-     @FXML
-    public void login(ActionEvent event){
-        if(txt_name.getText().equals("user") && txt_pass.getText().equals("1"))
-        {  
-           
-           try {
-                
-                 Parent root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
+
+    @FXML
+    public void login(ActionEvent event) {
+        if (!txt_name.getText().equals("") && !txt_pass.getText().equals("")) {
+
+            try {
+
+                ServerConnection con = new ServerConnection();
+                boolean result = con.SignIn(txt_name.getText(), txt_pass.getText());
+
+                if (result) {
+                    Parent root;
+                    root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.show();
+                }
             } catch (IOException ex) {
-                Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else
-        {
-             showAlert("Data isn't coerrect, please Enter again.");
-           // JOptionPane.showConfirmDialog(null, "Data isn't coerrect, please Enter again.", "OK",JOptionPane.DEFAULT_OPTION);
+        } else {
+            showAlert("Data isn't coerrect, please Enter again.");
+            // JOptionPane.showConfirmDialog(null, "Data isn't coerrect, please Enter again.", "OK",JOptionPane.DEFAULT_OPTION);
         }
     }
-    
+
     @FXML
-    public void signUPLink(ActionEvent event){
-         try {
-                
-                 Parent root = FXMLLoader.load(getClass().getResource("SignUpView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
-    
-        @FXML
-    public void forgetPass(ActionEvent event)
-    {
+    public void signUPLink(ActionEvent event) {
         try {
-                 Parent root = FXMLLoader.load(getClass().getResource("ForgetPasswordView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }  
+
+            Parent root = FXMLLoader.load(getClass().getResource("SignUpView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-        
- /*    @FXML
+
+    @FXML
+    public void forgetPass(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("ForgetPasswordView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /*    @FXML
     public void loginLink(ActionEvent event)
     {
         try {
@@ -116,13 +115,8 @@ public class LoginViewController implements Initializable {
                 Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
             }  
     }*/
-    
-    
-   
-     
-     
-     @FXML
-        private void showAlert(String mess) {
+    @FXML
+    private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("Succedded");
         alert.setHeaderText(null);
@@ -136,6 +130,6 @@ public class LoginViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
