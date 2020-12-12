@@ -72,7 +72,6 @@ public class SingleViewController implements Initializable {
         void back(ActionEvent event)
         {
               try {
-
                      Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                      Scene scene = (Scene)((Node)event.getSource()).getScene();
                      Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
@@ -84,9 +83,7 @@ public class SingleViewController implements Initializable {
                     Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
         }
-    
-    
-    
+     
         @FXML
         void play(ActionEvent event)
         {
