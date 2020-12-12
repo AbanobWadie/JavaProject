@@ -43,7 +43,6 @@ public class ListPlayerViewController implements Initializable {
     /*ObservableList list = FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
             "soha", "shimaa", "abanob", "ahmed",
             "soha", "shimaa", "abanob", "ahmed");*/
-
     @FXML
     private VBox vbox;
     @FXML
@@ -54,6 +53,7 @@ public class ListPlayerViewController implements Initializable {
     private Button btn_back;
 
     String name1;
+
     @FXML
     void back(ActionEvent event) {
         try {
@@ -126,13 +126,13 @@ public class ListPlayerViewController implements Initializable {
                 try {
 
                     //Load second scene
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
                     Parent root = loader.load();
 
                     //Get controller of scene2
-                    OnlineMultiplayerViewController o = loader.getController();
+                    OnlineViewController o = loader.getController();
                     //Pass whatever data you want. You can have multiple method calls here
-                    //o.transferMessage(new_val);
+                    o.transferMessageNames(name1, new_val);
 
                     Stage stage = (Stage) (list_persons).getScene().getWindow();
                     //stage.setScene(new Scene(root));
@@ -146,31 +146,6 @@ public class ListPlayerViewController implements Initializable {
                     System.err.println(ex);
                 }
 
-
-                   try {
-                       
-                       
-            //Load second scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
-            Parent root = loader.load();
-             
-            //Get controller of scene2
-            OnlineViewController o = loader.getController();
-            //Pass whatever data you want. You can have multiple method calls here
-            o.transferMessageNames(name1,new_val);
- 
-                Stage stage=(Stage)(list_persons).getScene().getWindow();
-                 //stage.setScene(new Scene(root));
-               
-            //Show scene 2 in new window            
-          //  Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-            
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-                      
             }
 
         });
@@ -178,8 +153,7 @@ public class ListPlayerViewController implements Initializable {
     }
 
     void transferMessageName1(String text) {
-            name1=text;
-        }
+        name1 = text;
+    }
 
-    
 }

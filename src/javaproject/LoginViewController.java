@@ -55,18 +55,23 @@ public class LoginViewController implements Initializable {
             try {
 
                 ServerConnection con = new ServerConnection();
-                boolean result = con.SignUp(txt_name.getText(), txt_pass.getText());
-
+                boolean result = con.SignIn(txt_name.getText(), txt_pass.getText());
                 if (result) {
-                    Parent root;
-                    root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
-                    Scene scene = new Scene(root);
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
+                    Parent root = loader.load();
+
+                    //Get controller of scene2
+                    ListPlayerViewController o = loader.getController();
+                    //Pass whatever data you want. You can have multiple method calls here
+                    o.transferMessageName1(txt_name.getText());
+
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(scene);
+                    stage.setScene(new Scene(root));
                     stage.show();
                 }
+
             } catch (IOException ex) {
-                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             showAlert("Data isn't coerrect, please Enter again.");
