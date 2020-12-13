@@ -156,9 +156,9 @@ public class OnlineViewController implements Initializable {
                 //Get controller of scene2
                 OnlineMultiplayerViewController o = loader.getController();
                 //Pass whatever data you want. You can have multiple method calls here
-                o.transferMessageText(lbl_player1.getText(), lbl_player2.getText());
-                o.transferMessagePlayers(player1, player2);
-                o.transferMessageButtons(X1, O1, X2, O2);
+               // o.transferMessageText(lbl_player1.getText(), lbl_player2.getText());
+                //o.transferMessagePlayers(player1, player2);
+                //o.transferMessageButtons(X1, O1, X2, O2);
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));

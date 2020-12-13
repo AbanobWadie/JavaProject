@@ -19,6 +19,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,7 +42,7 @@ import javafx.stage.WindowEvent;
  */
 public class ListPlayerViewController implements Initializable {
 
-    /*ObservableList list = FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
+   /* ObservableList list = FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
             "soha", "shimaa", "abanob", "ahmed",
             "soha", "shimaa", "abanob", "ahmed");*/
     @FXML
@@ -54,38 +55,41 @@ public class ListPlayerViewController implements Initializable {
     private Button btn_back;
 
     String name1;
+    ObservableList list;
 
     @FXML
     void back(ActionEvent event) {
         try {
             ServerConnection con = new ServerConnection();
             con.exit();
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            
+
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void loadData() {
-        new Thread(new Runnable() {
+         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         ServerConnection con = new ServerConnection();
                         ArrayList<String> result = con.getOnlineUsers();
-                        ObservableList list = FXCollections.observableArrayList(result);
+                        list = FXCollections.observableArrayList(result);
+                        
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                list_persons.setItems(list);
-                            }
+                             list_persons.setItems(list);
+           }
+                            
                         });
 
                         Thread.sleep(3000L);
@@ -122,10 +126,41 @@ public class ListPlayerViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         loadData();
-        
-        
 
-        list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        list_persons.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+            @Override
+            public void handle(javafx.scene.input.MouseEvent event) {
+                
+                for(int i=0;i<list.size();i++)
+                {
+                     if (list_persons.getSelectionModel().getSelectedIndex() == i)
+                     {
+                         try {
+                       
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+                        Parent root = loader.load();
+
+                        OnlineMultiplayerViewController o = loader.getController();
+
+                        o.transferMessageNames(name1, list_persons.getItems().get(i));
+
+                        Stage stage = (Stage) (list_persons).getScene().getWindow();
+
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (IOException ex) {
+                        System.err.println(ex);
+                    }
+
+                         
+                     }
+                    
+                }
+
+            }
+        });
+
+        /*   list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov,
                     String old_val, String new_val) {
@@ -135,7 +170,7 @@ public class ListPlayerViewController implements Initializable {
                         alert.setTitle("Sorry");
                         alert.setHeaderText(null);
                         alert.setContentText("This player is already in running game you cannot play with him before he finishes his game first");
-                        alert.show();*/
+                        alert.show();
                     } else {
                         //Load second scene
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
@@ -162,8 +197,7 @@ public class ListPlayerViewController implements Initializable {
 
             }
 
-        });
-
+        });*/
     }
 
     void transferMessageName1(String text) {

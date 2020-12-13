@@ -58,7 +58,7 @@
             <AnchorPane prefHeight="308.0" prefWidth="346.0" BorderPane.alignment="CENTER">
                <children>
                   <Canvas fx:id="canvas" height="356.0" layoutX="1.0" layoutY="3.0" width="347.0" />
-                  <Button fx:id="b3" contentDisplay="CENTER" layoutX="265.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb3" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
+                  <Button fx:id="b1" contentDisplay="CENTER" layoutX="65.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb1" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
                      <font>
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
@@ -68,7 +68,7 @@
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="b1" contentDisplay="CENTER" layoutX="65.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb1" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
+                  <Button fx:id="b3" contentDisplay="CENTER" layoutX="265.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb3" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
                      <font>
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
@@ -83,12 +83,7 @@
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="b9" contentDisplay="CENTER" layoutX="265.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb9" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
-                     <font>
-                        <Font name="Bauhaus 93" size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="b8" contentDisplay="CENTER" layoutX="165.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb8" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
+                  <Button fx:id="b6" alignment="CENTER" contentDisplay="CENTER" layoutX="267.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb6" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
                      <font>
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
@@ -98,7 +93,12 @@
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="b6" alignment="CENTER" contentDisplay="CENTER" layoutX="267.0" layoutY="180.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb6" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
+                  <Button fx:id="b8" contentDisplay="CENTER" layoutX="165.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb8" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
+                     <font>
+                        <Font name="Bauhaus 93" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="b9" contentDisplay="CENTER" layoutX="265.0" layoutY="280.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#eventb9" opacity="0.0" prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: #00000;" textAlignment="JUSTIFY" textFill="#9e0303">
                      <font>
                         <Font name="Bauhaus 93" size="24.0" />
                      </font>
