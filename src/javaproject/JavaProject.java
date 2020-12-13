@@ -37,8 +37,16 @@ public class JavaProject extends Application {
             Logger.getLogger(JavaProject.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 
+    @Override
+    public void stop() throws Exception {
+        ServerConnection con = new ServerConnection();
+        con.exit();
+    }
+
+
+    
+    
     /**
      * @param args the command line arguments
      */

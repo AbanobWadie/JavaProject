@@ -32,6 +32,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -57,17 +58,20 @@ public class ListPlayerViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         try {
-
+            ServerConnection con = new ServerConnection();
+            con.exit();
+            
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void loadData() {
         new Thread(new Runnable() {
             @Override
@@ -118,29 +122,39 @@ public class ListPlayerViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         loadData();
+        
+        
 
         list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> ov,
                     String old_val, String new_val) {
                 try {
+                    if (new_val.contains("In-Game")) {
+                        /*Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.CANCEL);
+                        alert.setTitle("Sorry");
+                        alert.setHeaderText(null);
+                        alert.setContentText("This player is already in running game you cannot play with him before he finishes his game first");
+                        alert.show();*/
+                    } else {
+                        //Load second scene
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
+                        Parent root = loader.load();
 
-                    //Load second scene
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
-                    Parent root = loader.load();
+                        //Get controller of scene2
+                        OnlineViewController o = loader.getController();
+                        //Pass whatever data you want. You can have multiple method calls here
+                        o.transferMessageNames(name1, new_val);
 
-                    //Get controller of scene2
-                    OnlineViewController o = loader.getController();
-                    //Pass whatever data you want. You can have multiple method calls here
-                    o.transferMessageNames(name1, new_val);
+                        Stage stage = (Stage) (list_persons).getScene().getWindow();
+                        //stage.setScene(new Scene(root));
 
-                    Stage stage = (Stage) (list_persons).getScene().getWindow();
-                    //stage.setScene(new Scene(root));
+                        //Show scene 2 in new window            
+                        //  Stage stage = new Stage();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    }
 
-                    //Show scene 2 in new window            
-                    //  Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.show();
 
                 } catch (IOException ex) {
                     System.err.println(ex);

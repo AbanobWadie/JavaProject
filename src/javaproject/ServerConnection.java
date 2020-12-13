@@ -98,8 +98,7 @@ public class ServerConnection {
                 String str = in.readLine();
                 
                 if(!str.equals("end")){
-                    String[] strArr = str.split(" ");
-                    arr.add(strArr[0]);
+                    arr.add(str);
                 }else{
                     break;
                 }
