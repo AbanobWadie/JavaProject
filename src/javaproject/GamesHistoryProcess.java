@@ -17,20 +17,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Abanob wadie
  */
-public class RecordedGamesProcess {
-    private ArrayList<Record> records = new ArrayList<>();
+public class GamesHistoryProcess {
+    private ArrayList<Game> games = new ArrayList<>();
     
-    public boolean save(Record record){
-        String saveLine = record.getPlayer1() + " " + record.getPlayer2();
-        for (String move : record.getMoves()) {
-            saveLine += " " + move;
-        }
+    public boolean save(Game game){
+        String saveLine = game.getPlayer1() + " " + game.getPlayer2() + " " + game.getWinner();
  
-        File file = new File(".", "Save");
+        File file = new File(".", "History");
         FileInputStream fis;
         FileOutputStream fos;
         try {
@@ -43,18 +41,17 @@ public class RecordedGamesProcess {
                     line += "," + saveLine;
                     saveLine = line;
                 }
-    
+                
                 fis.close();
                 dis.close();
-            }else{
+            } else {
                 try {
                     file.createNewFile();
                 } catch (IOException ex) {
                     Logger.getLogger(RecordedGamesProcess.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
-            
+
             fos = new FileOutputStream(file);
             DataOutputStream dos = new DataOutputStream(fos);
             dos.writeUTF(saveLine);
@@ -70,35 +67,28 @@ public class RecordedGamesProcess {
         
         return false;
     }
-
-    public void read() {
+    
+    public void read(){
         String line;
 
-        File file = new File(".", "Save");
+        File file = new File(".", "History");
         FileInputStream fis;
         try {
             if (file.exists()) {
                 fis = new FileInputStream(file);
                 DataInputStream dis = new DataInputStream(fis);
                 
-                if(dis.available() != 0){
+                if (dis.available() != 0) {
                     line = dis.readUTF();
 
                     String[] arr = line.split(",");
                     for (int i = 0; i < arr.length; i++) {
                         String[] arr2 = arr[i].split(" ");
-                        Record record = new Record(arr[0], arr[1]);
-
-                        for (int j = 2; j < arr2.length; j++) {
-                            String[] arr3 = arr2[i].split("|");
-                            record.setMove(arr3[0], arr3[1]);
-                        }
-                        records.add(record);
+                        Game game = new Game(arr[0], arr[1], arr[2]);
+                        games.add(game);
                     }
                 }
- 
-                
-
+  
                 fis.close();
                 dis.close();
             } else {
@@ -108,7 +98,6 @@ public class RecordedGamesProcess {
                     Logger.getLogger(RecordedGamesProcess.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RecordedGamesProcess.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -117,19 +106,15 @@ public class RecordedGamesProcess {
     }
 }
 
-class Record {
+class Game {
     private String player1;
     private String player2;
-    private ArrayList<String> moves;
+    private String winner;
 
-    public Record(String player1, String player2) {
+    public Game(String player1, String player2, String winner) {
         this.player1 = player1;
         this.player2 = player2;
-        moves = new ArrayList<>();
-    }
-    
-    public void setMove(String position, String symbol){
-        moves.add(position + "|" + symbol);
+        this.winner = winner;
     }
     
     public String getPlayer1(){
@@ -138,7 +123,7 @@ class Record {
     public String getPlayer2(){
         return player2;
     }
-    public ArrayList<String> getMoves(){
-        return moves;
+    public String getWinner(){
+        return winner;
     }
 }

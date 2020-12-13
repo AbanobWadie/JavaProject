@@ -90,9 +90,13 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
      @FXML
     private Button btn_back;
      
-      String name1;
-      String name2;
-      
+    String name1;
+    String name2;
+
+    private boolean recordFlag;
+    private Record record;
+    private String position;
+
     /**
      * Initializes the controller class.
      */
@@ -231,6 +235,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb1(ActionEvent event)
     {
+        position = "1";
        disableChoices(true);
         win = Result.add(p1, p2, 1);
         draw(50 + 15, 50 + 15 + 15);
@@ -241,6 +246,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb2(ActionEvent event)
     {
+        position = "2";
         disableChoices(true);
         win = Result.add(p1, p2, 2);
         draw(50 + 15 + 70 + 30, 50 + 15 + 15);
@@ -251,6 +257,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb3(ActionEvent event)
     {
+        position = "3";
        disableChoices(true);
         win = Result.add(p1, p2, 3);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
@@ -261,6 +268,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb4(ActionEvent event)
     {
+        position = "4";
         disableChoices(true);
         win = Result.add(p1, p2, 4);
         draw(50 + 15, 50 + 15 + 70 + 30 + 15);
@@ -271,6 +279,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb5(ActionEvent event)
     {
+        position = "5";
         disableChoices(true);
         win = Result.add(p1, p2, 5);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
@@ -281,6 +290,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb6(ActionEvent event)
     {
+        position = "6";
         disableChoices(true);
         win = Result.add(p1, p2, 6);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
@@ -291,6 +301,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb7(ActionEvent event)
     {
+        position = "7";
         disableChoices(true);
         win = Result.add(p1, p2, 7);
         draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
@@ -301,6 +312,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb8(ActionEvent event)
     {
+        position = "8";
         disableChoices(true);
         win = Result.add(p1, p2, 8);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
@@ -311,6 +323,7 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     @FXML
     void eventb9(ActionEvent event)
     {
+        position = "9";
         disableChoices(true);
         win = Result.add(p1, p2, 9);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
@@ -352,14 +365,26 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
     {
         if (getTurn() == p1) {
             if (p1.getSymbol() == SymbolsEnum.CROSS) {
+                if(recordFlag){
+                    record.setMove(position, "X");
+                }
                 Draw.draw_cross(gc, startX, startY);
             } else {
+                if(recordFlag){
+                    record.setMove(position, "O");
+                }
                 Draw.draw_circle(gc, startX, startY);
             }
         } else if (getTurn() == p2) {
             if (p2.getSymbol() == SymbolsEnum.CROSS) {
+                if(recordFlag){
+                    record.setMove(position, "X");
+                }
                 Draw.draw_cross(gc, startX, startY);
             } else {
+                if(recordFlag){
+                    record.setMove(position, "O");
+                }
                 Draw.draw_circle(gc, startX, startY);
             }
         }
@@ -368,12 +393,26 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
         if (win) {
 
             if (Turn.getTurn() ==p1) {
+                Game game = new Game(u1.getText(), u2.getText(), u1.getText());
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                
                 drawLine();
                 showAlert(u1.getText()+" is Winner.");
             } else {
+                Game game = new Game(u1.getText(), u2.getText(), u2.getText());
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                
                 drawLine();
                 showAlert(u2.getText()+" is Winner.");
             }
+            
+            if(recordFlag){
+                RecordedGamesProcess recordedGame = new RecordedGamesProcess();
+                recordedGame.save(record);
+            }
+        
             // Disables all buttons to stop the game
             setAllDisable(true);
         }
@@ -451,7 +490,14 @@ public class LocalMultiplayerViewController extends Turn implements Initializabl
         O10=O1;
         X20=X2;
         O20=O2;
-    }   
+    }
+    
+    void transferMessageRecordFlag(boolean flag) {
+        recordFlag = flag;
+        if(recordFlag){
+            record = new Record(u1.getText(), u2.getText());
+        }
+    }
 }
 
  

@@ -98,8 +98,8 @@ public class ServerConnection {
                 String str = in.readLine();
                 
                 if(!str.equals("end")){
-                    arr.add(str);
-                    System.out.println(arr);
+                    String[] strArr = str.split(" ");
+                    arr.add(strArr[0]);
                 }else{
                     break;
                 }

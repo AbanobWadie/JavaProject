@@ -20,7 +20,7 @@
       <RadioButton fx:id="O" layoutX="306.0" layoutY="245.0" mnemonicParsing="false" text="O" />
       <Label layoutX="140.0" layoutY="129.0" text="Name" />
       <Button fx:id="btn_play" layoutX="297.0" layoutY="328.0" mnemonicParsing="false" onAction="#play" prefHeight="52.0" prefWidth="209.0" text="play" />
-      <Button layoutX="50.0" layoutY="492.0" mnemonicParsing="false" text="Record" />
+      <Button fx:id="btn_record" layoutX="50.0" layoutY="492.0" mnemonicParsing="false" text="Record" onAction="#record"/>
       <Button layoutX="668.0" layoutY="492.0" mnemonicParsing="false" onAction="#back" text="back" />
    </children>
 </AnchorPane>

@@ -37,12 +37,14 @@ public class SingleViewController implements Initializable {
     @FXML
     private Button btn_play;
     @FXML
+    private Button btn_record;
+    @FXML
     private RadioButton X;
     @FXML
     private RadioButton O;
-    
-    
-    final ToggleGroup group=new ToggleGroup();
+
+    final ToggleGroup group = new ToggleGroup();
+    private boolean recordFlag;
 
     /**
      * Initializes the controller class.
@@ -50,76 +52,82 @@ public class SingleViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-          X.setToggleGroup(group);
-          O.setToggleGroup(group);
-          
-    }    
-    
-            void move(Button button) {
-               
-		if(button.getText() == "") {
-                     button.setText("");
-                if (X.isSelected()) {
+
+        X.setToggleGroup(group);
+        O.setToggleGroup(group);
+        recordFlag = false;
+
+    }
+
+    void move(Button button) {
+
+        if (button.getText() == "") {
+            button.setText("");
+            if (X.isSelected()) {
                 button.setText("X");
-                }else if (O.isSelected()) {
-                 button.setText("O");
-                }	
-		}       
-    }    
-            
-        @FXML
-        void back(ActionEvent event)
-        {
-              try {
-                     Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                     Scene scene = (Scene)((Node)event.getSource()).getScene();
-                     Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-                     scene.setRoot(root);
-                     stage.setScene(scene);
-                     stage.show();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            } else if (O.isSelected()) {
+                button.setText("O");
+            }
         }
-     
-        @FXML
-        void play(ActionEvent event)
-        {
-              if(txt_name.getText()==null ||txt_name.getText().equals("")){
-                   showAlert("Please,Enter your name.");
-          
-        }else if(X.isSelected()==false && O.isSelected()==false){
-                  showAlert("Please, Choose X or O.");
-            
-        }else{
-              try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("SinglePlayerView.fxml"));
-                   Parent root=loader.load();
+    }
 
-                    //Get controller of scene2
-                    SinglePlayerViewController o = loader.getController();
-                    //Pass whatever data you want. You can have multiple method calls here
-                    o.transferMesssageText(txt_name.getText());
-                    o.transferMessageButtons(X,O);
+    @FXML
+    void back(ActionEvent event) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = (Scene) ((Node) event.getSource()).getScene();
+            Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+            scene.setRoot(root);
+            stage.setScene(scene);
+            stage.show();
 
-                    Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.show();
-                  
-                    } catch (IOException ex) {
-                        Logger.getLogger(SingleViewController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-             }           
+        } catch (IOException ex) {
+            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        void showAlert(String mess) {
+    }
+
+    @FXML
+    void play(ActionEvent event) {
+        if (txt_name.getText() == null || txt_name.getText().equals("")) {
+            showAlert("Please,Enter your name.");
+
+        } else if (X.isSelected() == false && O.isSelected() == false) {
+            showAlert("Please, Choose X or O.");
+
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SinglePlayerView.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                SinglePlayerViewController o = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                o.transferMesssageText(txt_name.getText());
+                o.transferMessageButtons(X, O);
+                o.transferMessageRecordFlag(recordFlag);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(SingleViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    @FXML
+    void record(ActionEvent event) {
+        btn_record.setDisable(true);
+        recordFlag = true;
+    }
+
+    void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("ERROR");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
-        }
-    
+    }
+
 }

@@ -24,7 +24,7 @@
       <RadioButton fx:id="O1" layoutX="173.0" layoutY="253.0" mnemonicParsing="false" onAction="#player1Symbol" text="O" />
       <RadioButton fx:id="X2" layoutX="587.0" layoutY="214.0" mnemonicParsing="false" onAction="#player2Symbol" text="X" />
       <RadioButton fx:id="O2" layoutX="587.0" layoutY="253.0" mnemonicParsing="false" onAction="#player2Symbol" text="O" />
-      <Button fx:id="btn_record" layoutX="46.0" layoutY="492.0" mnemonicParsing="false" text="Record" />
+      <Button fx:id="btn_record" layoutX="46.0" layoutY="492.0" mnemonicParsing="false" text="Record" onAction="#record"/>
       <Button fx:id="back" layoutX="650.0" layoutY="492.0" mnemonicParsing="false" onAction="#back" text="back" />
    </children>
 </AnchorPane>

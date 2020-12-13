@@ -62,7 +62,7 @@ public class LocalViewController implements Initializable {
       Player player2=new Player();
       final ToggleGroup group1 = new ToggleGroup();
       final ToggleGroup group2 = new ToggleGroup();
-  
+  private boolean recordFlag;
       
     
     /**
@@ -114,6 +114,7 @@ public class LocalViewController implements Initializable {
                         o.transferMessageText(txt_player1.getText(),txt_player2.getText());
                         o.transferMessagePlayers(player1, player2);
                         o.transferMessageButtons(X1,O1,X2,O2);
+                        o.transferMessageRecordFlag(recordFlag);
 
                             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                             stage.setScene(new Scene(root));
@@ -182,6 +183,11 @@ public class LocalViewController implements Initializable {
         }
     }
     
+     @FXML
+    void record(ActionEvent event) {
+        btn_record.setDisable(true);
+        recordFlag = true;
+    }
     
         void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);

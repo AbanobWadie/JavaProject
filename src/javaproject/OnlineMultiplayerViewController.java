@@ -367,12 +367,12 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
         // Check if there is win and if yes draw a line and show alert 
         if (win) {
 
-            if (Turn.getTurn() ==p1) {
+            if (Turn.getTurn() == p1) {
                 drawLine();
-                showAlert(u1.getText()+" is Winner.");
+                showAlert(u1.getText() + " is Winner.");
             } else {
                 drawLine();
-                showAlert(u2.getText()+" is Winner.");
+                showAlert(u2.getText() + " is Winner.");
             }
             // Disables all buttons to stop the game
             setAllDisable(true);
