@@ -99,7 +99,7 @@ public class ServerConnection {
                 
                 if(!str.equals("end")){
                     arr.add(str);
-                }else{
+                }else if(str.equals("play request from")){
                     break;
                 }
             }
