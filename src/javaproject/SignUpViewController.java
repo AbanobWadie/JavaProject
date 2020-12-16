@@ -54,10 +54,16 @@ public class SignUpViewController implements Initializable {
                 boolean result = con.SignUp(txt_nameS.getText(), txt_passS.getText());
 
                 if (result) {
-                    Parent root;
-                    root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
+                    Parent root = loader.load();
+                    
+                    ListPlayerViewController o = loader.getController();
+
+                    o.transferMessageName1(txt_nameS.getText());
+                            
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                   
                     stage.setScene(scene);
                     stage.show();
                 }

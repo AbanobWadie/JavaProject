@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +24,7 @@ public class ServerConnection {
 
     static private BufferedReader in;
     static private PrintWriter out;
+    static volatile boolean running = true;
 
     public boolean init(String ip) {
         try {
@@ -83,24 +85,37 @@ public class ServerConnection {
     public void exit() {
         out.println("exit");
         out.flush();
-
+        running = false;
+        try {
+            in.close();
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     public void playWith(String name) {
         out.println("play " + name);
-        out.flush();
+        out.flush();        
     }
 
     public ArrayList<String> getOnlineUsers() {
         ArrayList<String> arr = new ArrayList<>();
         try {
-            while (in.ready()) {
+            //out.println("ready");
+            //out.flush();
+            if (in.ready()) {
                 String str = in.readLine();
-                
-                if(!str.equals("end")){
+                System.out.println(str);
+                if(str.contains("(online-list)")){
+                    String[] strArr = str.split(" ");
+                    
+                    for (int i = 1; i < strArr.length; i++) {
+                        arr.add(strArr[i]);
+                    }
+                }else {
                     arr.add(str);
-                }else if(str.equals("play request from")){
-                    break;
                 }
             }
         } catch (IOException ex) {
@@ -108,19 +123,30 @@ public class ServerConnection {
         }
         return arr;
     }
+    
 
-    public String ckeckPlayRequest() {
-        String playrequest = null;
+    public boolean ckeckPlayRequest(boolean flag, String str) {
+        String playrequest = str;
         try {
-            playrequest = in.readLine();
+            if(flag){
+                playrequest = in.readLine();
+                return  true;
+            }
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return playrequest;
+        return false;
     }
 
     public void ok() {
         out.println("ok");
+        out.flush();
+        out.println("ok");
+        out.flush();
+    }
+    
+    public void no() {
+        out.println("no");
         out.flush();
     }
 
@@ -137,11 +163,11 @@ public class ServerConnection {
         return false;
     }
 
-    public void sendPlayInPostion(boolean win, char c, int postion) {
+    public void sendPlayInPostion(boolean win, char c, int position) {
         if (win) {
-            out.println("win " + c + " " + postion);
+            out.println("win " + position + "|" + c);
         } else {
-            out.println(c + " " + postion);
+            out.println(position + "|" + c);
         }
         out.flush();
     }

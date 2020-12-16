@@ -64,8 +64,10 @@ public class LoginViewController implements Initializable {
                     ListPlayerViewController o = loader.getController();
                     //Pass whatever data you want. You can have multiple method calls here
                     o.transferMessageName1(txt_name.getText());
+                    
 
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    
                     stage.setScene(new Scene(root));
                     stage.show();
                 }

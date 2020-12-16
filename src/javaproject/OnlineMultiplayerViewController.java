@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -84,6 +85,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
 
     String name1;
     String name2;
+    int position;
 
     /**
      * Initializes the controller class.
@@ -92,10 +94,7 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     public void initialize(URL url, ResourceBundle rb) {
 
         // TODO
-        p1 = new Player();
-        p2 = new Player();
-        p1.setSymbol(SymbolsEnum.CROSS);
-        p2.setSymbol(SymbolsEnum.ROUND);
+        recieve();
         gc = canvas.getGraphicsContext2D();
         gc = Draw.draw_basic_skeleton(gc);
     }
@@ -155,79 +154,145 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
      */
     @FXML
     void eventb1(ActionEvent event) {
+        position = 1;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
+
         win = Result.add(p1, p2, 1);
         draw(50 + 15, 50 + 15 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b1.setDisable(true);
     }
 
     @FXML
     void eventb2(ActionEvent event) {
+        position = 2;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
 
         win = Result.add(p1, p2, 2);
         draw(50 + 15 + 70 + 30, 50 + 15 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b2.setDisable(true);
     }
 
     @FXML
     void eventb3(ActionEvent event) {
+        position = 3;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
+
         win = Result.add(p1, p2, 3);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b3.setDisable(true);
     }
 
     @FXML
     void eventb4(ActionEvent event) {
+        position = 4;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
+
         win = Result.add(p1, p2, 4);
         draw(50 + 15, 50 + 15 + 70 + 30 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b4.setDisable(true);
     }
 
     @FXML
     void eventb5(ActionEvent event) {
+        position = 5;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
 
         win = Result.add(p1, p2, 5);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b5.setDisable(true);
     }
 
     @FXML
     void eventb6(ActionEvent event) {
+        position = 6;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
 
         win = Result.add(p1, p2, 6);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b6.setDisable(true);
     }
 
     @FXML
     void eventb7(ActionEvent event) {
+        position = 7;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
 
         win = Result.add(p1, p2, 7);
         draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b7.setDisable(true);
     }
 
     @FXML
     void eventb8(ActionEvent event) {
+        position = 8;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
 
         win = Result.add(p1, p2, 8);
         draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b8.setDisable(true);
     }
 
     @FXML
     void eventb9(ActionEvent event) {
+        position = 9;
+        ServerConnection con = new ServerConnection();
+        if (p1.getSymbol() == SymbolsEnum.CROSS) {
+            con.sendPlayInPostion(false, 'x', position);
+        } else {
+            con.sendPlayInPostion(false, 'o', position);
+        }
 
         win = Result.add(p1, p2, 9);
         draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
-        ChangeTurn();
+        //ChangeTurn();
         b9.setDisable(true);
     }
 
@@ -281,6 +346,55 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
         }
     }
 
+    public void recieve() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ServerConnection con = new ServerConnection();
+
+                while (true) {
+                    String move = con.recivePlayInPostion();
+                    System.out.println(move);
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            String[] arr = move.split("|");
+                            switch (arr[0]) {
+                                case "1":
+                                    b1.setText(arr[1]);
+                                    break;
+                                case "2":
+                                    b2.setText(arr[1]);
+                                    break;
+                                case "3":
+                                    b3.setText(arr[1]);
+                                    break;
+                                case "4":
+                                    b4.setText(arr[1]);
+                                    break;
+                                case "5":
+                                    b5.setText(arr[1]);
+                                    break;
+                                case "6":
+                                    b6.setText(arr[1]);
+                                    break;
+                                case "7":
+                                    b7.setText(arr[1]);
+                                    break;
+                                case "8":
+                                    b8.setText(arr[1]);
+                                    break;
+                                case "9":
+                                    b9.setText(arr[1]);
+                                    break;
+                            }
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
     /**
      * Disables or enable s all buttons as per the user choice
      *
@@ -332,5 +446,17 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     void transferMessageNames(String name1, String get) {
         u1.setText(name1);
         u2.setText(get);
+    }
+
+    void transferMessageSymbol(String s) {
+        p1 = new Player();
+        p2 = new Player();
+        if (s.equals("x")) {
+            p1.setSymbol(SymbolsEnum.CROSS);
+            p2.setSymbol(SymbolsEnum.ROUND);
+        } else {
+            p1.setSymbol(SymbolsEnum.ROUND);
+            p2.setSymbol(SymbolsEnum.CROSS);
+        }
     }
 }

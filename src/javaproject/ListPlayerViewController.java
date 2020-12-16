@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -42,7 +45,7 @@ import javafx.stage.WindowEvent;
  */
 public class ListPlayerViewController implements Initializable {
 
-   /* ObservableList list = FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
+    /* ObservableList list = FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
             "soha", "shimaa", "abanob", "ahmed",
             "soha", "shimaa", "abanob", "ahmed");*/
     @FXML
@@ -56,6 +59,8 @@ public class ListPlayerViewController implements Initializable {
 
     String name1;
     ObservableList list;
+    String player2;
+    String playerRequest;
 
     @FXML
     void back(ActionEvent event) {
@@ -75,27 +80,94 @@ public class ListPlayerViewController implements Initializable {
     }
 
     private void loadData() {
-         new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    try {
-                        ServerConnection con = new ServerConnection();
-                        ArrayList<String> result = con.getOnlineUsers();
+                ArrayList<String> currentOnlineList = new ArrayList<>();
+                ServerConnection con = new ServerConnection();
+                while (ServerConnection.running) {
+
+                    ArrayList<String> result = con.getOnlineUsers();
+
+                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o")) {
                         list = FXCollections.observableArrayList(result);
-                        
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                             list_persons.setItems(list);
-           }
-                            
+                                list_persons.setItems(list);
+                            }
+                        });
+                    } else if (!result.isEmpty() && result.get(0).contains("play request from")) {
+                        System.out.println("req");
+                        String[] arr = result.get(0).split(" ");
+                        playerRequest = arr[3];
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                dialog(result.get(0), con);
+                            }
                         });
 
+                    } else if (!result.isEmpty() && result.get(0).equals("x")) {
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+                                    Parent root = loader.load();
+
+                                    OnlineMultiplayerViewController o = loader.getController();
+
+                                    o.transferMessageNames(name1, player2);
+
+                                    o.transferMessageSymbol(result.get(0));
+
+                                    Stage stage = (Stage)  btn_back.getScene().getWindow();
+                                    stage.setScene(new Scene(root));
+                                    stage.show();
+                                    
+                                    
+                                } catch (IOException ex) {
+                                    System.err.println(ex);
+                                }
+                            }
+                        });
+                        
+                        break;
+                    } else if (!result.isEmpty() && result.get(0).equals("o")) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+                                    Parent root = loader.load();
+
+                                    OnlineMultiplayerViewController o = loader.getController();
+
+                                    o.transferMessageNames(name1, playerRequest);
+
+                                    o.transferMessageSymbol(result.get(0));
+
+                                    Stage stage = (Stage)  btn_back.getScene().getWindow();
+                                    stage.setScene(new Scene(root));
+                                    stage.show();
+
+                                } catch (IOException ex) {
+                                    System.err.println(ex);
+                                }
+                            }
+                        });
+                        break;
+                    }
+
+                    /*try {
                         Thread.sleep(3000L);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(ListPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    }*/
                 }
             }
         }).start();
@@ -130,31 +202,14 @@ public class ListPlayerViewController implements Initializable {
         list_persons.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
-                
-                for(int i=0;i<list.size();i++)
-                {
-                     if (list_persons.getSelectionModel().getSelectedIndex() == i)
-                     {
-                         try {
-                       
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
-                        Parent root = loader.load();
 
-                        OnlineMultiplayerViewController o = loader.getController();
-
-                        o.transferMessageNames(name1, list_persons.getItems().get(i));
-
-                        Stage stage = (Stage) (list_persons).getScene().getWindow();
-
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    } catch (IOException ex) {
-                        System.err.println(ex);
+                ServerConnection con = new ServerConnection();
+                for (int i = 0; i < list.size(); i++) {
+                    if (list_persons.getSelectionModel().getSelectedIndex() == i) {
+                        con.playWith(list_persons.getItems().get(i));
+                        player2 = list_persons.getItems().get(i);
                     }
 
-                         
-                     }
-                    
                 }
 
             }
@@ -204,4 +259,20 @@ public class ListPlayerViewController implements Initializable {
         name1 = text;
     }
 
+    public void dialog(String mgs, ServerConnection con) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Request");
+        ButtonType acceptBtn = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
+        ButtonType refuseBtn = new ButtonType("Refuse", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.setContentText(mgs);
+        dialog.getDialogPane().getButtonTypes().addAll(acceptBtn, refuseBtn);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if (result.get() == acceptBtn) {
+            con.ok();
+        } else if (result.get() == refuseBtn) {
+            con.no();
+        }
+    }
 }
