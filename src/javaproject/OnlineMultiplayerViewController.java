@@ -1,6 +1,5 @@
 package javaproject;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,10 +27,7 @@ import static javaproject.Turn.setTurn;
 
 public class OnlineMultiplayerViewController implements Initializable{
 
-    private Button button00;
-
-	@FXML
-	private Button restartButton;
+	
 	private String[][] ticTacToeTable;
 	private ArrayList<Button> buttonsList = new ArrayList<>();
         
@@ -43,16 +39,8 @@ public class OnlineMultiplayerViewController implements Initializable{
 	public static String key;
 	public static String winner;
 	private static String[] buttonText;
-    @FXML
-    private Label lbl_player1;
-    @FXML
-    private Label lbl_player2;
-    @FXML
-    private Label lbl_name1;
-    @FXML
-    private Label lbl_name2;
-    @FXML
-    private Button btn_back;
+   
+  
     @FXML
     private Button b1;
     @FXML
@@ -71,6 +59,19 @@ public class OnlineMultiplayerViewController implements Initializable{
     private Button b8;
     @FXML
     private Button b9;
+   
+    @FXML
+    private Label lbl_player2;
+    @FXML
+    private Label lbl_player1;
+    @FXML
+    private Label lbl_name1;
+    @FXML
+    private Label lbl_name2;
+    @FXML
+    private Button btn_back;
+  
+   
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -145,12 +146,11 @@ public class OnlineMultiplayerViewController implements Initializable{
 			buttonsList.get(i).setText("");
 			buttonsList.get(i).setStyle("-fx-font: 40 arial; -fx-base: #b6e7c9;");
 		}
-		restartButton.setVisible(false);
+		
 	}
 
 	  public void showVictory(String key) {
         reddeningButtons();
-        restartButton.setVisible(true);
         switch (key) {
             case "line 0": {
                 b1.setStyle("-fx-base: #00FF00;");
@@ -456,9 +456,8 @@ public class OnlineMultiplayerViewController implements Initializable{
 		}
 		return false;
 	}
-        
-         @FXML
-    void back(ActionEvent event) {
+        @FXML
+         void back(ActionEvent event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
@@ -474,32 +473,8 @@ public class OnlineMultiplayerViewController implements Initializable{
 
     void transferMessageNames(String name1, String get) {
         lbl_player1.setText(name1);
-        lbl_player1.setText(get);
+        lbl_player2.setText(get);
 
-    }
-
-    @FXML
-    private void resetButton(ActionEvent event) {
-        
-       
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
-            Parent root;
-            root = loader.load();
-             OnlineMultiplayerViewController p = loader.getController();
-            p.transferMessageNames(lbl_player1.getText(), lbl_player2.getText());
-            p1.setSymbol("X");
-            p2.setSymbol("O");
-            Scene scene = new Scene(root);
-            // ((Stage) reset.getScene().getWindow()).close();
-            Stage stage = (Stage) restartButton.getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(OnlineMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-           
     }
     
     void transferMessageSymbol(String s) {

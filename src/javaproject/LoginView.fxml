@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -18,11 +19,6 @@
          </image>
       </ImageView>
       <TextField fx:id="txt_name" layoutX="290.0" layoutY="168.0" prefHeight="31.0" prefWidth="251.0">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="txt_pass" layoutX="290.0" layoutY="232.0" prefHeight="31.0" prefWidth="251.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -47,5 +43,6 @@
       </Label>
       <Hyperlink fx:id="link_signUp" layoutX="667.0" layoutY="29.0" onAction="#signUPLink" text="SignUp" textFill="#662edd" underline="true" />
       <Hyperlink fx:id="link_pass" layoutX="365.0" layoutY="370.0" onAction="#forgetPass" text="Forget password?" textFill="#3d02ff" underline="true" />
+      <PasswordField fx:id="txt_pass" layoutX="291.0" layoutY="236.0" prefHeight="31.0" prefWidth="251.0" />
    </children>
 </AnchorPane>
