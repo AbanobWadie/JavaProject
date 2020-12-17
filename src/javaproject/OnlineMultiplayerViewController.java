@@ -1,23 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javaproject;
 
-import players.SymbolsEnum;
-import players.Turn;
-import players.Result;
-import players.Draw;
-import players.Player;
+
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,32 +16,44 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
-import static players.Turn.getTurn;
-import static players.Turn.setTurn;
+import static javaproject.Turn.getTurn;
+import static javaproject.Turn.setTurn;
 
-/**
- * FXML Controller class
- *
- * @author SoHa
- */
-public class OnlineMultiplayerViewController extends Turn implements Initializable {
 
-    Player p1;
-    Player p2;
-    boolean win;
-    GraphicsContext gc;
 
+public class OnlineMultiplayerViewController implements Initializable{
+
+    private Button button00;
+
+	@FXML
+	private Button restartButton;
+	private String[][] ticTacToeTable;
+	private ArrayList<Button> buttonsList = new ArrayList<>();
+        
+        Player p1=new Player();
+        Player p2=new Player();
+        
+          public static boolean myTurn;
+	public static String gameMode;
+	public static String key;
+	public static String winner;
+	private static String[] buttonText;
     @FXML
-    private Canvas canvas;
-    @FXML // 9 boxes to draw 
+    private Label lbl_player1;
+    @FXML
+    private Label lbl_player2;
+    @FXML
+    private Label lbl_name1;
+    @FXML
+    private Label lbl_name2;
+    @FXML
+    private Button btn_back;
+    @FXML
     private Button b1;
     @FXML
     private Button b2;
@@ -69,37 +72,392 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
     @FXML
     private Button b9;
 
-    // Labels for underline
-    @FXML
-    private Label u1;
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+            p1.setSymbol("X");
+            p2.setSymbol("O");
+            lbl_name1.setText(p1.getSymbol());
+             lbl_name2.setText(p2.getSymbol());
+		loadGame();
+	}
 
     @FXML
-    private Label u2;
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == b1) {
+			move(b1);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b2) {
+			move(b2);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b3) {
+			move(b3);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b4) {
+			move(b4);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b5) {
+			move(b5);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b6) {
+			move(b6);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b7) {
+			move(b7);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b8) {
+			move(b8);
+                         ChangeTurn();
+		}
+		if(e.getSource() == b9) {
+			move(b9);
+                         ChangeTurn();
+		}
+		
+	}
+	
+	private void move(Button button) {
+		if(button.getText() == "") {
+			if(gameMode == "twoPlayers") {
+				button.setText(playController(buttonsList, ticTacToeTable));
+				updateGame();
+			
+                        }}
+	}
+	
+	private void loadGame() {
+		ticTacToeTable = new String [3][3];
+		loadButtonsList();
+		loadButtons();
+		loadTicTacToeTable();
+		myTurn = true;
+		disableButtons(false);
+	}
 
-    // JFXRadiobuttons for symbol choice of player1
-    @FXML // Reset or NewGame button
-    private Button reset;
+	private void loadButtons() {
+		for (int i = 0; i < buttonsList.size(); i++) {
+			buttonsList.get(i).setText("");
+			buttonsList.get(i).setStyle("-fx-font: 40 arial; -fx-base: #b6e7c9;");
+		}
+		restartButton.setVisible(false);
+	}
 
-    @FXML
-    private Button btn_back;
-
-    String name1;
-    String name2;
-    int position;
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        // TODO
-        recieve();
-        gc = canvas.getGraphicsContext2D();
-        gc = Draw.draw_basic_skeleton(gc);
+	  public void showVictory(String key) {
+        reddeningButtons();
+        restartButton.setVisible(true);
+        switch (key) {
+            case "line 0": {
+                b1.setStyle("-fx-base: #00FF00;");
+                b2.setStyle("-fx-base: #00FF00;");
+                b3.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "line 1": {
+                b4.setStyle("-fx-base: #00FF00;");
+                b5.setStyle("-fx-base: #00FF00;");
+                b6.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "line 2": {
+                b7.setStyle("-fx-base: #00FF00;");
+                b8.setStyle("-fx-base: #00FF00;");
+                b9.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "column 0": {
+                b1.setStyle("-fx-base: #00FF00;");
+                b4.setStyle("-fx-base: #00FF00;");
+                b7.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "column 1": {
+                b2.setStyle("-fx-base: #00FF00;");
+                b5.setStyle("-fx-base: #00FF00;");
+                b8.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "column 2": {
+                b3.setStyle("-fx-base: #00FF00;");
+                b6.setStyle("-fx-base: #00FF00;");
+                b9.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "main diagonal": {
+                b1.setStyle("-fx-base: #00FF00;");
+                b5.setStyle("-fx-base: #00FF00;");
+                b9.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "secundary diagonal": {
+                b3.setStyle("-fx-base: #00FF00;");
+                b5.setStyle("-fx-base: #00FF00;");
+                b7.setStyle("-fx-base: #00FF00;");
+                break;
+            }
+            case "draw": {
+                reddeningButtons();
+                break;
+            }
+        }
+        disableButtons(true);
+        showEndGameAlert(key);
     }
 
-    @FXML
+
+	private void showEndGameAlert(String key) {
+		Alert endGame = new Alert(AlertType.INFORMATION);
+		if(key != "draw") {
+			endGame.setTitle("Victory");
+			endGame.setContentText("Player \"" +winner + "\" won.");
+		}else {
+			endGame.setContentText("The game was a draw.");
+			endGame.setTitle("Draw");
+		}
+		endGame.setHeaderText(null);
+		endGame.show();
+
+	}
+
+	private void reddeningButtons() {
+		for (int i = 0; i < buttonsList.size(); i++) {
+			buttonsList.get(i).setStyle("-fx-base: #FF0000;");
+		}
+	}
+
+	private void disableButtons(boolean disable) {
+		for (int i = 0; i < buttonsList.size(); i++) {
+			buttonsList.get(i).setDisable(disable);
+		}
+	}
+
+	private void loadButtonsList() {
+		buttonsList.add(b1);
+		buttonsList.add(b2);
+		buttonsList.add(b3);
+		buttonsList.add(b4);
+		buttonsList.add(b5);
+		buttonsList.add(b6);
+		buttonsList.add(b7);
+		buttonsList.add(b8);
+		buttonsList.add(b9);
+	}
+
+	private boolean updateGame() {
+		loadTicTacToeTable();
+		if (winningChecker(ticTacToeTable)){
+			showVictory(key);
+			return false;
+		}else {
+			return true;
+		}
+	}
+
+	private void loadTicTacToeTable() {
+		int temp = 0;
+		for(int i = 0; i < ticTacToeTable.length; i++) {
+			for (int j = 0; j < ticTacToeTable[0].length; j++) {
+				ticTacToeTable[i][j] = buttonsList.get(temp++).getText();
+			}
+		}
+
+	}
+        
+      
+
+
+	public  String playController(ArrayList<Button> buttonsList, String[][] ticTacToeTable) {
+		switch (gameMode) {
+		
+		case "twoPlayers": {
+			/*if(myTurn) {
+                            
+				myTurn = !myTurn;
+                               return p1.getSymbol();
+				
+			}else {
+				myTurn = !myTurn;
+				return p2.getSymbol();
+			}*/
+                        if(myTurn)
+                        {
+                            if(getTurn()==p1)
+                            {
+                                if(p1.getSymbol()=="X")
+                                {
+                                    p2.setSymbol("O");
+                                    return "X";
+                                }else 
+                                {
+                                    p1.setSymbol("O");
+                                     return "O";
+                                }
+                            }else
+                            {
+                                if(p2.getSymbol()=="X")
+                                {
+                                    p1.setSymbol("O");
+                                    return "X";
+                                }else 
+                                {
+                                    p2.setSymbol("O");
+                                     return "O";
+                                }
+                            }
+                        }
+                                
+		}
+		default :{
+			return null;
+		}
+		}
+	}
+        
+        
+    private void ChangeTurn() {
+        if (getTurn() == p1) {
+            setTurn(p2);
+            // Setting underlines visible or invisible acc to player turn
+           
+        } else {
+            setTurn(p1);
+            
+        }
+    }
+
+	public static boolean winningChecker(String[][] ticTacToeTable) {
+		buttonText = new String[3];
+		//Checking line 0
+		for(int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[0][i];
+			if(checkVictory(buttonText)) {
+				key = "line 0";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//Checking line 1
+		for(int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[1][i];
+			if(checkVictory(buttonText)) {
+				key = "line 1";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//Checking line 2
+		for(int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[2][i];
+			if(checkVictory(buttonText)) {
+				key = "line 2";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//Checking column 0
+		for(int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[i][0];
+			if(checkVictory(buttonText)) {
+				key = "column 0";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//Checking column 1
+		for(int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[i][1];
+			if(checkVictory(buttonText)) {
+				key = "column 1";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//Checking column 2
+		for(int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[i][2];
+			if(checkVictory(buttonText)) {
+				key = "column 2";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//main diagonal
+		for (int i = 0; i < buttonText.length; i++) {
+			buttonText[i] = ticTacToeTable[i][i];
+			if(checkVictory(buttonText)) {
+				key = "main diagonal";
+				return true;
+			}
+		}
+		buttonText = new String[3];
+		//secondary diagonal
+		for (int i = 0; i < buttonText.length; i++) {
+			int j = buttonText.length - 1 - i;
+			buttonText[i] = ticTacToeTable[i][j];
+			if(checkVictory(buttonText)) {
+				key = "secundary diagonal";
+				return true;
+			}
+		}
+		//draw
+		if(checkDraw(ticTacToeTable)) {
+			key = "draw";
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean checkVictory(String[] vector) {
+		if(vector[0] == "X" && vector[1] == "X" && vector[2] == "X") {
+			winner = "X";
+			return true;
+
+		} else if(vector[0] == "O" && vector[1] == "O" && vector[2] == "O") {
+			winner = "O";
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+	public static boolean checkDraw(String[][] ticTacToeTable) {
+		for (int i = 0; i < ticTacToeTable.length; i++) {
+			for (int j = 0; j < ticTacToeTable[0].length; j++) {
+				if(ticTacToeTable[i][j] == "") {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	private static void easyGameLogic(ArrayList<Button> buttonsList) {
+		Random randomMove = new Random();
+		int temp;
+		while(checkFreeButton(buttonsList)) {
+			temp = randomMove.nextInt(9);
+			if(buttonsList.get(temp).getText() == "") {
+				buttonsList.get(temp).setText("O");
+				break;
+			}
+		}
+	}
+
+	private static boolean checkFreeButton(ArrayList<Button> buttonsList) {
+		for (int i = 0; i < buttonsList.size(); i++) {
+			if(buttonsList.get(i).getText() == "") {
+				return true;
+			}
+		}
+		return false;
+	}
+        
+         @FXML
     void back(ActionEvent event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -114,349 +472,45 @@ public class OnlineMultiplayerViewController extends Turn implements Initializab
         }
     }
 
-    /**
-     * The radio button event to select the clicked and also to select the
-     * opposite for other player (Player 1 here)
-     *
-     * @param event OnClick Action Event
-     */
+    void transferMessageNames(String name1, String get) {
+        lbl_player1.setText(name1);
+        lbl_player1.setText(get);
+
+    }
+
     @FXML
-    void resetButton(ActionEvent event) {
+    private void resetButton(ActionEvent event) {
+        
+       
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
-            Parent root = loader.load();
-
-            OnlineMultiplayerViewController p = loader.getController();
-            p.transferMessageNames(u1.getText(), u2.getText());
-            p1.setSymbol(SymbolsEnum.CROSS);
-            p2.setSymbol(SymbolsEnum.ROUND);
-            Result.clearMoves();
+            Parent root;
+            root = loader.load();
+             OnlineMultiplayerViewController p = loader.getController();
+            p.transferMessageNames(lbl_player1.getText(), lbl_player2.getText());
+            p1.setSymbol("X");
+            p2.setSymbol("O");
             Scene scene = new Scene(root);
             // ((Stage) reset.getScene().getWindow()).close();
-            Stage stage = (Stage) reset.getScene().getWindow();
+            Stage stage = (Stage) restartButton.getScene().getWindow();
             stage.setScene(scene);
             stage.show();
-
         } catch (IOException ex) {
-            ex.getMessage();
-        } catch (Exception ex) {
-            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /*
-     * --------------- This is same for all 9 buttonEvents ---------------
-     *
-     * win = Result.add(player1, player2, 'boxnumber'); -->> Add the number of box to the moves of the respective player and check if there is a win 
-     * draw(50 + 15, 50 + 15 + 15); -->> Draw and if win is false show alert -> this is included in draw function
-     * ChangeTurn(); -->> This will happen only if win is false 
-     * buttonNumber.setDisable(true); -->> Disable the button for further overwriting
-     */
-    @FXML
-    void eventb1(ActionEvent event) {
-        position = 1;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
+            Logger.getLogger(OnlineMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        win = Result.add(p1, p2, 1);
-        draw(50 + 15, 50 + 15 + 15);
-        //ChangeTurn();
-        b1.setDisable(true);
+           
     }
-
-    @FXML
-    void eventb2(ActionEvent event) {
-        position = 2;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 2);
-        draw(50 + 15 + 70 + 30, 50 + 15 + 15);
-        //ChangeTurn();
-        b2.setDisable(true);
-    }
-
-    @FXML
-    void eventb3(ActionEvent event) {
-        position = 3;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 3);
-        draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 15);
-        //ChangeTurn();
-        b3.setDisable(true);
-    }
-
-    @FXML
-    void eventb4(ActionEvent event) {
-        position = 4;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 4);
-        draw(50 + 15, 50 + 15 + 70 + 30 + 15);
-        //ChangeTurn();
-        b4.setDisable(true);
-    }
-
-    @FXML
-    void eventb5(ActionEvent event) {
-        position = 5;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 5);
-        draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 15);
-        //ChangeTurn();
-        b5.setDisable(true);
-    }
-
-    @FXML
-    void eventb6(ActionEvent event) {
-        position = 6;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 6);
-        draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 15);
-        //ChangeTurn();
-        b6.setDisable(true);
-    }
-
-    @FXML
-    void eventb7(ActionEvent event) {
-        position = 7;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 7);
-        draw(50 + 15, 50 + 15 + 70 + 30 + 70 + 30 + 15);
-        //ChangeTurn();
-        b7.setDisable(true);
-    }
-
-    @FXML
-    void eventb8(ActionEvent event) {
-        position = 8;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 8);
-        draw(50 + 15 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
-        //ChangeTurn();
-        b8.setDisable(true);
-    }
-
-    @FXML
-    void eventb9(ActionEvent event) {
-        position = 9;
-        ServerConnection con = new ServerConnection();
-        if (p1.getSymbol() == SymbolsEnum.CROSS) {
-            con.sendPlayInPostion(false, 'x', position);
-        } else {
-            con.sendPlayInPostion(false, 'o', position);
-        }
-
-        win = Result.add(p1, p2, 9);
-        draw(50 + 15 + 70 + 30 + 70 + 30, 50 + 15 + 70 + 30 + 70 + 30 + 15);
-        //ChangeTurn();
-        b9.setDisable(true);
-    }
-
-    private void ChangeTurn() {
-        if (getTurn() == p1) {
-            setTurn(p2);
-            // Setting underlines visible or invisible acc to player turn
-            u1.setVisible(true);
-            u2.setVisible(false);
-        } else {
-            setTurn(p1);
-            u2.setVisible(true);
-            u1.setVisible(false);
-        }
-    }
-
-    /**
-     * Calls the appropriate draw function as per the players turn and symbol.
-     * shows alert if win is true and if yes disables all buttons
-     *
-     * @param startX X-coordinate of the point to start drawing from
-     * @param startY Y-coordinate of the point to start drawing from
-     */
-    private void draw(int startX, int startY) {
-        if (getTurn() == p1) {
-            if (p1.getSymbol() == SymbolsEnum.CROSS) {
-                Draw.draw_cross(gc, startX, startY);
-            } else {
-                Draw.draw_circle(gc, startX, startY);
-            }
-        } else if (getTurn() == p2) {
-            if (p2.getSymbol() == SymbolsEnum.CROSS) {
-                Draw.draw_cross(gc, startX, startY);
-            } else {
-                Draw.draw_circle(gc, startX, startY);
-            }
-        }
-
-        // Check if there is win and if yes draw a line and show alert 
-        if (win) {
-
-            if (Turn.getTurn() == p1) {
-                drawLine();
-                showAlert(u1.getText() + " is winner.");
-            } else {
-                drawLine();
-                showAlert(u2.getText() + " is winner.");
-            }
-            // Disables all buttons to stop the game
-            setAllDisable(true);
-        }
-    }
-
-    public void recieve() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ServerConnection con = new ServerConnection();
-
-                while (true) {
-                    String move = con.recivePlayInPostion();
-                    System.out.println(move);
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            String[] arr = move.split("|");
-                            switch (arr[0]) {
-                                case "1":
-                                    b1.setText(arr[1]);
-                                    break;
-                                case "2":
-                                    b2.setText(arr[1]);
-                                    break;
-                                case "3":
-                                    b3.setText(arr[1]);
-                                    break;
-                                case "4":
-                                    b4.setText(arr[1]);
-                                    break;
-                                case "5":
-                                    b5.setText(arr[1]);
-                                    break;
-                                case "6":
-                                    b6.setText(arr[1]);
-                                    break;
-                                case "7":
-                                    b7.setText(arr[1]);
-                                    break;
-                                case "8":
-                                    b8.setText(arr[1]);
-                                    break;
-                                case "9":
-                                    b9.setText(arr[1]);
-                                    break;
-                            }
-                        }
-                    });
-                }
-            }
-        }).start();
-    }
-
-    /**
-     * Disables or enable s all buttons as per the user choice
-     *
-     * @param option This could be ture or false
-     */
-    private void setAllDisable(boolean option) {
-        b1.setDisable(option);
-        b2.setDisable(option);
-        b3.setDisable(option);
-        b4.setDisable(option);
-        b5.setDisable(option);
-        b6.setDisable(option);
-        b7.setDisable(option);
-        b8.setDisable(option);
-        b9.setDisable(option);
-    }
-
-    /**
-     * Sets coordinates for the draw_winning_line function and calls the
-     * function with the coordinates as parameters
-     */
-    private void drawLine() {
-        List<Integer> winningMoves;
-        if (getTurn() == p1) {
-            winningMoves = Result.getPlayer1moves();
-        } else {
-            winningMoves = Result.getPlayer2moves();
-        }
-        Collections.sort(winningMoves);
-
-        int startX, startY, endX, endY;
-        // Adding 35 to move the point to center
-        startX = 35 + (50 + 15) + (winningMoves.get(0) - 1) % 3 * (70 + 30);
-        startY = 35 + (50 + 15 + 15) + (winningMoves.get(0) - 1) / 3 * (70 + 30);
-        endX = 35 + (50 + 15) + (winningMoves.get(2) - 1) % 3 * (70 + 30);
-        endY = 35 + (50 + 15 + 15) + (winningMoves.get(2) - 1) / 3 * (70 + 30);
-
-        Draw.draw_winning_line(gc, startX, startY, endX, endY);
-    }
-
-    private void showAlert(String mess) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
-        alert.setTitle("Winner");
-        alert.setHeaderText(null);
-        alert.setContentText(mess);
-        alert.show();
-    }
-
-    void transferMessageNames(String name1, String get) {
-        u1.setText(name1);
-        u2.setText(get);
-    }
-
+    
     void transferMessageSymbol(String s) {
         p1 = new Player();
         p2 = new Player();
-        if (s.equals("x")) {
-            p1.setSymbol(SymbolsEnum.CROSS);
-            p2.setSymbol(SymbolsEnum.ROUND);
+        if (s.equals("X")) {
+            p1.setSymbol("O");
+            p2.setSymbol("X");
         } else {
-            p1.setSymbol(SymbolsEnum.ROUND);
-            p2.setSymbol(SymbolsEnum.CROSS);
+            p1.setSymbol("O");
+            p2.setSymbol("X");
         }
     }
 }

@@ -115,6 +115,7 @@ public class ListPlayerViewController implements Initializable {
                             @Override
                             public void run() {
                                 try {
+                                    OnlineMultiplayerViewController.gameMode="twoPlayers";
                                     FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
                                     Parent root = loader.load();
 
