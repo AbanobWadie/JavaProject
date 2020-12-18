@@ -38,15 +38,15 @@
             <DropShadow />
          </effect>
       </Button>
-      <Button fx:id="btn_exit" blendMode="SOFT_LIGHT" layoutX="693.0" layoutY="14.0" mnemonicParsing="false" onAction="#exit" opacity="0.77" prefHeight="23.0" prefWidth="30.0" style="-fx-background-color: #FFFBCB;" text="x" textFill="RED">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
       <ImageView blendMode="DARKEN" fitHeight="244.0" fitWidth="265.0" layoutX="244.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Images/tics.png" />
          </image>
       </ImageView>
+      <Button fx:id="btn_record" layoutX="630.0" layoutY="30.0" mnemonicParsing="false" onAction="#record" prefHeight="30.0" prefWidth="89.0" style="-fx-background-color: #ea0e0e; -fx-background-radius: 100;" text="Record" textFill="WHITE">
+         <font>
+            <Font name="Bell MT Bold" size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

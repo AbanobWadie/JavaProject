@@ -44,14 +44,11 @@ public class JavaProject extends Application {
         con.exit();
     }
 
-
-    
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

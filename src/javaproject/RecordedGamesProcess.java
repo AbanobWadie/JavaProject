@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  * @author Abanob wadie
  */
 public class RecordedGamesProcess {
-    private ArrayList<Record> records = new ArrayList<>();
+    ArrayList<Record> records = new ArrayList<>();
     
     public boolean save(Record record){
         String saveLine = record.getPlayer1() + " " + record.getPlayer2();
@@ -127,6 +127,7 @@ class Record {
         this.player2 = player2;
         moves = new ArrayList<>();
     }
+
     
     public void setMove(String position, String symbol){
         moves.add(position + "|" + symbol);

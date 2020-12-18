@@ -36,6 +36,8 @@ public class StartViewController implements Initializable {
     
     @FXML
     private Button btn_onlineMultiplayer;
+    @FXML
+    private Button btn_record;
 
     
     @FXML 
@@ -97,5 +99,20 @@ public class StartViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void record(ActionEvent event) {
+        
+         try {            
+                 Parent root = FXMLLoader.load(getClass().getResource("SingleRecordView.fxml"));
+                 Scene scene = new Scene(root);
+                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 stage.setScene(scene);
+                 stage.show();
+                 
+            } catch (IOException ex) {
+                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
     
 }
