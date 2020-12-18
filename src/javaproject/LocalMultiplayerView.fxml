@@ -65,10 +65,11 @@
                </font></Button>
          </children>
       </GridPane>
-      <Button fx:id="restartButton" layoutX="312.0" layoutY="442.0" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="35.0" prefWidth="120.0" text="New game" />
+      <Button fx:id="btn_reset" layoutX="312.0" layoutY="442.0" mnemonicParsing="false" onAction="#resetButton" prefHeight="35.0" prefWidth="120.0" text="Reset" />
       <Label fx:id="lbl_p1" layoutX="71.0" layoutY="33.0" text="Player1" />
       <Label fx:id="lbl_p2" layoutX="628.0" layoutY="33.0" text="Player2" />
       <Label fx:id="s1" layoutX="87.0" layoutY="63.0" text="0" />
       <Label fx:id="s2" layoutX="644.0" layoutY="63.0" text="0" />
+      <Button fx:id="btn_back" layoutX="618.0" layoutY="447.0" mnemonicParsing="false" onAction="#back" text="Back" />
    </children>
 </AnchorPane>
