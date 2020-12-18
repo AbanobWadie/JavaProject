@@ -5,6 +5,7 @@
  */
 package javaproject;
 
+import com.sun.javaws.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +18,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -25,10 +25,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import players.Player;
-import players.SymbolsEnum;
-import static players.Turn.setTurn;
-import static sun.audio.AudioPlayer.player;
+import static javaproject.Turn.setTurn;
 
 /**
  * FXML Controller class
@@ -40,156 +37,148 @@ public class LocalViewController implements Initializable {
     @FXML
     private Button btn_play;
     @FXML
-    private TextField txt_player1;
-    @FXML
-    private TextField txt_player2;
-    @FXML
-    RadioButton X1;
-    @FXML
-     RadioButton O1;
-    @FXML
-    RadioButton X2;
-    @FXML
-    RadioButton O2;
-    @FXML
     private Button btn_record;
-    @FXML
-    private Button back;
 
-    
-    
-      Player player1=new Player();
-      Player player2=new Player();
-      final ToggleGroup group1 = new ToggleGroup();
-      final ToggleGroup group2 = new ToggleGroup();
-  private boolean recordFlag;
-      
-    
+    final ToggleGroup group1 = new ToggleGroup();
+    final ToggleGroup group2 = new ToggleGroup();
+    private boolean recordFlag;
+    @FXML
+    private TextField txt_name1;
+    @FXML
+    private RadioButton X1;
+    @FXML
+    private RadioButton O1;
+    @FXML
+    private TextField txt_name2;
+    @FXML
+    private RadioButton X2;
+    @FXML
+    private RadioButton O2;
+
+    Player p1=new Player();
+    Player p2=new Player();
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
-            X1.setToggleGroup(group1);
-            O1.setToggleGroup(group1);
-            X2.setToggleGroup(group2);
-            O2.setToggleGroup(group2);
-    }  
-    
-      @FXML
-        void back(ActionEvent event)
-        {
-              try {
 
-                     Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                     Scene scene = (Scene)((Node)event.getSource()).getScene();
-                     Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-                     scene.setRoot(root);
-                     stage.setScene(scene);
-                     stage.show();
+        X1.setToggleGroup(group1);
+        O1.setToggleGroup(group1);
+        X2.setToggleGroup(group2);
+        O2.setToggleGroup(group2);
+        recordFlag = false;
 
-                } catch (IOException ex) {
-                    Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        }
+    }
 
-        @FXML
-         void play(ActionEvent event) {
-             if(txt_player1.getText().equals("") || txt_player2.getText().equals("")){
-                  showAlert("Please, Enter you Name!");
+    void move(Button button) {
 
-
-            }else if(X1.isSelected()==false &&O1.isSelected()==false){
-                  showAlert("Please, Choose X or O.");
-            }else{
-                  try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiplayerView.fxml"));
-                        Parent root = loader.load();
-
-                        //Get controller of scene2
-                        LocalMultiplayerViewController o = loader.getController();
-                        //Pass whatever data you want. You can have multiple method calls here
-                        o.transferMessageText(txt_player1.getText(),txt_player2.getText());
-                        o.transferMessagePlayers(player1, player2);
-                        o.transferMessageButtons(X1,O1,X2,O2);
-                        o.transferMessageRecordFlag(recordFlag);
-
-                            Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                            stage.setScene(new Scene(root));
-                            stage.show();
-
-                } catch (IOException ex) {
-                    Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (button.getText() == "") {
+            button.setText("");
+            if (X1.isSelected()) {
+                O2.setSelected(true);
+               
+                //button.setText("X");
+            } else if (O1.isSelected()) {
+                X2.setSelected(true);
+                p1.setSymbol("O");
+                p2.setSymbol("X");
+               // button.setText("O");
             }
-
         }
-
+    }
     @FXML
     void player1Symbol(ActionEvent event) {
-      
+
         if (X1.isSelected()) {
             O2.setSelected(true);
-          
+
             // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.CROSS);
-            player2.setSymbol(SymbolsEnum.ROUND);
+            p1.setSymbol("X");
+            p2.setSymbol("O");
         } else if (O1.isSelected()) {
             X2.setSelected(true);
-            
+
             // Setting Symbols for players
-            player1.setSymbol(SymbolsEnum.ROUND);
-            player2.setSymbol(SymbolsEnum.CROSS);
+            p1.setSymbol("O");
+            p2.setSymbol("X");
         }
         // Set initial turn for player with symbol CROSS
-       if (player1.getSymbol() == SymbolsEnum.CROSS) {
-            setTurn(player1);
-          
+        if (p1.getSymbol() == "X") {
+            setTurn(p1);
+
         } else {
-            setTurn(player2);
-           
+            setTurn(p2);
+
         }
     }
+
+    @FXML
+    void player2Symbol(ActionEvent event) {
+
+        if (X2.isSelected()) {
+            O1.setSelected(true);
+
+            p1.setSymbol("X");
+
+            p2.setSymbol("X");
+
+        } else if (O2.isSelected()) {
+            X1.setSelected(true);
+
+            p1.setSymbol("O");
+            p2.setSymbol("X");
+        }
+
+        if (p1.getSymbol() == "X") {
+            setTurn(p1);
+
+        } else {
+            setTurn(p2);
+
+        }
+    }
+
+
     
 
     @FXML
-     void player2Symbol(ActionEvent event) {
-        
-         
-        if (X2.isSelected()) {
-            O1.setSelected(true);
-             
-            player1.setSymbol(SymbolsEnum.CROSS);
-          
-          
-            player2.setSymbol(SymbolsEnum.ROUND);
-            
-            
-        } else if (O2.isSelected()) {
-            X1.setSelected(true);
-            
-            player1.setSymbol(SymbolsEnum.ROUND);
-            player2.setSymbol(SymbolsEnum.CROSS);
-        }
+    void play(ActionEvent event) {
+        if (txt_name2.getText().equals("") || txt_name1.getText().equals("")) {
+            showAlert("Please,Enter your name.");
 
-        if (player1.getSymbol() == SymbolsEnum.CROSS) {
-            setTurn(player1);
-           
+        } else if (X1.isSelected() == false && O1.isSelected() == false) {
+            showAlert("Please, Choose X or O.");
+
         } else {
-            setTurn(player2);
-          
+            
+		
+            try {
+                LocalMultiplayerViewController.gameMode = "twoPlayers";
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiplayerView.fxml"));
+                Parent root = loader.load();
+
+                //Get controller of scene2
+                LocalMultiplayerViewController o = loader.getController();
+                //Pass whatever data you want. You can have multiple method calls here
+                o.transferMesssageText(txt_name1.getText(),txt_name2.getText());
+                o.transferMessageButtons(X1, O1,X2,O2);
+                //o.transferMessageRecordFlag(recordFlag);
+                o.transferPlayers(p1,p2);
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(LocalViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-    
-     @FXML
-    void record(ActionEvent event) {
-        btn_record.setDisable(true);
-        recordFlag = true;
-    }
-    
-        void showAlert(String mess) {
+
+
+    void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("ERROR");
         alert.setHeaderText(null);
@@ -197,6 +186,6 @@ public class LocalViewController implements Initializable {
         alert.show();
     }
 
- 
-      
+  
+
 }

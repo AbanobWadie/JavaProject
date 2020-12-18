@@ -67,13 +67,18 @@ public class SinglePlayerViewController implements Initializable {
     public static String key;
     public static String winner;
     private static String[] buttonText;
-    
+
     private boolean recordFlag;
     private Record record;
     private String position;
-    
+    @FXML
+    private Label lbl_symbol1;
+    @FXML
+    private Label lbl_symbol2;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+
         loadGame();
     }
 
@@ -122,11 +127,6 @@ public class SinglePlayerViewController implements Initializable {
     void back(ActionEvent event) {
         try {
 
-            /* Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();*/
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
@@ -168,7 +168,7 @@ public class SinglePlayerViewController implements Initializable {
 
     void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
-        alert.setTitle("ERROR");
+        alert.setTitle("Winner");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
@@ -179,12 +179,13 @@ public class SinglePlayerViewController implements Initializable {
             button.setText("");
             if (X1.isSelected()) {
                 button.setText("X");
-                if(recordFlag){
+                lbl_symbol1.setText("X");
+                if (recordFlag) {
                     record.setMove(position, "X");
                 }
             } else if (O1.isSelected()) {
                 button.setText("O");
-                if(recordFlag){
+                if (recordFlag) {
                     record.setMove(position, "O");
                 }
             }
@@ -202,6 +203,13 @@ public class SinglePlayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         disableButtons(false);
+        if (X1.isSelected()) {
+            lbl_symbol1.setText("X");
+            lbl_symbol2.setText("O");
+        } else if (O1.isSelected()) {
+            lbl_symbol1.setText("O");
+            lbl_symbol2.setText("X");
+        }
     }
 
     private void loadButtons() {
@@ -276,21 +284,42 @@ public class SinglePlayerViewController implements Initializable {
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (key != "draw") {
-            Game game = new Game(lbl_player.getText(), "AI", winner);
-            GamesHistoryProcess history = new GamesHistoryProcess();
-            history.save(game);
-            
-            endGame.setTitle("Victory");
-            endGame.setContentText("Player \"" + winner + "\" won.");
+            if (X1.isSelected() && winner == "X") {
+                Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                endGame.setTitle("Winner");
+                endGame.setContentText("Player \"" + winner + " " + lbl_player.getText() + "\" won.");
+            } else if (X1.isSelected() && winner == "O") {
+                Game game = new Game(lbl_player.getText(), "AI", "AI");
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                endGame.setTitle("Winner");
+                endGame.setContentText("Player \"" + winner + " AI\" won.");
+            } else if (O1.isSelected() && winner == "O") {
+                Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                endGame.setTitle("Winner");
+                endGame.setContentText("Player \"" + winner + " " + lbl_player.getText() + "\" won.");
+
+            } else {
+                Game game = new Game(lbl_player.getText(), "AI", "AI");
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                endGame.setTitle("Winner");
+                endGame.setContentText("Player \"" + winner + " AI\" won.");
+
+            }
         } else {
             Game game = new Game(lbl_player.getText(), "AI", "draw");
             GamesHistoryProcess history = new GamesHistoryProcess();
             history.save(game);
-            
+
             endGame.setContentText("The game was a draw.");
             endGame.setTitle("Draw");
         }
-        
+
         if (recordFlag) {
             RecordedGamesProcess recordedGame = new RecordedGamesProcess();
             recordedGame.save(record);
@@ -467,14 +496,14 @@ public class SinglePlayerViewController implements Initializable {
             if (buttonsList.get(temp).getText() == "") {
                 if (X1.isSelected()) {
                     buttonsList.get(temp).setText("O");
-                    if(recordFlag){
-                        record.setMove(""+(temp + 1), "O");
+                    if (recordFlag) {
+                        record.setMove("" + (temp + 1), "O");
                     }
                     break;
                 } else if (O1.isSelected()) {
                     buttonsList.get(temp).setText("X");
-                    if(recordFlag){
-                        record.setMove(""+(temp + 1), "X");
+                    if (recordFlag) {
+                        record.setMove("" + (temp + 1), "X");
                     }
                     break;
                 }
@@ -498,11 +527,19 @@ public class SinglePlayerViewController implements Initializable {
     void transferMessageButtons(RadioButton X, RadioButton O) {
         X1 = X;
         O1 = O;
+        if (X1.isSelected()) {
+            lbl_symbol1.setText(X1.getText());
+            lbl_symbol2.setText("O");
+        } else if (O1.isSelected()) {
+            lbl_symbol1.setText("O");
+            lbl_symbol2.setText("X");
+        }
+
     }
-    
+
     void transferMessageRecordFlag(boolean flag) {
         recordFlag = flag;
-        if(recordFlag){
+        if (recordFlag) {
             record = new Record(lbl_player.getText(), "AI");
         }
     }
