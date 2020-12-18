@@ -69,7 +69,6 @@ public class GameHistoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        historyText.setText("");
        
         ObservableList hisP1 = FXCollections.observableArrayList();
         ObservableList hisP2 = FXCollections.observableArrayList();
@@ -90,8 +89,10 @@ public class GameHistoryController implements Initializable {
   
       
     }
-     void translate(ArrayList<Game>game){
+     void translate(ArrayList<Game>game, String title){
         this.game=game;
+        historyText.setText(title);
+
     }
     
 }

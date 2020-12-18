@@ -128,7 +128,7 @@ public class StartViewController implements Initializable {
             Parent root = loader.load();
 
             GameHistoryController o = loader.getController();
-            o.translate(history.games);
+            o.translate(history.games,"Local History");
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
