@@ -87,7 +87,7 @@ public class RecordedGamesProcess {
                     String[] arr = line.split(",");
                     for (int i = 0; i < arr.length; i++) {
                         String[] arr2 = arr[i].split(" ");
-                        Record record = new Record(arr[0], arr[1]);
+                        Record record = new Record(arr2[0], arr2[1]);
 
                         for (int j = 2; j < arr2.length; j++) {
                             String[] arr3 = arr2[i].split("|");

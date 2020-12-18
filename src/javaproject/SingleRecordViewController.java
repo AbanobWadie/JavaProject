@@ -55,14 +55,16 @@ public class SingleRecordViewController implements Initializable {
                 for (int i = 0; i <recG.records.size() ; i++) {
                     String p1=recG.records.get(i).getPlayer1();
                     String p2=recG.records.get(i).getPlayer2();
-                    recp1.add(p1);
-                    recp2.add(p2);
+                    System.out.println(recG.records.get(i).getMoves());
+                    
+                    recp1.add(p1+" vs "+p2);
+                   // recp2.add(p2);
                     
                     listRecord.getItems();   
 
                 }
+                //listRecord.setItems(recp1);
                 listRecord.setItems(recp1);
-                //listRecord.setItems(recp2);
 
 
             }

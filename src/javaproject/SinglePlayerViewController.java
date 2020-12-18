@@ -56,6 +56,8 @@ public class SinglePlayerViewController implements Initializable {
     private Button restartButton;
     private String[][] ticTacToeTable;
     private ArrayList<Button> buttonsList = new ArrayList<>();
+    
+    boolean recflag=true;
 
     RadioButton X1 = new RadioButton();
 
@@ -173,7 +175,8 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     void move(Button button) {
-        if (button.getText() == "") {
+        recflag=true;
+        if (button.getText().equals("")) {
             button.setText("");
             if (X1.isSelected()) {
                 button.setText("X");
@@ -482,36 +485,75 @@ public class SinglePlayerViewController implements Initializable {
     void easyGameLogic(ArrayList<Button> buttonsList) {
         Random randomMove = new Random();
         int temp;
-        while (checkFreeButton(buttonsList)) {
+
+        String symbol = null;
+       
 
             temp = randomMove.nextInt(9);
-            if (buttonsList.get(temp).getText() == "") {
+            if (buttonsList.get(temp).getText().equals("")) {
+
                 if (X1.isSelected()) {
-                    buttonsList.get(temp).setText("O");
-                    for (int i = 0; i < buttonText.length; i++) {
-                        buttonText[i] = buttonsList.get(temp).getText();
-                        break;
-                    }
+
+                    symbol = "O";
 
                     if (recordFlag) {
                         record.setMove("" + (temp + 1), "O");
                     }
-                    break;
-                } else if (O1.isSelected()) {
-                    buttonsList.get(temp).setText("X");
-                    for (int i = 0; i < buttonText.length; i++) {
-                        buttonText[i] = buttonsList.get(temp).getText();
-                        break;
 
-                    }
+                } else if (O1.isSelected()) {
+                    symbol = "X";
 
                     if (recordFlag) {
                         record.setMove("" + (temp + 1), "X");
                     }
-                    break;
+
                 }
+                switch (temp) {
+                    case 1:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 2:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 3:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 4:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 5:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 6:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 7:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 8:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                   case 9:
+                        buttonsList.get(temp).setText(symbol);
+                        break;
+                        
+
+                }
+                
+               
             }
-        }
+            else
+            {
+               
+                   easyGameLogic(buttonsList);
+                
+            }
+            if(recflag){
+             updateGame();
+             recflag=false;
+            }
+        
+       
     }
 
     boolean checkFreeButton(ArrayList<Button> buttonsList) {
