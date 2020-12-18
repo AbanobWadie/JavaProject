@@ -9,9 +9,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,7 +24,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class SinglePlayerViewController implements Initializable {
 
@@ -272,7 +278,31 @@ public class SinglePlayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        showEndGameAlert(key);
+        video();
+        //showEndGameAlert(key);
+    }
+    void video(){
+         MediaPlayer mediaPlayer;    
+        String vurl = "file:/D:/videos/videeeo.mp4";
+        Media media = new Media(vurl);        
+        mediaPlayer = new MediaPlayer(media);        
+        mediaPlayer.play();   
+        Stage dialog = new Stage();
+        dialog.setHeight(370);
+        dialog.setWidth(370);
+        Scene scene = new Scene(new Group(new MediaView(mediaPlayer)));   
+        dialog.setTitle("congaturation");
+        dialog.setResizable(false);
+        dialog.setScene(scene);
+        dialog.show();
+        dialog.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {       
+             mediaPlayer.stop();
+             dialog.close();
+            }
+           
+        });
     }
 
     void showEndGameAlert(String key) {

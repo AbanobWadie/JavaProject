@@ -24,7 +24,7 @@ public class ServerConnection {
 
     static private BufferedReader in;
     static private PrintWriter out;
-    static volatile boolean running = true;
+    static volatile boolean running = false;
 
     public static boolean init(String ip) {
         try {
@@ -96,12 +96,6 @@ public class ServerConnection {
         out.println("back");
         out.flush();
         running = false;
-        try {
-            in.close();
-            out.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static void playWith(String name) {
