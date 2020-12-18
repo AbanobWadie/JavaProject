@@ -65,8 +65,8 @@ public class ListPlayerViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         try {
-            ServerConnection con = new ServerConnection();
-            con.exit();
+            ServerConnection.exit();
+            ServerConnection.end();
 
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             Scene scene = new Scene(root);
@@ -84,10 +84,11 @@ public class ListPlayerViewController implements Initializable {
             @Override
             public void run() {
                 ArrayList<String> currentOnlineList = new ArrayList<>();
-                ServerConnection con = new ServerConnection();
+                
+                ServerConnection.running = true;
                 while (ServerConnection.running) {
 
-                    ArrayList<String> result = con.getOnlineUsers();
+                    ArrayList<String> result = ServerConnection.getOnlineUsers();
 
                     if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o")) {
                         list = FXCollections.observableArrayList(result);
@@ -105,7 +106,7 @@ public class ListPlayerViewController implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                dialog(result.get(0), con);
+                                dialog(result.get(0));
                             }
                         });
 
@@ -122,8 +123,10 @@ public class ListPlayerViewController implements Initializable {
                                     OnlineMultiplayerViewController o = loader.getController();
 
                                     o.transferMessageNames(name1, player2);
+                                    
+                                    o.transferMessageRecordFlag(false);
 
-                                    o.transferMessageSymbol(result.get(0));
+                                    o.transferMessageSymbol("X");
 
                                     Stage stage = (Stage)  btn_back.getScene().getWindow();
                                     stage.setScene(new Scene(root));
@@ -149,8 +152,10 @@ public class ListPlayerViewController implements Initializable {
                                     OnlineMultiplayerViewController o = loader.getController();
 
                                     o.transferMessageNames(name1, playerRequest);
+                                    
+                                    o.transferMessageRecordFlag(false);
 
-                                    o.transferMessageSymbol(result.get(0));
+                                    o.transferMessageSymbol("O");
 
                                     Stage stage = (Stage)  btn_back.getScene().getWindow();
                                     stage.setScene(new Scene(root));
@@ -204,10 +209,9 @@ public class ListPlayerViewController implements Initializable {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
 
-                ServerConnection con = new ServerConnection();
                 for (int i = 0; i < list.size(); i++) {
                     if (list_persons.getSelectionModel().getSelectedIndex() == i) {
-                        con.playWith(list_persons.getItems().get(i));
+                        ServerConnection.playWith(list_persons.getItems().get(i));
                         player2 = list_persons.getItems().get(i);
                     }
 
@@ -260,7 +264,7 @@ public class ListPlayerViewController implements Initializable {
         name1 = text;
     }
 
-    public void dialog(String mgs, ServerConnection con) {
+    public void dialog(String mgs) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Request");
         ButtonType acceptBtn = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
@@ -271,9 +275,9 @@ public class ListPlayerViewController implements Initializable {
         Optional<ButtonType> result = dialog.showAndWait();
 
         if (result.get() == acceptBtn) {
-            con.ok();
+            ServerConnection.ok();
         } else if (result.get() == refuseBtn) {
-            con.no();
+            ServerConnection.no();
         }
     }
 }

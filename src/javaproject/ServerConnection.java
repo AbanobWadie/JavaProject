@@ -26,7 +26,7 @@ public class ServerConnection {
     static private PrintWriter out;
     static volatile boolean running = true;
 
-    public boolean init(String ip) {
+    public static boolean init(String ip) {
         try {
             Socket mySocket = new Socket(ip, 5005);
             in = new BufferedReader(new InputStreamReader(
@@ -41,8 +41,17 @@ public class ServerConnection {
 
         }
     }
+    
+    public static void end(){
+        try {
+            in.close();
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-    public boolean SignIn(String userName, String password) {
+    public static boolean SignIn(String userName, String password) {
         out.println("singin " + userName + " " + password);
         out.flush();
         try {
@@ -56,7 +65,7 @@ public class ServerConnection {
         return false;
     }
 
-    public boolean SignUp(String userName, String password) {
+    public static boolean SignUp(String userName, String password) {
         out.println("singup " + userName + " " + password);
         out.flush();
         try {
@@ -69,20 +78,8 @@ public class ServerConnection {
         }
         return false;
     }
-    
-    public void readThread(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    
-                }
-            }
-        }).start();
 
-    }
-
-    public void exit() {
+    public static void exit() {
         out.println("exit");
         out.flush();
         running = false;
@@ -94,13 +91,25 @@ public class ServerConnection {
         }
         
     }
+    
+    public static void back(){
+        out.println("back");
+        out.flush();
+        running = false;
+        try {
+            in.close();
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-    public void playWith(String name) {
+    public static void playWith(String name) {
         out.println("play " + name);
         out.flush();        
     }
 
-    public ArrayList<String> getOnlineUsers() {
+    public static ArrayList<String> getOnlineUsers() {
         ArrayList<String> arr = new ArrayList<>();
         try {
             //out.println("ready");
@@ -123,56 +132,34 @@ public class ServerConnection {
         }
         return arr;
     }
-    
 
-    public boolean ckeckPlayRequest(boolean flag, String str) {
-        String playrequest = str;
-        try {
-            if(flag){
-                playrequest = in.readLine();
-                return  true;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    public void ok() {
+    public static void ok() {
         out.println("ok");
         out.flush();
         out.println("ok");
         out.flush();
     }
     
-    public void no() {
+    public static void no() {
         out.println("no");
         out.flush();
     }
 
-    public boolean requestIsAccepted() {
-        try {
-
-            String playrequest = in.readLine();
-            if (playrequest.equals("ok")) {
-                return true;
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    public void sendPlayInPostion(boolean win, char c, int position) {
+    public static void sendPlayInPostion(boolean win, boolean draw, String c, String position) {
         if (win) {
-            out.println("win " + position + "|" + c);
+            out.println(position + "|" + c);
+            out.println("win");
         } else {
             out.println(position + "|" + c);
+            
+            if(draw){
+                out.println("draw");
+            }
         }
         out.flush();
     }
 
-    public String recivePlayInPostion() {
+    public static String recivePlayInPostion() {
 
         try {
             return in.readLine();

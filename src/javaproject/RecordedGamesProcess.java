@@ -22,9 +22,9 @@ import java.util.logging.Logger;
  * @author Abanob wadie
  */
 public class RecordedGamesProcess {
-    private ArrayList<Record> records = new ArrayList<>();
+    public static ArrayList<Record> records = new ArrayList<>();
     
-    public boolean save(Record record){
+    public static boolean save(Record record){
         String saveLine = record.getPlayer1() + " " + record.getPlayer2();
         for (String move : record.getMoves()) {
             saveLine += " " + move;
@@ -43,7 +43,7 @@ public class RecordedGamesProcess {
                     line += "," + saveLine;
                     saveLine = line;
                 }
-    
+                
                 fis.close();
                 dis.close();
             }else{
@@ -71,7 +71,7 @@ public class RecordedGamesProcess {
         return false;
     }
 
-    public void read() {
+    public static void read() {
         String line;
 
         File file = new File(".", "Save");
@@ -97,8 +97,6 @@ public class RecordedGamesProcess {
                     }
                 }
  
-                
-
                 fis.close();
                 dis.close();
             } else {

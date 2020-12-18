@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,26 +20,28 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import static javaproject.Turn.getTurn;
-import static javaproject.Turn.setTurn;
-
 
 
 public class OnlineMultiplayerViewController implements Initializable{
 
 	
-	private String[][] ticTacToeTable;
+	private String[][] ticTacToeTable = new String[3][3];
 	private ArrayList<Button> buttonsList = new ArrayList<>();
         
-        Player p1=new Player();
-        Player p2=new Player();
+        Player p1 = new Player();
+        Player p2 = new Player();
         
           public static boolean myTurn;
-	public static String gameMode;
+	public static String gameMode = "twoPlayers";
 	public static String key;
 	public static String winner;
 	private static String[] buttonText;
    
+        private String position;
+        private String moveSymbol;
+        private boolean recordFlag;
+        private Record record;
+        private boolean mine;
   
     @FXML
     private Button b1;
@@ -75,64 +77,162 @@ public class OnlineMultiplayerViewController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-            p1.setSymbol("X");
-            p2.setSymbol("O");
-            lbl_name1.setText(p1.getSymbol());
-             lbl_name2.setText(p2.getSymbol());
-		loadGame();
+            loadGame();
+            
+            ServerConnection.running = true;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (ServerConnection.running) {
+                        String result = ServerConnection.recivePlayInPostion();
+                        String arr[] = result.split("|");
+                        
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                switch(arr[0]){
+                                    case "1":
+                                        position = "1";
+                                        move(b1);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "2":
+                                        position = "2";
+                                        move(b2);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "3":
+                                        position = "3";
+                                        move(b3);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "4":
+                                        position = "4";
+                                        move(b4);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "5":
+                                        position = "5";
+                                        move(b5);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "6":
+                                        position = "6";
+                                        move(b6);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "7":
+                                        position = "7";
+                                        move(b7);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "8":
+                                        position = "8";
+                                        move(b8);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                        
+                                    case "9":
+                                        position = "9";
+                                        move(b9);
+                                        ChangeTurn();
+                                        disableButtons(false);
+                                        break;
+                                }
+                            }
+                        });
+                    }
+                }
+            }).start();
 	}
 
     @FXML
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == b1) {
+                        position = "1";
 			move(b1);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b2) {
+                        position = "2";
 			move(b2);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b3) {
+                        position = "3";
 			move(b3);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b4) {
+                        position = "4";
 			move(b4);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b5) {
+                        position = "5";
 			move(b5);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b6) {
+                        position = "6";
 			move(b6);
                          ChangeTurn();
+                         disableButtons(true);
 		}
-		if(e.getSource() == b7) {
+		if(e.getSource() == b7) {   
+                        position = "7";
 			move(b7);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b8) {
+                        position = "8";
 			move(b8);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		if(e.getSource() == b9) {
+                        position = "9";
 			move(b9);
                          ChangeTurn();
+                         disableButtons(true);
 		}
 		
 	}
 	
 	private void move(Button button) {
-		if(button.getText() == "") {
-			if(gameMode == "twoPlayers") {
+		if(button.getText().equals("")) {
+			if(gameMode.equals("twoPlayers")) {
 				button.setText(playController(buttonsList, ticTacToeTable));
 				updateGame();
-			
+                                
+                                if(recordFlag){
+                                    record.setMove(position, moveSymbol);
+                                }
                         }}
 	}
 	
-	private void loadGame() {
+	private void loadGame() {         
 		ticTacToeTable = new String [3][3];
 		loadButtonsList();
 		loadButtons();
@@ -156,52 +256,61 @@ public class OnlineMultiplayerViewController implements Initializable{
                 b1.setStyle("-fx-base: #00FF00;");
                 b2.setStyle("-fx-base: #00FF00;");
                 b3.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "line 1": {
                 b4.setStyle("-fx-base: #00FF00;");
                 b5.setStyle("-fx-base: #00FF00;");
                 b6.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "line 2": {
                 b7.setStyle("-fx-base: #00FF00;");
                 b8.setStyle("-fx-base: #00FF00;");
                 b9.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "column 0": {
                 b1.setStyle("-fx-base: #00FF00;");
                 b4.setStyle("-fx-base: #00FF00;");
                 b7.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "column 1": {
                 b2.setStyle("-fx-base: #00FF00;");
                 b5.setStyle("-fx-base: #00FF00;");
                 b8.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "column 2": {
                 b3.setStyle("-fx-base: #00FF00;");
                 b6.setStyle("-fx-base: #00FF00;");
                 b9.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "main diagonal": {
                 b1.setStyle("-fx-base: #00FF00;");
                 b5.setStyle("-fx-base: #00FF00;");
                 b9.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "secundary diagonal": {
                 b3.setStyle("-fx-base: #00FF00;");
                 b5.setStyle("-fx-base: #00FF00;");
                 b7.setStyle("-fx-base: #00FF00;");
+                disableButtons(true);
                 break;
             }
             case "draw": {
                 reddeningButtons();
+                disableButtons(true);
                 break;
             }
         }
@@ -212,7 +321,7 @@ public class OnlineMultiplayerViewController implements Initializable{
 
 	private void showEndGameAlert(String key) {
 		Alert endGame = new Alert(AlertType.INFORMATION);
-		if(key != "draw") {
+		if(!key.equals("draw")) {
 			endGame.setTitle("Victory");
 			endGame.setContentText("Player \"" +winner + "\" won.");
 		}else {
@@ -221,7 +330,10 @@ public class OnlineMultiplayerViewController implements Initializable{
 		}
 		endGame.setHeaderText(null);
 		endGame.show();
-
+                
+                if(recordFlag){
+                    RecordedGamesProcess.save(record);
+                }
 	}
 
 	private void reddeningButtons() {
@@ -251,11 +363,40 @@ public class OnlineMultiplayerViewController implements Initializable{
 	private boolean updateGame() {
 		loadTicTacToeTable();
 		if (winningChecker(ticTacToeTable)){
+                        if(key.equals("draw")){
+                            if(mine){
+                                mine = false;
+                                System.out.println("finalDraw");
+                                ServerConnection.sendPlayInPostion(false, true, moveSymbol, position);
+                            }else{
+                                mine = true;
+                            }
+                        }else{
+                            if(mine){
+                                mine = false;
+                                System.out.println("finalWin");
+                                ServerConnection.sendPlayInPostion(true, false, moveSymbol, position);
+                            }else{
+                                mine = true;
+                            }
+                        }
+                        
 			showVictory(key);
+                        System.out.println(key);
 			return false;
 		}else {
+                        if(mine){
+                            mine = false;
+                            ServerConnection.sendPlayInPostion(false, false, moveSymbol, position);
+                            System.out.println(key);
+                            System.out.println("play");
+                        }else{
+                                mine = true;
+                        }
 			return true;
 		}
+                
+                
 	}
 
 	private void loadTicTacToeTable() {
@@ -286,25 +427,29 @@ public class OnlineMultiplayerViewController implements Initializable{
 			}*/
                         if(myTurn)
                         {
-                            if(getTurn()==p1)
+                            if(Turn.getTurn() == p1)
                             {
-                                if(p1.getSymbol()=="X")
+                                if(p1.getSymbol().equals("X"))
                                 {
+                                    moveSymbol = "X";                                    
                                     p2.setSymbol("O");
                                     return "X";
                                 }else 
                                 {
+                                    moveSymbol = "O";
                                     p1.setSymbol("O");
                                      return "O";
                                 }
                             }else
                             {
-                                if(p2.getSymbol()=="X")
+                                if(p2.getSymbol().equals("X"))
                                 {
+                                    moveSymbol = "X";
                                     p1.setSymbol("O");
                                     return "X";
                                 }else 
                                 {
+                                    moveSymbol = "O";
                                     p2.setSymbol("O");
                                      return "O";
                                 }
@@ -320,12 +465,12 @@ public class OnlineMultiplayerViewController implements Initializable{
         
         
     private void ChangeTurn() {
-        if (getTurn() == p1) {
-            setTurn(p2);
+        if (Turn.getTurn() == (p1)) {
+            Turn.setTurn(p2);
             // Setting underlines visible or invisible acc to player turn
            
         } else {
-            setTurn(p1);
+            Turn.setTurn(p1);
             
         }
     }
@@ -335,75 +480,89 @@ public class OnlineMultiplayerViewController implements Initializable{
 		//Checking line 0
 		for(int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[0][i];
-			if(checkVictory(buttonText)) {
+		}
+                if(checkVictory(buttonText)) {
 				key = "line 0";
 				return true;
-			}
-		}
+                }
+                
 		buttonText = new String[3];
 		//Checking line 1
 		for(int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[1][i];
-			if(checkVictory(buttonText)) {
+		}
+                if(checkVictory(buttonText)) {
 				key = "line 1";
 				return true;
 			}
-		}
+                
 		buttonText = new String[3];
 		//Checking line 2
 		for(int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[2][i];
-			if(checkVictory(buttonText)) {
+			
+		}
+                if(checkVictory(buttonText)) {
 				key = "line 2";
 				return true;
 			}
-		}
+                
 		buttonText = new String[3];
 		//Checking column 0
 		for(int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[i][0];
-			if(checkVictory(buttonText)) {
+			
+		}
+                if(checkVictory(buttonText)) {
 				key = "column 0";
 				return true;
 			}
-		}
+                
 		buttonText = new String[3];
 		//Checking column 1
 		for(int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[i][1];
-			if(checkVictory(buttonText)) {
+			
+		}
+                if(checkVictory(buttonText)) {
 				key = "column 1";
 				return true;
 			}
-		}
+                
 		buttonText = new String[3];
 		//Checking column 2
 		for(int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[i][2];
-			if(checkVictory(buttonText)) {
+			
+		}
+                if(checkVictory(buttonText)) {
 				key = "column 2";
 				return true;
 			}
-		}
+                
 		buttonText = new String[3];
 		//main diagonal
 		for (int i = 0; i < buttonText.length; i++) {
 			buttonText[i] = ticTacToeTable[i][i];
-			if(checkVictory(buttonText)) {
+			
+		}
+                if(checkVictory(buttonText)) {
 				key = "main diagonal";
 				return true;
 			}
-		}
+                
 		buttonText = new String[3];
 		//secondary diagonal
 		for (int i = 0; i < buttonText.length; i++) {
 			int j = buttonText.length - 1 - i;
 			buttonText[i] = ticTacToeTable[i][j];
-			if(checkVictory(buttonText)) {
+			
+		}
+                if(checkVictory(buttonText)) {
 				key = "secundary diagonal";
 				return true;
 			}
-		}
+                
 		//draw
 		if(checkDraw(ticTacToeTable)) {
 			key = "draw";
@@ -413,11 +572,11 @@ public class OnlineMultiplayerViewController implements Initializable{
 	}
 
 	public static boolean checkVictory(String[] vector) {
-		if(vector[0] == "X" && vector[1] == "X" && vector[2] == "X") {
+		if(vector[0].equals("X") && vector[1].equals("X") && vector[2].equals("X")) {
 			winner = "X";
 			return true;
 
-		} else if(vector[0] == "O" && vector[1] == "O" && vector[2] == "O") {
+		} else if(vector[0].equals("O") && vector[1].equals("O") && vector[2].equals("O")) {
 			winner = "O";
 			return true;
 		}else {
@@ -428,7 +587,7 @@ public class OnlineMultiplayerViewController implements Initializable{
 	public static boolean checkDraw(String[][] ticTacToeTable) {
 		for (int i = 0; i < ticTacToeTable.length; i++) {
 			for (int j = 0; j < ticTacToeTable[0].length; j++) {
-				if(ticTacToeTable[i][j] == "") {
+				if(ticTacToeTable[i][j].equals("")) {
 					return false;
 				}
 			}
@@ -436,21 +595,9 @@ public class OnlineMultiplayerViewController implements Initializable{
 		return true;
 	}
 
-	private static void easyGameLogic(ArrayList<Button> buttonsList) {
-		Random randomMove = new Random();
-		int temp;
-		while(checkFreeButton(buttonsList)) {
-			temp = randomMove.nextInt(9);
-			if(buttonsList.get(temp).getText() == "") {
-				buttonsList.get(temp).setText("O");
-				break;
-			}
-		}
-	}
-
 	private static boolean checkFreeButton(ArrayList<Button> buttonsList) {
 		for (int i = 0; i < buttonsList.size(); i++) {
-			if(buttonsList.get(i).getText() == "") {
+			if(buttonsList.get(i).getText().equals("")) {
 				return true;
 			}
 		}
@@ -459,11 +606,19 @@ public class OnlineMultiplayerViewController implements Initializable{
         @FXML
          void back(ActionEvent event) {
         try {
+            ServerConnection.back();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
+            Parent root = loader.load();
+
+            //Get controller of scene2
+            ListPlayerViewController o = loader.getController();
+            //Pass whatever data you want. You can have multiple method calls here
+            o.transferMessageName1(lbl_player1.getText());
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-            scene.setRoot(root);
-            stage.setScene(scene);
+
+            stage.setScene(new Scene(root));
             stage.show();
 
         } catch (IOException ex) {
@@ -474,18 +629,33 @@ public class OnlineMultiplayerViewController implements Initializable{
     void transferMessageNames(String name1, String get) {
         lbl_player1.setText(name1);
         lbl_player2.setText(get);
-
+        
+        if(recordFlag){
+            record = new Record(name1, get);
+        }
+    }
+    
+    void transferMessageRecordFlag(boolean flag) {
+        recordFlag = flag;
     }
     
     void transferMessageSymbol(String s) {
-        p1 = new Player();
-        p2 = new Player();
         if (s.equals("X")) {
-            p1.setSymbol("O");
-            p2.setSymbol("X");
+            Turn.setTurn(p1);
+            mine = true;
+            p1.setSymbol("X");
+            p2.setSymbol("O");
+            
+            lbl_name1.setText("X");
+            lbl_name2.setText("O");
         } else {
+            Turn.setTurn(p2);
+            mine = false;
             p1.setSymbol("O");
             p2.setSymbol("X");
+            
+            lbl_name1.setText("O");
+            lbl_name2.setText("X");
         }
     }
 }

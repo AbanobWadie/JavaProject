@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -36,6 +37,17 @@ public class JavaProject extends Application {
         } catch (IOException ex) {
             Logger.getLogger(JavaProject.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                if (ServerConnection.running) {
+                    ServerConnection.exit();
+                    ServerConnection.end();
+                }
+                System.exit(0);
+            }
+        });
     }
 
     @Override
@@ -44,14 +56,11 @@ public class JavaProject extends Application {
         con.exit();
     }
 
-
-    
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
