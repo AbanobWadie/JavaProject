@@ -177,7 +177,6 @@ public class SinglePlayerViewController implements Initializable {
             button.setText("");
             if (X1.isSelected()) {
                 button.setText("X");
-                lbl_symbol1.setText("X");
                 if (recordFlag) {
                     record.setMove(position, "X");
                 }
@@ -201,13 +200,7 @@ public class SinglePlayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         disableButtons(false);
-        if (X1.isSelected()) {
-            lbl_symbol1.setText("X");
-            lbl_symbol2.setText("O");
-        } else if (O1.isSelected()) {
-            lbl_symbol1.setText("O");
-            lbl_symbol2.setText("X");
-        }
+   
     }
 
     private void loadButtons() {
@@ -287,26 +280,26 @@ public class SinglePlayerViewController implements Initializable {
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
-                endGame.setContentText("Player \"" + winner + " " + lbl_player.getText() + "\" won.");
+                endGame.setContentText("\"" + lbl_player.getText() + "\" is winner.");
             } else if (X1.isSelected() && winner == "O") {
                 Game game = new Game(lbl_player.getText(), "AI", "AI");
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
-                endGame.setContentText("Player \"" + winner + " AI\" won.");
+                endGame.setContentText("\"" + " AI\" is winner.");
             } else if (O1.isSelected() && winner == "O") {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
-                endGame.setContentText("Player \"" + winner + " " + lbl_player.getText() + "\" won.");
+                endGame.setContentText("\"" + lbl_player.getText() + "\" is winner.");
 
             } else {
                 Game game = new Game(lbl_player.getText(), "AI", "AI");
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
-                endGame.setContentText("Player \"" + winner + " AI\" won.");
+                endGame.setContentText("\"" + " AI\" is winner.");
 
             }
         } else {
@@ -490,16 +483,34 @@ public class SinglePlayerViewController implements Initializable {
         Random randomMove = new Random();
         int temp;
         while (checkFreeButton(buttonsList)) {
+            
             temp = randomMove.nextInt(9);
             if (buttonsList.get(temp).getText() == "") {
                 if (X1.isSelected()) {
                     buttonsList.get(temp).setText("O");
+                     for (int i = 0; i < buttonText.length; i++) {
+                    buttonText[i]=buttonsList.get(temp).getText();
+                  //  buttonText[1]=buttonsList.get(temp).getText();
+                    //buttonText[2]=buttonsList.get(temp).getText();
+                     checkVictory(buttonText);
+                     }
+                    
                     if (recordFlag) {
                         record.setMove("" + (temp + 1), "O");
                     }
                     break;
                 } else if (O1.isSelected()) {
                     buttonsList.get(temp).setText("X");
+                     for (int i = 0; i < buttonText.length; i++) {
+                    buttonText[i]=buttonsList.get(temp).getText();
+                  //  buttonText[1]=buttonsList.get(temp).getText();
+                    //buttonText[2]=buttonsList.get(temp).getText();
+                     checkVictory(buttonText);
+                     }
+                     
+                   
+                    
+                   
                     if (recordFlag) {
                         record.setMove("" + (temp + 1), "X");
                     }
