@@ -4,27 +4,22 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.LocalViewController">
    <children>
-      <ImageView blendMode="SCREEN" fitHeight="550.0" fitWidth="750.0" pickOnBounds="true">
-         <image>
-            <Image url="@../Images/wood.png" />
-         </image>
-      </ImageView>
-      <Button fx:id="btn_play" layoutX="312.0" layoutY="353.0" mnemonicParsing="false" onAction="#play" prefHeight="37.0" prefWidth="126.0" text="Play" />
-      <Label layoutX="57.0" layoutY="150.0" text="player1" />
-      <Label layoutX="463.0" layoutY="151.0" text="Player2" />
-      <TextField fx:id="txt_player1" layoutX="113.0" layoutY="141.0" prefHeight="37.0" prefWidth="183.0" />
-      <TextField fx:id="txt_player2" layoutX="510.0" layoutY="141.0" prefHeight="37.0" prefWidth="183.0" />
-      <RadioButton fx:id="X1" layoutX="173.0" layoutY="214.0" mnemonicParsing="false" onAction="#player1Symbol" text="X" />
-      <RadioButton fx:id="O1" layoutX="173.0" layoutY="253.0" mnemonicParsing="false" onAction="#player1Symbol" text="O" />
-      <RadioButton fx:id="X2" layoutX="587.0" layoutY="214.0" mnemonicParsing="false" onAction="#player2Symbol" text="X" />
-      <RadioButton fx:id="O2" layoutX="587.0" layoutY="253.0" mnemonicParsing="false" onAction="#player2Symbol" text="O" />
-      <Button fx:id="btn_record" layoutX="46.0" layoutY="492.0" mnemonicParsing="false" text="Record" onAction="#record"/>
-      <Button fx:id="back" layoutX="650.0" layoutY="492.0" mnemonicParsing="false" onAction="#back" text="back" />
+      <ImageView blendMode="SCREEN" fitHeight="550.0" fitWidth="750.0" layoutX="2.0" pickOnBounds="true" />
+      <TextField fx:id="txt_name1" layoutX="130.0" layoutY="97.0" prefHeight="41.0" prefWidth="150.0" />
+      <RadioButton fx:id="X1" layoutX="190.0" layoutY="186.0" mnemonicParsing="false" onAction="#player1Symbol" text="X" />
+      <RadioButton fx:id="O1" layoutX="190.0" layoutY="231.0" mnemonicParsing="false" onAction="#player1Symbol" text="O" />
+      <Label layoutX="61.0" layoutY="109.0" text="player1" />
+      <Button fx:id="btn_play" layoutX="297.0" layoutY="328.0" mnemonicParsing="false" onAction="#play" prefHeight="52.0" prefWidth="209.0" text="play" />
+      <TextField fx:id="txt_name2" layoutX="527.0" layoutY="97.0" prefHeight="41.0" prefWidth="150.0" />
+      <Label layoutX="450.0" layoutY="118.0" text="player2" />
+      <RadioButton fx:id="X2" layoutX="587.0" layoutY="186.0" mnemonicParsing="false" onAction="#player2Symbol" text="X" />
+      <RadioButton fx:id="O2" layoutX="587.0" layoutY="231.0" mnemonicParsing="false" onAction="#player2Symbol" text="O" />
+      <Button fx:id="btn_record" layoutX="74.0" layoutY="469.0" mnemonicParsing="false" text="Record" />
+      <Button fx:id="btn_back" layoutX="657.0" layoutY="469.0" mnemonicParsing="false" onAction="#back" text="Back" />
    </children>
 </AnchorPane>

@@ -30,7 +30,7 @@
          <top>
             <Pane prefHeight="109.0" prefWidth="719.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lbl_player" layoutX="75.0" layoutY="26.0" text="Player" textFill="#ff2700">
+                  <Label fx:id="lbl_player" layoutX="75.0" layoutY="31.0" text="Player" textFill="#ff2700">
                      <font>
                         <Font name="Berlin Sans FB Bold" size="18.0" />
                      </font>
@@ -40,6 +40,8 @@
                         <Font name="Berlin Sans FB Bold" size="18.0" />
                      </font>
                   </Label>
+                  <Label fx:id="lbl_symbol1" layoutX="92.0" layoutY="69.0" text="0" />
+                  <Label fx:id="lbl_symbol2" layoutX="614.0" layoutY="70.0" text="0" />
                </children>
             </Pane>
          </top>
