@@ -200,7 +200,7 @@ public class SinglePlayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         disableButtons(false);
-   
+
     }
 
     private void loadButtons() {
@@ -483,34 +483,28 @@ public class SinglePlayerViewController implements Initializable {
         Random randomMove = new Random();
         int temp;
         while (checkFreeButton(buttonsList)) {
-            
+
             temp = randomMove.nextInt(9);
             if (buttonsList.get(temp).getText() == "") {
                 if (X1.isSelected()) {
                     buttonsList.get(temp).setText("O");
-                     for (int i = 0; i < buttonText.length; i++) {
-                    buttonText[i]=buttonsList.get(temp).getText();
-                  //  buttonText[1]=buttonsList.get(temp).getText();
-                    //buttonText[2]=buttonsList.get(temp).getText();
-                     checkVictory(buttonText);
-                     }
-                    
+                    for (int i = 0; i < buttonText.length; i++) {
+                        buttonText[i] = buttonsList.get(temp).getText();
+                        break;
+                    }
+
                     if (recordFlag) {
                         record.setMove("" + (temp + 1), "O");
                     }
                     break;
                 } else if (O1.isSelected()) {
                     buttonsList.get(temp).setText("X");
-                     for (int i = 0; i < buttonText.length; i++) {
-                    buttonText[i]=buttonsList.get(temp).getText();
-                  //  buttonText[1]=buttonsList.get(temp).getText();
-                    //buttonText[2]=buttonsList.get(temp).getText();
-                     checkVictory(buttonText);
-                     }
-                     
-                   
-                    
-                   
+                    for (int i = 0; i < buttonText.length; i++) {
+                        buttonText[i] = buttonsList.get(temp).getText();
+                        break;
+
+                    }
+
                     if (recordFlag) {
                         record.setMove("" + (temp + 1), "X");
                     }

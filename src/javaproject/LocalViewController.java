@@ -57,6 +57,8 @@ public class LocalViewController implements Initializable {
 
     Player p1=new Player();
     Player p2=new Player();
+    @FXML
+    private Button btn_back;
     /**
      * Initializes the controller class.
      */
@@ -184,6 +186,23 @@ public class LocalViewController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
+    }
+
+  
+    @FXML
+    void back(ActionEvent event) {
+        try {
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = (Scene) ((Node) event.getSource()).getScene();
+            Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+            scene.setRoot(root);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
   
