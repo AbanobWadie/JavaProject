@@ -78,6 +78,28 @@ public class ListPlayerViewController implements Initializable {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+        @FXML 
+    void playerHistory(ActionEvent event)
+    {
+
+          try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
+            Parent root = loader.load();
+
+            GameHistoryController o = loader.getController();
+           // o.translate(history.games,"Online History");
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+
+    }
 
     private void loadData() {
         new Thread(new Runnable() {

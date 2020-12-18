@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author Abanob wadie
  */
 public class GamesHistoryProcess {
-    private ArrayList<Game> games = new ArrayList<>();
+    public ArrayList<Game> games = new ArrayList<>();
     
     public boolean save(Game game){
         String saveLine = game.getPlayer1() + " " + game.getPlayer2() + " " + game.getWinner();
@@ -84,7 +84,7 @@ public class GamesHistoryProcess {
                     String[] arr = line.split(",");
                     for (int i = 0; i < arr.length; i++) {
                         String[] arr2 = arr[i].split(" ");
-                        Game game = new Game(arr[0], arr[1], arr[2]);
+                        Game game = new Game(arr2[0], arr2[1], arr2[2]);
                         games.add(game);
                     }
                 }
