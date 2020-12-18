@@ -116,7 +116,7 @@ public class StartViewController implements Initializable {
                 Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
-       @FXML 
+    @FXML 
     void playerHistory(ActionEvent event)
     {
       GamesHistoryProcess history = new GamesHistoryProcess();

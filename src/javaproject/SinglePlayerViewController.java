@@ -283,7 +283,7 @@ public class SinglePlayerViewController implements Initializable {
     }
     void video(){
          MediaPlayer mediaPlayer;    
-        String vurl = "file:/D:/videos/videeeo.mp4";
+        String vurl = ".";
         Media media = new Media(vurl);        
         mediaPlayer = new MediaPlayer(media);        
         mediaPlayer.play();   
