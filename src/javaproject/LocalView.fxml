@@ -19,7 +19,7 @@
       <Label layoutX="450.0" layoutY="118.0" text="player2" />
       <RadioButton fx:id="X2" layoutX="587.0" layoutY="186.0" mnemonicParsing="false" onAction="#player2Symbol" text="X" />
       <RadioButton fx:id="O2" layoutX="587.0" layoutY="231.0" mnemonicParsing="false" onAction="#player2Symbol" text="O" />
-      <Button fx:id="btn_record" layoutX="74.0" layoutY="469.0" mnemonicParsing="false" text="Record" />
+      <Button fx:id="btn_record" layoutX="74.0" layoutY="469.0" mnemonicParsing="false" onAction="#record" text="Record" />
       <Button fx:id="btn_back" layoutX="657.0" layoutY="469.0" mnemonicParsing="false" onAction="#back" text="Back" />
    </children>
 </AnchorPane>
