@@ -14,7 +14,7 @@
       <RadioButton fx:id="X1" layoutX="190.0" layoutY="186.0" mnemonicParsing="false" onAction="#player1Symbol" text="X" />
       <RadioButton fx:id="O1" layoutX="190.0" layoutY="231.0" mnemonicParsing="false" onAction="#player1Symbol" text="O" />
       <Label layoutX="61.0" layoutY="109.0" text="player1" />
-      <Button fx:id="btn_play" layoutX="297.0" layoutY="328.0" mnemonicParsing="false" onAction="#play" prefHeight="52.0" prefWidth="209.0" text="play" />
+      <Button fx:id="btn_play" defaultButton="true" layoutX="297.0" layoutY="328.0" mnemonicParsing="false" onAction="#play" prefHeight="52.0" prefWidth="209.0" text="play" />
       <TextField fx:id="txt_name2" layoutX="527.0" layoutY="97.0" prefHeight="41.0" prefWidth="150.0" />
       <Label layoutX="450.0" layoutY="118.0" text="player2" />
       <RadioButton fx:id="X2" layoutX="587.0" layoutY="186.0" mnemonicParsing="false" onAction="#player2Symbol" text="X" />

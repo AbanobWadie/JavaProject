@@ -26,7 +26,7 @@
             <ListView fx:id="list_persons" prefHeight="500.0" prefWidth="280.0" />
          </children>
       </VBox>
-      <Button fx:id="btn_back" layoutX="495.0" layoutY="414.0" mnemonicParsing="false" onAction="#back" text="BACK" textFill="#0d00ff">
+      <Button fx:id="btn_back" defaultButton="true" layoutX="495.0" layoutY="414.0" mnemonicParsing="false" onAction="#back" text="BACK" textFill="#0d00ff">
          <font>
             <Font name="System Bold Italic" size="14.0" />
          </font>
