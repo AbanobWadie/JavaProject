@@ -92,7 +92,7 @@ public class RecordedGamesProcess {
                         Record record = new Record(arr2[0], arr2[1]);
 
                         for (int j = 2; j < arr2.length; j++) {
-                            String[] arr3 = arr2[i].split("|");
+                            String[] arr3 = arr2[j].split("\\|");
                             record.setMove(arr3[0], arr3[1]);
                         }
                         records.add(record);
