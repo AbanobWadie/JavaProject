@@ -61,6 +61,9 @@ public class ListPlayerViewController implements Initializable {
     ObservableList list;
     String player2;
     String playerRequest;
+    boolean recordFlag;
+    @FXML
+    private Button btn_record;
 
     @FXML
     void back(ActionEvent event) {
@@ -77,6 +80,27 @@ public class ListPlayerViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+        void playerHistory(ActionEvent event)
+    {
+
+          try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
+            Parent root = loader.load();
+
+            GameHistoryController o = loader.getController();
+           // o.translate(history.games,"Online History");
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+
     }
 
     private void loadData() {
@@ -106,7 +130,14 @@ public class ListPlayerViewController implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                dialog(result.get(0));
+                                if(recordFlag)
+                                {
+                                    dialog(result.get(0));
+                                }else
+                                {
+                                    dialog2(result.get(0));
+                                }
+                               
                             }
                         });
 
@@ -124,7 +155,7 @@ public class ListPlayerViewController implements Initializable {
 
                                     o.transferMessageNames(name1, player2);
                                     
-                                    o.transferMessageRecordFlag(false);
+                                    o.transferMessageRecordFlag(recordFlag);
 
                                     o.transferMessageSymbol("X");
 
@@ -153,7 +184,7 @@ public class ListPlayerViewController implements Initializable {
 
                                     o.transferMessageNames(name1, playerRequest);
                                     
-                                    o.transferMessageRecordFlag(false);
+                                    o.transferMessageRecordFlag(recordFlag);
 
                                     o.transferMessageSymbol("O");
 
@@ -263,8 +294,7 @@ public class ListPlayerViewController implements Initializable {
     void transferMessageName1(String text) {
         name1 = text;
     }
-
-    public void dialog(String mgs) {
+     public void dialog(String mgs) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Request");
         ButtonType acceptBtn = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
@@ -279,5 +309,35 @@ public class ListPlayerViewController implements Initializable {
         } else if (result.get() == refuseBtn) {
             ServerConnection.no();
         }
+    }
+
+
+    public void dialog2(String mgs) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Request");
+        ButtonType acceptBtn = new ButtonType("Accept without record", ButtonBar.ButtonData.OK_DONE);
+        ButtonType acceptWithRecordBtn = new ButtonType("Accept with record", ButtonBar.ButtonData.OK_DONE);
+        ButtonType refuseBtn = new ButtonType("Refuse", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.setContentText(mgs);
+        dialog.getDialogPane().getButtonTypes().addAll(acceptBtn, refuseBtn, acceptWithRecordBtn);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if (result.get() == acceptBtn) {
+            ServerConnection.ok();
+        } else if (result.get() == refuseBtn) {
+            ServerConnection.no();
+        }else if(result.get() == acceptWithRecordBtn)
+        {
+            ServerConnection.ok();
+            recordFlag=true;
+        }
+    }
+
+    @FXML
+    private void record(ActionEvent event) {
+        btn_record.setDisable(true);
+        recordFlag=true;
+        
     }
 }

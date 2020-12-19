@@ -115,6 +115,11 @@ public class RecordedGamesProcess {
             Logger.getLogger(RecordedGamesProcess.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+     static void clear(){
+        records.clear();
+        
+    }
 }
 
 class Record {

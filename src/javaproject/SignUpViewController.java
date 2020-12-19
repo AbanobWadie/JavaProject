@@ -42,7 +42,8 @@ public class SignUpViewController implements Initializable {
 
     @FXML
     public void signUP(ActionEvent event) {
-        if (txt_nameS.getText().equals("") || txt_passS.getText().equals("")) {
+        if (txt_nameS.getText().equals("") || txt_passS.getText().equals("")||
+                 txt_nameS.getText().length()<=20 || txt_passS.getText().length()<=20) {
             showAlert("Rigistration Failed, Enter all data, please");
 
         } else {

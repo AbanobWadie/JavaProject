@@ -39,7 +39,9 @@ public class StartViewController implements Initializable {
     @FXML
     private Button btn_record;
 
-    
+     @FXML
+    private Button btn_localHistory;
+
     @FXML 
     void singlePlayer(ActionEvent event)
     {
@@ -115,6 +117,29 @@ public class StartViewController implements Initializable {
             } catch (IOException ex) {
                 Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
             }
+    }
+       @FXML 
+    void playerHistory(ActionEvent event)
+    {
+      GamesHistoryProcess history = new GamesHistoryProcess();
+      history.read();
+
+          try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
+            Parent root = loader.load();
+
+            GameHistoryController o = loader.getController();
+            o.translate(history.games,"Local History");
+
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+
     }
     
 }
