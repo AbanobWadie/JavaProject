@@ -24,7 +24,7 @@ public class ServerConnection {
 
     static private BufferedReader in;
     static private PrintWriter out;
-    static volatile boolean running = true;
+    static volatile boolean running = false;
 
     public static boolean init(String ip) {
         try {
