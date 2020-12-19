@@ -49,9 +49,7 @@ public class SignUpViewController implements Initializable {
             showAlert("Rigistration Successeded");
 
             try {
-
-                ServerConnection con = new ServerConnection();
-                boolean result = con.SignUp(txt_nameS.getText(), txt_passS.getText());
+                boolean result = ServerConnection.SignUp(txt_nameS.getText(), txt_passS.getText());
 
                 if (result) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
@@ -90,7 +88,7 @@ public class SignUpViewController implements Initializable {
     @FXML
     private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
-        alert.setTitle("Succedded");
+        alert.setTitle("");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
