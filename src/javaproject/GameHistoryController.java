@@ -50,14 +50,18 @@ public class GameHistoryController implements Initializable {
     @FXML
     private HBox hBox;
    
-    ArrayList<Game>game;
+    ArrayList<Game> game;
    
   @FXML
   void back(ActionEvent event)
     {       
         try {
              Parent root;
-             root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+             if(historyText.getText().equals("Local History")){
+                 root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+             }else{
+                 root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+             }
              Scene scene = new Scene(root);
              Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
              stage.setScene(scene);
@@ -69,16 +73,21 @@ public class GameHistoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       GamesHistoryProcess history = new GamesHistoryProcess();
-       history.read();
+              
+  
+      
+    }
+    
+    public void fillTable(){
+        System.out.println(game.get(0));
         ObservableList hisP1 = FXCollections.observableArrayList();
         ObservableList hisP2 = FXCollections.observableArrayList();
         ObservableList hisW = FXCollections.observableArrayList();
 
-        for (int i = 0; i < history.games.size(); i++) {
-            String p1 = history.games.get(i).getPlayer1();
-            String p2 = history.games.get(i).getPlayer2();
-            String w = history.games.get(i).getWinner();
+        for (int i = 0; i < game.size(); i++) {
+            String p1 = game.get(i).getPlayer1();
+            String p2 = game.get(i).getPlayer2();
+            String w = game.get(i).getWinner();
             hisP1.add((i+1)+"-  "+p1);
             hisP2.add((i+1)+"-  "+p2);
             hisW.add((i+1)+"-  "+w);
@@ -86,14 +95,13 @@ public class GameHistoryController implements Initializable {
         }
         listPlayer1.setItems(hisP1);
         listPlayer2.setItems(hisP2);
-        listWinner.setItems(hisW);      
-  
-      
+        listWinner.setItems(hisW);
     }
-     void translate(ArrayList<Game>game, String title){
+     void translate(ArrayList<Game> game, String title){
         this.game=game;
         historyText.setText(title);
-
+        
+        fillTable();
     }
       
 }

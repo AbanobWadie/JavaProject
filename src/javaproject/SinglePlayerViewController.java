@@ -329,10 +329,18 @@ public class SinglePlayerViewController implements Initializable {
         }
 
         if (!key.equals("draw")) {
-            if (!winner.equals("AI")) {
-                new ShowVideo().video(lbl_player.getText(), true);
+            if (winner.equals("X")) {
+                if(lbl_symbol1.getText().equals("X")){
+                    new ShowVideo().video(lbl_player.getText(), true);
+                }else{
+                    new ShowVideo().video(lbl_player.getText(), false);
+                }
             } else {
-                new ShowVideo().video(lbl_player.getText(), false);
+                if(lbl_symbol1.getText().equals("O")){
+                    new ShowVideo().video(lbl_player.getText(), true);
+                }else{
+                    new ShowVideo().video(lbl_player.getText(), false);
+                }
             }
         } else {
             endGame.setHeaderText(null);
@@ -398,74 +406,88 @@ public class SinglePlayerViewController implements Initializable {
         //Checking line 0
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[0][i];
-            if (checkVictory(buttonText)) {
-                key = "line 0";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "line 0";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking line 1
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[1][i];
-            if (checkVictory(buttonText)) {
-                key = "line 1";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "line 1";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking line 2
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[2][i];
-            if (checkVictory(buttonText)) {
-                key = "line 2";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "line 2";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking column 0
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][0];
-            if (checkVictory(buttonText)) {
-                key = "column 0";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "column 0";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking column 1
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][1];
-            if (checkVictory(buttonText)) {
-                key = "column 1";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "column 1";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking column 2
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][2];
-            if (checkVictory(buttonText)) {
-                key = "column 2";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "column 2";
+            return true;
         }
         buttonText = new String[3];
         //main diagonal
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][i];
-            if (checkVictory(buttonText)) {
-                key = "main diagonal";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "main diagonal";
+            return true;
+        }
+
         buttonText = new String[3];
         //secondary diagonal
         for (int i = 0; i < buttonText.length; i++) {
             int j = buttonText.length - 1 - i;
             buttonText[i] = ticTacToeTable[i][j];
-            if (checkVictory(buttonText)) {
-                key = "secundary diagonal";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "secundary diagonal";
+            return true;
         }
         //draw
         if (checkDraw(ticTacToeTable)) {
@@ -508,7 +530,7 @@ public class SinglePlayerViewController implements Initializable {
         while (true) {
             temp = (int) (Math.random() * 10) % 9;
             System.out.println(temp);
-            if(buttonsList.get(temp).getText().equals("")){
+            if (buttonsList.get(temp).getText().equals("")) {
                 if (X1.isSelected()) {
 
                     symbol = "O";
@@ -573,8 +595,8 @@ public class SinglePlayerViewController implements Initializable {
                         break;
                 }
             }
-            
-            if(!recflag){
+
+            if (!recflag) {
                 break;
             }
         }

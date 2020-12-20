@@ -31,7 +31,7 @@
             <Font name="System Bold Italic" size="20.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="btn_back" layoutX="13.0" layoutY="21.0" prefHeight="23.0" prefWidth="55.0" text="Back">
+      <Hyperlink fx:id="btn_back" onAction="#back" layoutX="13.0" layoutY="21.0" prefHeight="23.0" prefWidth="55.0" text="Back">
          <font>
             <Font name="Berlin Sans FB" size="14.0" />
          </font>

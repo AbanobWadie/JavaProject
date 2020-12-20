@@ -26,11 +26,11 @@ public class ShowVideo {
         String vurl ;
         String title;
        if(flag){
-           vurl = "file:D:/ITI/java/Project/JavaProject/JavaProject/src/video/winnervideo.mp4";
+           vurl = "file:/D:/ITI/java/Project/JavaProject/JavaProject/src/video/winnervideo.mp4";
            title="congaturation";
        }else{
-            vurl = "file:D:/ITI/java/Project/JavaProject/JavaProject/src/video/loservideo.mp4";
-             title="ooh...Game Over";
+            vurl = "file:/D:/ITI/java/Project/JavaProject/JavaProject/src/video/loservideo.mp4";
+             title="Game Over";
        }
         Media media = new Media( vurl);
         mediaPlayer = new MediaPlayer(media);

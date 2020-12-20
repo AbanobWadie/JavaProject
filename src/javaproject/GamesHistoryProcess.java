@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class GamesHistoryProcess {
     public static ArrayList<Game> games = new ArrayList<>();
     
-    public boolean save(Game game){
+    public static boolean save(Game game){
         String saveLine = game.getPlayer1() + " " + game.getPlayer2() + " " + game.getWinner();
  
         File file = new File(".", "History");
@@ -68,7 +68,7 @@ public class GamesHistoryProcess {
         return false;
     }
     
-    public void read(){
+    public static void read(){
         String line;
 
         File file = new File(".", "History");

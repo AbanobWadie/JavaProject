@@ -196,55 +196,46 @@ public class OnlineMultiplayerViewController implements Initializable {
             position = "1";
             move(b1);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b2) {
             position = "2";
             move(b2);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b3) {
             position = "3";
             move(b3);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b4) {
             position = "4";
             move(b4);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b5) {
             position = "5";
             move(b5);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b6) {
             position = "6";
             move(b6);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b7) {
             position = "7";
             move(b7);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b8) {
             position = "8";
             move(b8);
             ChangeTurn();
-            disableButtons(true);
         }
         if (e.getSource() == b9) {
             position = "9";
             move(b9);
             ChangeTurn();
-            disableButtons(true);
         }
 
     }
@@ -252,12 +243,15 @@ public class OnlineMultiplayerViewController implements Initializable {
     private void move(Button button) {
         if (button.getText().equals("")) {
             if (gameMode.equals("twoPlayers")) {
-                button.setText(playController(buttonsList, ticTacToeTable));
-
-                if (recordFlag) {
-                    record.setMove(position, moveSymbol);
+                String s = playController(buttonsList, ticTacToeTable);
+                if(button.getText().equals("")){
+                    button.setText(s);
+                    disableButtons(true);
+                    if (recordFlag) {
+                        record.setMove(position, moveSymbol);
+                    }
+                    updateGame();
                 }
-                updateGame();
             }
         }
     }
@@ -345,35 +339,34 @@ public class OnlineMultiplayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        //showEndGameAlert(key);
-        if (winner.equals("X")) {
-            if (lbl_name1.getText().equals("X")) {
-                new ShowVideo().video(lbl_player1.getText(), true);
-            } else {
-                new ShowVideo().video(lbl_player1.getText(), false);
-            }
+        showEndGameAlert(key);
 
-        } else {
-            if (lbl_name1.getText().equals("O")) {
-                new ShowVideo().video(lbl_player1.getText(), true);
-            } else {
-                new ShowVideo().video(lbl_player1.getText(), false);
-            }
-        }
     }
 
     private void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (!key.equals("draw")) {
-            endGame.setTitle("Victory");
-            endGame.setContentText("Player \"" + winner + "\" won.");
+            if (winner.equals("X")) {
+                if (lbl_name1.getText().equals("X")) {
+                    new ShowVideo().video(lbl_player1.getText(), true);
+                } else {
+                    new ShowVideo().video(lbl_player1.getText(), false);
+                }
+
+            } else {
+                if (lbl_name1.getText().equals("O")) {
+                    new ShowVideo().video(lbl_player1.getText(), true);
+                } else {
+                    new ShowVideo().video(lbl_player1.getText(), false);
+                }
+            }
         } else {
             endGame.setContentText("The game was a draw.");
             endGame.setTitle("Draw");
+            endGame.setHeaderText(null);
+            endGame.show();
         }
-        endGame.setHeaderText(null);
-        endGame.show();
-
+        disableButtons(true);
         if (recordFlag) {
             RecordedGamesProcess.save(record);
         }

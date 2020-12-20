@@ -218,13 +218,14 @@ public class LocalMultiplayerViewController implements Initializable {
     private void move(Button button) {
         if (button.getText().equals("")) {
             if (gameMode.equals("twoPlayers")) {
-                button.setText(playController(buttonsList, ticTacToeTable));
-
-                if (recordFlag) {
-                    record.setMove(position, moveSymbol);
+                String s = playController(buttonsList, ticTacToeTable);
+                if(button.getText().equals("")){
+                    button.setText(s);
+                    if (recordFlag) {
+                        record.setMove(position, moveSymbol);
+                    }
+                    updateGame();
                 }
-                updateGame();
-
             }
         }
     }

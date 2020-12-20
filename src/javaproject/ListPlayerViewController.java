@@ -56,6 +56,8 @@ public class ListPlayerViewController implements Initializable {
     private ListView<String> list_persons;
     @FXML
     private Button btn_back;
+    @FXML
+    private Button historyBtn;
 
     String name1;
     ObservableList list;
@@ -81,26 +83,9 @@ public class ListPlayerViewController implements Initializable {
         }
     }
 
-    void playerHistory(ActionEvent event) {
-
-        try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
-            Parent root = loader.load();
-
-            //  GameHistoryController o = loader.getController();
-            // o.translate(history.games,"Online History");
-            GameHistoryController o = loader.getController();
-            // o.translate(history.games,"Online History");
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-
+    @FXML
+    void historyAction(ActionEvent event) {
+        ServerConnection.history();
     }
 
     private void timer(){
@@ -127,7 +112,7 @@ public class ListPlayerViewController implements Initializable {
 
                     ArrayList<String> result = ServerConnection.getOnlineUsers();
 
-                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o")) {
+                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o") && !result.get(0).contains("history")) {
                         list = FXCollections.observableArrayList(result);
 
                         Platform.runLater(new Runnable() {
@@ -226,13 +211,15 @@ public class ListPlayerViewController implements Initializable {
                                 ArrayList<Game> games = new ArrayList<>();
                                 String history = result.get(0);
                                 
-                                String[] arr = history.split(",");
-                                for (int i = 0; i < arr.length; i++) {
-                                    String[] arr2 = arr[i].split(" ");
-                                    Game game = new Game(arr2[0], arr2[1], arr2[2]);
-                                    games.add(game);
+                                System.out.println(history);
+                                if(!history.equals("")){
+                                    String[] arr = history.split(",");
+                                    for (int i = 1; i < arr.length; i++) {
+                                        String[] arr2 = arr[i].split(" ");
+                                        Game game = new Game(arr2[0], arr2[1], arr2[2]);
+                                        games.add(game);
+                                    }
                                 }
-
                                 try {
 
                                     FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
@@ -330,45 +317,6 @@ public class ListPlayerViewController implements Initializable {
 
             }
         });
-
-        /*   list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov,
-                    String old_val, String new_val) {
-                try {
-                    if (new_val.contains("In-Game")) {
-                        /*Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.CANCEL);
-                        alert.setTitle("Sorry");
-                        alert.setHeaderText(null);
-                        alert.setContentText("This player is already in running game you cannot play with him before he finishes his game first");
-                        alert.show();
-                    } else {
-                        //Load second scene
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
-                        Parent root = loader.load();
-
-                        //Get controller of scene2
-                        OnlineViewController o = loader.getController();
-                        //Pass whatever data you want. You can have multiple method calls here
-                        o.transferMessageNames(name1, new_val);
-
-                        Stage stage = (Stage) (list_persons).getScene().getWindow();
-                        //stage.setScene(new Scene(root));
-
-                        //Show scene 2 in new window            
-                        //  Stage stage = new Stage();
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    }
-
-
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                }
-
-            }
-
-        });*/
     }
 
     void transferMessageName1(String text) {
