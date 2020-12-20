@@ -42,9 +42,23 @@ public class ServerConnection {
         }
     }
     
-   
-    public static boolean SignIn(String userName, String password) {
+
+
+    public static String SignIn(String userName, String password) {
+
         out.println("singin " + userName + " " + password);
+        out.flush();
+        try {
+            String requestState = in.readLine();
+            return requestState;
+        } catch (IOException ex) {
+            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public static boolean SignUp(String userName, String password) {
+        out.println("singup " + userName + " " + password);
         out.flush();
         try {
             String requestState = in.readLine();
@@ -56,9 +70,9 @@ public class ServerConnection {
         }
         return false;
     }
-
-    public static boolean SignUp(String userName, String password) {
-        out.println("singup " + userName + " " + password);
+    
+    public static boolean forgetPassword(String userName, String password) {
+        out.println("forget " + userName + " " + password);
         out.flush();
         try {
             String requestState = in.readLine();
