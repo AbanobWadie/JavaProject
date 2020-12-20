@@ -42,17 +42,23 @@ public class ServerConnection {
         }
     }
     
-    public static void end(){
+
+
+    public static String SignIn(String userName, String password) {
+
+        out.println("singin " + userName + " " + password);
+        out.flush();
         try {
-            in.close();
-            out.close();
+            String requestState = in.readLine();
+            return requestState;
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 
-    public static boolean SignIn(String userName, String password) {
-        out.println("singin " + userName + " " + password);
+    public static boolean SignUp(String userName, String password) {
+        out.println("singup " + userName + " " + password);
         out.flush();
         try {
             String requestState = in.readLine();
@@ -64,9 +70,9 @@ public class ServerConnection {
         }
         return false;
     }
-
-    public static boolean SignUp(String userName, String password) {
-        out.println("singup " + userName + " " + password);
+    
+    public static boolean forgetPassword(String userName, String password) {
+        out.println("forget " + userName + " " + password);
         out.flush();
         try {
             String requestState = in.readLine();
@@ -83,25 +89,14 @@ public class ServerConnection {
         out.println("exit");
         out.flush();
         running = false;
-        try {
-            in.close();
-            out.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+       
     }
     
     public static void back(){
         out.println("back");
         out.flush();
         running = false;
-        try {
-            in.close();
-            out.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     public static void playWith(String name) {
@@ -114,19 +109,28 @@ public class ServerConnection {
         try {
             //out.println("ready");
             //out.flush();
-            if (in.ready()) {
+           
                 String str = in.readLine();
                 System.out.println(str);
+                if(str ==null)
+                {
+                     arr.add("server closed");
+                     in.close();
+                     out.close();
+                     return arr;
+                    
+                }
                 if(str.contains("(online-list)")){
                     String[] strArr = str.split(" ");
                     
                     for (int i = 1; i < strArr.length; i++) {
                         arr.add(strArr[i]);
                     }
+                    arr.add(" ");
                 }else {
                     arr.add(str);
                 }
-            }
+            
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.LoginViewController">
    <children>
-      <ImageView blendMode="SCREEN" fitHeight="550.0" fitWidth="750.0" layoutY="2.0" opacity="0.93" pickOnBounds="true">
+      <ImageView blendMode="SCREEN" fitHeight="550.0" fitWidth="750.0" focusTraversable="true" layoutY="2.0" opacity="0.93" pickOnBounds="true">
          <image>
             <Image url="@../Images/xo.png" />
          </image>
@@ -23,7 +23,7 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="btn_login" layoutX="285.0" layoutY="340.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="262.0" style="-fx-background-color: #ED5485;" text="Login" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="btn_login" defaultButton="true" layoutX="285.0" layoutY="340.0" mnemonicParsing="false" onAction="#login" prefHeight="30.0" prefWidth="262.0" style="-fx-background-color: #ED5485;" text="Login" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="14.0" />
          </font>

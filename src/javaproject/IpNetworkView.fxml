@@ -26,7 +26,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btn_play" layoutX="281.0" layoutY="303.0" mnemonicParsing="false" onAction="#play" prefHeight="44.0" prefWidth="189.0" style="-fx-background-color: #ED5485;" text="Connect" textFill="WHITE">
+      <Button fx:id="btn_play" defaultButton="true" layoutX="281.0" layoutY="303.0" mnemonicParsing="false" onAction="#play" prefHeight="44.0" prefWidth="189.0" style="-fx-background-color: #ED5485;" text="Connect" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>

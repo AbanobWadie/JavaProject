@@ -122,15 +122,15 @@ public class LocalViewController implements Initializable {
         if (X2.isSelected()) {
             O1.setSelected(true);
 
-            p1.setSymbol("X");
+            p1.setSymbol("O");
 
             p2.setSymbol("X");
 
         } else if (O2.isSelected()) {
             X1.setSelected(true);
 
-            p1.setSymbol("O");
-            p2.setSymbol("X");
+            p1.setSymbol("X");
+            p2.setSymbol("O");
         }
 
         if (p1.getSymbol() == "X") {
@@ -164,10 +164,14 @@ public class LocalViewController implements Initializable {
                 //Get controller of scene2
                 LocalMultiplayerViewController o = loader.getController();
                 //Pass whatever data you want. You can have multiple method calls here
+                 o.transferMessageRecordFlag(recordFlag);
                 o.transferMesssageText(txt_name1.getText(),txt_name2.getText());
                 o.transferMessageButtons(X1, O1,X2,O2);
+                
                 //o.transferMessageRecordFlag(recordFlag);
                 o.transferPlayers(p1,p2);
+                o.transferFlag(false, null);
+              
 
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
@@ -205,6 +209,12 @@ public class LocalViewController implements Initializable {
         }
     }
 
+    @FXML
+    void record(ActionEvent event)
+    {
+         btn_record.setDisable(true);
+        recordFlag = true;
+    }
   
 
 }

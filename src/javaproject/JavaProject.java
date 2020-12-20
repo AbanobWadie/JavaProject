@@ -43,7 +43,7 @@ public class JavaProject extends Application {
             public void handle(WindowEvent event) {
                 if (ServerConnection.running) {
                     ServerConnection.exit();
-                    ServerConnection.end();
+                    
                 }
                 System.exit(0);
             }
