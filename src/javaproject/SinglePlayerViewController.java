@@ -280,14 +280,10 @@ public class SinglePlayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        if(!winner.equals("AI")){
-           new ShowVideo().video(lbl_player.getText(),true);
-        }else{
-           new ShowVideo().video(lbl_player.getText(),false);
-        }
+        
 
         
-        //showEndGameAlert(key);
+        showEndGameAlert(key);
     }
   
     
@@ -335,8 +331,17 @@ public class SinglePlayerViewController implements Initializable {
             recordedGame.save(record);
         }
 
-        endGame.setHeaderText(null);
-        endGame.show();
+        if(key != "draw"){
+            if(!winner.equals("AI")){
+               new ShowVideo().video(lbl_player.getText(),true);
+            }else{
+               new ShowVideo().video(lbl_player.getText(),false);
+            }
+        }else{
+            endGame.setHeaderText(null);
+            endGame.show();
+        }
+        
 
     }
 
