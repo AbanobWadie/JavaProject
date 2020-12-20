@@ -96,12 +96,6 @@ public class ServerConnection {
         out.println("back");
         out.flush();
         running = false;
-        try {
-            in.close();
-            out.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public static void playWith(String name) {

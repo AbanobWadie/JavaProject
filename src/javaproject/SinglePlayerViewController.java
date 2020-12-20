@@ -285,7 +285,9 @@ public class SinglePlayerViewController implements Initializable {
         }else{
            new ShowVideo().video(lbl_player.getText(),false);
         }
-       // showEndGameAlert(key);
+
+        
+        //showEndGameAlert(key);
     }
   
     
