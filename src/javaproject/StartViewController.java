@@ -100,6 +100,8 @@ public class StartViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        RecordedGamesProcess.read();
+        System.out.println(RecordedGamesProcess.records.get(0).getMoves());
     }    
 
     @FXML

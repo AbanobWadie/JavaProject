@@ -505,7 +505,8 @@ public class SinglePlayerViewController implements Initializable {
         String symbol = null;
        
 
-            temp = randomMove.nextInt(9);
+            temp = (int)(Math.random()*9+1);
+            System.out.println(temp);
             if (buttonsList.get(temp).getText().equals("")) {
 
                 if (X1.isSelected()) {
