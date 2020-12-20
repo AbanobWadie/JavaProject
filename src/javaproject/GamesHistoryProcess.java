@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * @author Abanob wadie
  */
 public class GamesHistoryProcess {
-    public ArrayList<Game> games = new ArrayList<>();
+    public static ArrayList<Game> games = new ArrayList<>();
     
     public boolean save(Game game){
         String saveLine = game.getPlayer1() + " " + game.getPlayer2() + " " + game.getWinner();

@@ -64,8 +64,8 @@ public class SinglePlayerViewController implements Initializable {
     private Button restartButton;
     private String[][] ticTacToeTable;
     private ArrayList<Button> buttonsList = new ArrayList<>();
-    
-    boolean recflag=true;
+
+    boolean recflag = true;
 
     RadioButton X1 = new RadioButton();
 
@@ -183,7 +183,7 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     void move(Button button) {
-        recflag=true;
+        recflag = true;
         if (button.getText().equals("")) {
             button.setText("");
             if (X1.isSelected()) {
@@ -280,29 +280,26 @@ public class SinglePlayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        
 
-        
         showEndGameAlert(key);
     }
-  
-    
+
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (key != "draw") {
-            if (X1.isSelected() && winner == "X") {
+            if (X1.isSelected() && winner.equals("X")) {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + lbl_player.getText() + "\" is winner.");
-            } else if (X1.isSelected() && winner == "O") {
+            } else if (X1.isSelected() && winner.equals("O")) {
                 Game game = new Game(lbl_player.getText(), "AI", "AI");
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + " AI\" is winner.");
-            } else if (O1.isSelected() && winner == "O") {
+            } else if (O1.isSelected() && winner.equals("O")) {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
@@ -331,17 +328,16 @@ public class SinglePlayerViewController implements Initializable {
             recordedGame.save(record);
         }
 
-        if(key != "draw"){
-            if(!winner.equals("AI")){
-               new ShowVideo().video(lbl_player.getText(),true);
-            }else{
-               new ShowVideo().video(lbl_player.getText(),false);
+        if (!key.equals("draw")) {
+            if (!winner.equals("AI")) {
+                new ShowVideo().video(lbl_player.getText(), true);
+            } else {
+                new ShowVideo().video(lbl_player.getText(), false);
             }
-        }else{
+        } else {
             endGame.setHeaderText(null);
             endGame.show();
         }
-        
 
     }
 
@@ -480,11 +476,11 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     public boolean checkVictory(String[] vector) {
-        if (vector[0] == "X" && vector[1] == "X" && vector[2] == "X") {
+        if (vector[0].equals("X") && vector[1].equals("X") && vector[2].equals("X")) {
             winner = "X";
             return true;
 
-        } else if (vector[0] == "O" && vector[1] == "O" && vector[2] == "O") {
+        } else if (vector[0].equals("O") && vector[1].equals("O") && vector[2].equals("O")) {
             winner = "O";
             return true;
         } else {
@@ -495,7 +491,7 @@ public class SinglePlayerViewController implements Initializable {
     public boolean checkDraw(String[][] ticTacToeTable) {
         for (int i = 0; i < ticTacToeTable.length; i++) {
             for (int j = 0; j < ticTacToeTable[0].length; j++) {
-                if (ticTacToeTable[i][j] == "") {
+                if (ticTacToeTable[i][j].equals("")) {
                     return false;
                 }
             }
@@ -506,14 +502,13 @@ public class SinglePlayerViewController implements Initializable {
     void easyGameLogic(ArrayList<Button> buttonsList) {
         Random randomMove = new Random();
         int temp;
-
         String symbol = null;
-       
+        temp = (int) (Math.random() * 10) % 9;
 
-            temp = (int)(Math.random()*9+1);
+        while (true) {
+            temp = (int) (Math.random() * 10) % 9;
             System.out.println(temp);
-            if (buttonsList.get(temp).getText().equals("")) {
-
+            if(buttonsList.get(temp).getText().equals("")){
                 if (X1.isSelected()) {
 
                     symbol = "O";
@@ -533,54 +528,61 @@ public class SinglePlayerViewController implements Initializable {
                 switch (temp) {
                     case 1:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 2:
+                    case 2:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 3:
+                    case 3:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 4:
+                    case 4:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 5:
+                    case 5:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 6:
+                    case 6:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 7:
+                    case 7:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 8:
+                    case 8:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 9:
+                    case 9:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                        
-
                 }
-                
-               
             }
-            else
-            {
-               
-                   easyGameLogic(buttonsList);
-                
+            
+            if(!recflag){
+                break;
             }
-            if(recflag){
-             updateGame();
-             recflag=false;
-            }
-        
-       
+        }
     }
 
     boolean checkFreeButton(ArrayList<Button> buttonsList) {
         for (int i = 0; i < buttonsList.size(); i++) {
-            if (buttonsList.get(i).getText() == "") {
+            if (buttonsList.get(i).getText().equals("")) {
                 return true;
             }
         }

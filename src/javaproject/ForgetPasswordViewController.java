@@ -58,7 +58,7 @@ public class ForgetPasswordViewController implements Initializable {
     }
 
     @FXML
-    public void forget(ActionEvent event){
+    public void confirm(ActionEvent event){
         if (txt_username.getText().equals("") || txt_newPass.getText().equals("") || txt_confirmPass.getText().equals("")) {
             showAlert("Failed, Enter all data, please");
 
