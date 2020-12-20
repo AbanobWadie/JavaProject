@@ -129,9 +129,9 @@ public class ListPlayerViewController implements Initializable {
                             @Override
                             public void run() {
                                 if (recordFlag) {
-                                    dialog(result.get(0));
-                                } else {
                                     dialog2(result.get(0));
+                                } else {
+                                    dialog(result.get(0));
                                 }
 
                             }
