@@ -32,5 +32,6 @@
          </font>
       </Button>
       <Button fx:id="btn_record" layoutX="493.0" layoutY="300.0" mnemonicParsing="false" onAction="#record" prefHeight="30.0" prefWidth="57.0" text="Record" />
+      <Button fx:id="btn_onlineHistory" layoutX="590.0" layoutY="483.0" mnemonicParsing="false" onAction="#playerHistory" text="Online History" />
    </children>
 </AnchorPane>

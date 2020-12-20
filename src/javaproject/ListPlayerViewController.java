@@ -64,6 +64,8 @@ public class ListPlayerViewController implements Initializable {
     boolean recordFlag;
     @FXML
     private Button btn_record;
+     @FXML
+    private Button btn_onlineHistory;
 
     @FXML
     void back(ActionEvent event) {
