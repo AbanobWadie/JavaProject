@@ -88,7 +88,7 @@ public class ListPlayerViewController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
             Parent root = loader.load();
 
-            GameHistoryController o = loader.getController();
+          //  GameHistoryController o = loader.getController();
            // o.translate(history.games,"Online History");
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

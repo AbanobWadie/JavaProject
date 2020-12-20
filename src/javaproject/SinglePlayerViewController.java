@@ -1,7 +1,9 @@
 package javaproject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -9,9 +11,11 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,7 +26,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class SinglePlayerViewController implements Initializable {
 
@@ -272,9 +280,15 @@ public class SinglePlayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        showEndGameAlert(key);
+        if(!winner.equals("AI")){
+           new ShowVideo().video(lbl_player.getText(),true);
+        }else{
+           new ShowVideo().video(lbl_player.getText(),false);
+        }
+       // showEndGameAlert(key);
     }
-
+  
+    
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (key != "draw") {

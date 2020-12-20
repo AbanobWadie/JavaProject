@@ -69,18 +69,19 @@ public class GameHistoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+       GamesHistoryProcess history = new GamesHistoryProcess();
+       history.read();
         ObservableList hisP1 = FXCollections.observableArrayList();
         ObservableList hisP2 = FXCollections.observableArrayList();
         ObservableList hisW = FXCollections.observableArrayList();
 
-        for (int i = 0; i < game.size(); i++) {
-            String p1 = game.get(i).getPlayer1();
-            String p2 = game.get(i).getPlayer2();
-            String w = game.get(i).getWinner();
-            hisP1.add(p1);
-            hisP2.add(p2);
-            hisW.add(w);
+        for (int i = 0; i < history.games.size(); i++) {
+            String p1 = history.games.get(i).getPlayer1();
+            String p2 = history.games.get(i).getPlayer2();
+            String w = history.games.get(i).getWinner();
+            hisP1.add((i+1)+"-  "+p1);
+            hisP2.add((i+1)+"-  "+p2);
+            hisW.add((i+1)+"-  "+w);
 
         }
         listPlayer1.setItems(hisP1);
@@ -94,6 +95,6 @@ public class GameHistoryController implements Initializable {
         historyText.setText(title);
 
     }
-    
+      
 }
   

@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+import static javaproject.OnlineMultiplayerViewController.winner;
 import static javaproject.Turn.setTurn;
 import static javaproject.Turn.getTurn;
 
@@ -204,8 +205,24 @@ public class LocalMultiplayerViewController implements Initializable {
                 break;
             }
         }
-        disableButtons(true);
-        showEndGameAlert(key);
+        disableButtons(true);  
+         if(winner.equals("X")){
+             if(s1.getText().equals("X")){
+              new ShowVideo().video(lbl_p1.getText(),true);
+             }
+             else{
+                   new ShowVideo().video(lbl_p2.getText(),true);
+             }
+          
+        }else{
+              if(s1.getText().equals("O")){
+              new ShowVideo().video(lbl_p1.getText(),true);
+             }
+             else{
+               new ShowVideo().video(lbl_p2.getText(),true);
+             }
+        }
+       // showEndGameAlert(key);
     }
 
     private void showEndGameAlert(String key) {

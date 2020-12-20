@@ -12,21 +12,24 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="750.0" stylesheets="project.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.GameHistoryController">
   <children>
-      <Text fx:id="historyText" layoutX="238.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="273.6708984375">
+      <Text fx:id="historyText" fill="#8d1414" layoutX="257.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="273.6708984375">
          <font>
-            <Font size="24.0" />
+            <Font name="System Bold Italic" size="36.0" />
          </font></Text>
       <Button fx:id="btn_back" layoutX="21.0" layoutY="444.0" mnemonicParsing="false" onAction="#back" prefHeight="31.0" prefWidth="73.0" style="-fx-background-radius: 100; -fx-background-color: #6b1c1c;" text="Back" textFill="WHITE" />
       <VBox layoutX="39.0" layoutY="95.0" prefHeight="340.0" prefWidth="672.0">
          <children>
-            <Label prefHeight="30.0" prefWidth="672.0" text="                 Player1                                              Player2                                             Winner" />
-            <HBox prefHeight="356.0" prefWidth="672.0">
+            <Label prefHeight="0.0" prefWidth="664.0" text="                 Player1                                 Player2                                  Winner" textFill="#861515">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <HBox prefHeight="316.0" prefWidth="672.0">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
                <children>
                   <ListView fx:id="listPlayer1" prefHeight="200.0" prefWidth="225.0" />
-                  <ListView fx:id="listPlayer2" prefHeight="200.0" prefWidth="225.0" />
+                  <ListView fx:id="listPlayer2" prefHeight="303.0" prefWidth="224.0" />
                   <ListView fx:id="listWinner" prefHeight="290.0" prefWidth="225.0" />
                </children>
             </HBox>

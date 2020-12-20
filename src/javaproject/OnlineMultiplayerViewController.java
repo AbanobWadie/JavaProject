@@ -315,7 +315,23 @@ public class OnlineMultiplayerViewController implements Initializable{
             }
         }
         disableButtons(true);
-        showEndGameAlert(key);
+        //showEndGameAlert(key);
+         if(winner.equals("X")){
+             if(lbl_name1.getText().equals("X")){
+              new ShowVideo().video(lbl_player1.getText(),true);
+             }
+             else{
+                   new ShowVideo().video(lbl_player1.getText(),false);
+             }
+          
+        }else{
+              if(lbl_name1.getText().equals("O")){
+              new ShowVideo().video(lbl_player1.getText(),true);
+             }
+             else{
+               new ShowVideo().video(lbl_player1.getText(),false);
+             }
+        }
     }
 
 
