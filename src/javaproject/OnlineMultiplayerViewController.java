@@ -224,11 +224,11 @@ public class OnlineMultiplayerViewController implements Initializable{
 		if(button.getText().equals("")) {
 			if(gameMode.equals("twoPlayers")) {
 				button.setText(playController(buttonsList, ticTacToeTable));
-				updateGame();
-                                
+				
                                 if(recordFlag){
                                     record.setMove(position, moveSymbol);
                                 }
+                                updateGame();
                         }}
 	}
 	
@@ -238,7 +238,7 @@ public class OnlineMultiplayerViewController implements Initializable{
 		loadButtons();
 		loadTicTacToeTable();
 		myTurn = true;
-		disableButtons(false);
+                System.out.println("load");
 	}
 
 	private void loadButtons() {
@@ -626,21 +626,24 @@ public class OnlineMultiplayerViewController implements Initializable{
         }
     }
 
+    void transferMessageRecordFlag(boolean flag) {
+        recordFlag = flag;
+    }     
+         
     void transferMessageNames(String name1, String get) {
         lbl_player1.setText(name1);
         lbl_player2.setText(get);
-        
+        System.out.println("names");
         if(recordFlag){
             record = new Record(name1, get);
         }
     }
     
-    void transferMessageRecordFlag(boolean flag) {
-        recordFlag = flag;
-    }
+    
     
     void transferMessageSymbol(String s) {
         if (s.equals("X")) {
+            disableButtons(false);
             Turn.setTurn(p1);
             mine = true;
             p1.setSymbol("X");
@@ -649,6 +652,7 @@ public class OnlineMultiplayerViewController implements Initializable{
             lbl_name1.setText("X");
             lbl_name2.setText("O");
         } else {
+            disableButtons(true);
             Turn.setTurn(p2);
             mine = false;
             p1.setSymbol("O");

@@ -149,9 +149,8 @@ public class ListPlayerViewController implements Initializable {
 
                                     OnlineMultiplayerViewController o = loader.getController();
 
-                                    o.transferMessageNames(name1, player2);
-
                                     o.transferMessageRecordFlag(recordFlag);
+                                    o.transferMessageNames(name1, player2);
 
                                     o.transferMessageSymbol("X");
 
@@ -176,10 +175,8 @@ public class ListPlayerViewController implements Initializable {
                                     Parent root = loader.load();
 
                                     OnlineMultiplayerViewController o = loader.getController();
-
-                                    o.transferMessageNames(name1, playerRequest);
-
                                     o.transferMessageRecordFlag(recordFlag);
+                                    o.transferMessageNames(name1, playerRequest);
 
                                     o.transferMessageSymbol("O");
 
