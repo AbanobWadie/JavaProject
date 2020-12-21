@@ -16,7 +16,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
@@ -26,19 +28,22 @@ import javafx.stage.WindowEvent;
 public class JavaProject extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-            Scene scene = new Scene(root);
+            root = FXMLLoader.load(getClass().getResource("SplashView.fxml"));
+           // Scene scene = new Scene(root);
 
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            Scene scene = new Scene(root,725,550,Color.TRANSPARENT);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        
+        stage.setScene(scene);
+        stage.show();
         } catch (IOException ex) {
             Logger.getLogger(JavaProject.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
                 if (ServerConnection.running) {
