@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,35 +13,59 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.SingleViewController">
    <children>
-      <ImageView fitHeight="550.0" fitWidth="750.0" layoutX="1.0" pickOnBounds="true">
+      <ImageView fitHeight="550.0" fitWidth="751.0" pickOnBounds="true">
          <image>
             <Image url="@../Images/page.png" />
          </image>
       </ImageView>
       <TextField fx:id="txt_name" layoutX="211.0" layoutY="44.0" opacity="0.47" prefHeight="41.0" prefWidth="301.0" style="-fx-background-radius: 50;" />
-      <RadioButton fx:id="X" layoutX="554.0" layoutY="47.0" mnemonicParsing="false" text="X">
+      <RadioButton fx:id="X" layoutX="555.0" layoutY="46.0" mnemonicParsing="false" prefWidth="57.0" text="X">
          <font>
-            <Font size="24.0" />
+            <Font name="Jokerman" size="22.0" />
          </font></RadioButton>
-      <RadioButton fx:id="O" layoutX="663.0" layoutY="47.0" mnemonicParsing="false" text="O">
+      <RadioButton fx:id="O" layoutX="645.0" layoutY="45.0" mnemonicParsing="false" text="O">
          <font>
-            <Font size="24.0" />
+            <Font name="Jokerman" size="22.0" />
          </font></RadioButton>
-      <Label layoutX="94.0" layoutY="42.0" text="Name" textFill="#3c3b20fa">
+      <Label layoutX="94.0" layoutY="42.0" text="Name" textFill="#a81010fa">
          <font>
             <Font name="Bell MT Bold" size="36.0" />
          </font></Label>
-      <Button fx:id="btn_play" layoutX="283.0" layoutY="438.0" mnemonicParsing="false" onAction="#play" prefHeight="55.0" prefWidth="209.0" style="-fx-background-radius: 100; -fx-background-color: #38c450;" text="play" textFill="WHITE">
+      <Button fx:id="btn_play" layoutX="276.0" layoutY="429.0" mnemonicParsing="false" onAction="#play" prefHeight="57.0" prefWidth="224.0" style="-fx-background-radius: 100; -fx-background-color: #38c450;" text="play" textFill="WHITE">
          <font>
-            <Font name="Bell MT Bold" size="36.0" />
+            <Font name="Sitka Display Bold Italic" size="31.0" />
          </font></Button>
-      <Button fx:id="btn_record" layoutX="626.0" layoutY="472.0" mnemonicParsing="false" onAction="#record" prefHeight="44.0" prefWidth="92.0" style="-fx-background-radius: 100; -fx-background-color: #93704a;" text="Record" textFill="WHITE">
+      <Button fx:id="btn_record" layoutX="613.0" layoutY="486.0" mnemonicParsing="false" onAction="#record" prefHeight="35.0" prefWidth="92.0" style="-fx-background-radius: 100; -fx-background-color: #93704a;" text="Record" textFill="WHITE">
          <font>
             <Font name="Bookman Old Style" size="18.0" />
          </font></Button>
-      <Button layoutX="39.0" layoutY="479.0" mnemonicParsing="false" onAction="#back" prefHeight="44.0" prefWidth="92.0" style="-fx-background-radius: 100; -fx-background-color: #93704a;" text="Back" textFill="WHITE">
+      <Button layoutX="44.0" layoutY="486.0" mnemonicParsing="false" onAction="#back" prefHeight="35.0" prefWidth="92.0" style="-fx-background-radius: 100; -fx-background-color: #93704a;" text="Back" textFill="WHITE">
          <font>
-            <Font name="Bookman Old Style" size="20.0" />
+            <Font name="Bookman Old Style" size="18.0" />
          </font></Button>
+      <ToggleButton fx:id="btn_easy" layoutX="237.0" layoutY="264.0" mnemonicParsing="false" onAction="#easy" prefHeight="102.0" prefWidth="101.0" style="-fx-background-radius: 100; -fx-background-color: #ED5485;" text="Easy">
+         <font>
+            <Font name="Jokerman" size="19.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ToggleButton>
+      <ToggleButton fx:id="btn_meduim" layoutX="337.0" layoutY="185.0" mnemonicParsing="false" onAction="#meduim" prefHeight="102.0" prefWidth="101.0" style="-fx-background-radius: 100; -fx-background-color: #FFE869;" text="Meduim">
+         <font>
+            <Font name="Jokerman" size="19.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ToggleButton>
+      <ToggleButton fx:id="btn_hard" layoutX="438.0" layoutY="264.0" mnemonicParsing="false" onAction="#hard" prefHeight="102.0" prefWidth="101.0" style="-fx-background-radius: 100; -fx-background-color: #57D1C9;" text="Hard">
+         <font>
+            <Font name="Jokerman" size="19.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </ToggleButton>
    </children>
 </AnchorPane>

@@ -218,7 +218,7 @@ public class SinglePlayerViewController implements Initializable {
     private void loadButtons() {
         for (int i = 0; i < buttonsList.size(); i++) {
             buttonsList.get(i).setText("");
-            buttonsList.get(i).setStyle("-fx-font: 40 arial; -fx-base: #b6e7c9;");
+            buttonsList.get(i).setStyle("-fx-background: #b6e7c9;");
         }
         restartButton.setVisible(false);
     }
@@ -288,7 +288,7 @@ public class SinglePlayerViewController implements Initializable {
 
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
-        if (key != "draw") {
+        if (!key.equals("draw")) {
             if (X1.isSelected() && winner.equals("X")) {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
@@ -528,25 +528,30 @@ public class SinglePlayerViewController implements Initializable {
         //while (true) {
             int temp = mediumAIAlogorithm.getBestPosition(buttonsList, lbl_symbol1.getText(), lbl_symbol2.getText());
             System.out.println(temp);
-            System.out.println(lbl_symbol1.getText());
             if (buttonsList.get(temp).getText().equals("")) {
                 if (X1.isSelected()) {
 
                     symbol = "O";
 
                     if (recordFlag) {
-                        record.setMove("" + (temp + 1), "O");
+                        record.setMove("" + (temp), "O");
                     }
 
                 } else if (O1.isSelected()) {
                     symbol = "X";
 
                     if (recordFlag) {
-                        record.setMove("" + (temp + 1), "X");
+                        record.setMove("" + (temp), "X");
                     }
 
                 }
                 switch (temp) {
+                    case 0:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                        
                     case 1:
                         buttonsList.get(temp).setText(symbol);
                         updateGame();
@@ -587,11 +592,7 @@ public class SinglePlayerViewController implements Initializable {
                         updateGame();
                         recflag = false;
                         break;
-                    case 9:
-                        buttonsList.get(temp).setText(symbol);
-                        updateGame();
-                        recflag = false;
-                        break;
+                   
                 }
             }
 

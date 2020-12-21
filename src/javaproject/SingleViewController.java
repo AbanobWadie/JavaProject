@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
@@ -44,7 +45,14 @@ public class SingleViewController implements Initializable {
     private RadioButton O;
 
     final ToggleGroup group = new ToggleGroup();
+    final ToggleGroup groupLevels = new ToggleGroup();
     private boolean recordFlag;
+    @FXML
+    private ToggleButton btn_easy;
+    @FXML
+    private ToggleButton btn_meduim;
+    @FXML
+    private ToggleButton btn_hard;
 
     /**
      * Initializes the controller class.
@@ -55,6 +63,11 @@ public class SingleViewController implements Initializable {
 
         X.setToggleGroup(group);
         O.setToggleGroup(group);
+        
+        btn_easy.setToggleGroup(groupLevels);
+        btn_meduim.setToggleGroup(groupLevels);
+        btn_hard.setToggleGroup(groupLevels);
+
         recordFlag = false;
 
     }
@@ -109,7 +122,7 @@ public class SingleViewController implements Initializable {
                 Scene scene=new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
-                 scene.getStylesheets().add("/CSS/Project.css");
+                scene.getStylesheets().add("/CSS/Project.css");
                 stage.show();
 
             } catch (IOException ex) {
@@ -130,6 +143,18 @@ public class SingleViewController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
+    }
+
+    @FXML
+    private void easy(ActionEvent event) {
+    }
+
+    @FXML
+    private void meduim(ActionEvent event) {
+    }
+
+    @FXML
+    private void hard(ActionEvent event) {
     }
 
 }

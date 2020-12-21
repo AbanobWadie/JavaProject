@@ -76,7 +76,7 @@ public class LocalViewController implements Initializable {
 
     void move(Button button) {
 
-        if (button.getText() == "") {
+        if (button.getText().equals("")) {
             button.setText("");
             if (X1.isSelected()) {
                 O2.setSelected(true);
@@ -107,7 +107,7 @@ public class LocalViewController implements Initializable {
             p2.setSymbol("X");
         }
         // Set initial turn for player with symbol CROSS
-        if (p1.getSymbol() == "X") {
+        if (p1.getSymbol().equals("X")) {
             setTurn(p1);
 
         } else {
@@ -133,7 +133,7 @@ public class LocalViewController implements Initializable {
             p2.setSymbol("O");
         }
 
-        if (p1.getSymbol() == "X") {
+        if (p1.getSymbol().equals("X")) {
             setTurn(p1);
 
         } else {
@@ -150,7 +150,7 @@ public class LocalViewController implements Initializable {
         if (txt_name2.getText().equals("") || txt_name1.getText().equals("")) {
             showAlert("Please,Enter your name.");
 
-        } else if (X1.isSelected() == false && O1.isSelected() == false) {
+        } else if (!X1.isSelected() && !O1.isSelected()) {
             showAlert("Please, Choose X or O.");
 
         } else {
@@ -173,8 +173,10 @@ public class LocalViewController implements Initializable {
                 o.transferFlag(false, null);
               
 
+                Scene scene=new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
+                stage.setScene(scene);
+                scene.getStylesheets().add("/CSS/Project.css");
                 stage.show();
 
             } catch (IOException ex) {

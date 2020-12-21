@@ -70,14 +70,14 @@ public class mediumAIAlogorithm {
             return 8;
         } else if (board.get(0).getText().equals(symbol) && board.get(8).getText().equals(symbol) && board.get(4).getText().equals("")) {
             return 4;
-        } else if (board.get(4).getText().equals(symbol) && board.get(8).getText().equals(symbol) && board.get(1).getText().equals("")) {
-            return 1;
+        } else if (board.get(4).getText().equals(symbol) && board.get(8).getText().equals(symbol) && board.get(0).getText().equals("")) {
+            return 0;
         }
 
         else if (board.get(2).getText().equals(symbol) && board.get(4).getText().equals(symbol) && board.get(6).getText().equals("")) {
             return 6;
-        } else if (board.get(2).getText().equals(symbol) && board.get(6).getText().equals(symbol) && board.get(5).getText().equals("")) {
-            return 5;
+        } else if (board.get(2).getText().equals(symbol) && board.get(6).getText().equals(symbol) && board.get(4).getText().equals("")) {
+            return 4;
         } else if (board.get(4).getText().equals(symbol) && board.get(6).getText().equals(symbol) && board.get(2).getText().equals("")) {
             return 2;
         }

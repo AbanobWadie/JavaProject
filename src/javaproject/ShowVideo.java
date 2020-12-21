@@ -14,6 +14,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import static jdk.nashorn.internal.objects.NativeDebug.getClass;
 
 /**
  *
@@ -27,13 +28,13 @@ public class ShowVideo {
         String title;
 
        if(flag){
-           vurl = "file:/D:/ITI/java/Project/JavaProject/JavaProject/src/video/winnervideo.mp4";
+           vurl = "/video/winnervideo.mp4";
            title="congaturation";
        }else{
-            vurl = "file:/D:/ITI/java/Project/JavaProject/JavaProject/src/video/loservideo.mp4";
+            vurl = "/video/loservideo.mp4";
              title="Game Over";
        }
-        Media media = new Media( vurl);
+        Media media = new Media(getClass().getResource(vurl).toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
         Stage dialog = new Stage();
