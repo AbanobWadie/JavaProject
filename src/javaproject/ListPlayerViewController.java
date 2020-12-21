@@ -56,6 +56,8 @@ public class ListPlayerViewController implements Initializable {
     private ListView<String> list_persons;
     @FXML
     private Button btn_back;
+    @FXML
+    private Button historyBtn;
 
     String name1;
     ObservableList list;
@@ -83,31 +85,24 @@ public class ListPlayerViewController implements Initializable {
         }
     }
 
-    void playerHistory(ActionEvent event) {
-
-        try {
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
-            Parent root = loader.load();
-
-
-          //  GameHistoryController o = loader.getController();
-           // o.translate(history.games,"Online History");
-
-            GameHistoryController o = loader.getController();
-            // o.translate(history.games,"Online History");
-
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-
-        } catch (IOException ex) {
-            System.err.println(ex);
-        }
-
+    @FXML
+    void historyAction(ActionEvent event) {
+        ServerConnection.history();
     }
 
+    private void timer(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                     Thread.sleep(6000l);
+                     ServerConnection.no();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ListPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+       }).start();
+    }
     private void loadData() {
         new Thread(new Runnable() {
             @Override
@@ -119,7 +114,7 @@ public class ListPlayerViewController implements Initializable {
 
                     ArrayList<String> result = ServerConnection.getOnlineUsers();
 
-                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o")) {
+                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o") && !result.get(0).contains("history")) {
                         list = FXCollections.observableArrayList(result);
 
                         Platform.runLater(new Runnable() {
@@ -129,6 +124,7 @@ public class ListPlayerViewController implements Initializable {
                             }
                         });
                     } else if (!result.isEmpty() && result.get(0).contains("play request from")) {
+                        timer();
                         System.out.println("req");
                         String[] arr = result.get(0).split(" ");
                         playerRequest = arr[3];
@@ -136,14 +132,27 @@ public class ListPlayerViewController implements Initializable {
                             @Override
                             public void run() {
                                 if (recordFlag) {
-                                    dialog2(result.get(0));
-                                } else {
                                     dialog(result.get(0));
+                                } else {
+                                    dialog2(result.get(0));
                                 }
 
                             }
                         });
 
+                    } else if (!result.isEmpty() && result.get(0).equals("no")) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                Dialog<ButtonType> dialog = new Dialog<>();
+                                dialog.setTitle("Sorry");
+                                ButtonType okBtn = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+                                dialog.setContentText("Sorry, your request is refused");
+                                dialog.getDialogPane().getButtonTypes().addAll(okBtn);
+
+                                dialog.showAndWait();
+                            }
+                        });
                     } else if (!result.isEmpty() && result.get(0).equals("x")) {
 
                         Platform.runLater(new Runnable() {
@@ -197,35 +206,67 @@ public class ListPlayerViewController implements Initializable {
                             }
                         });
                         break;
-                    } else if (result.get(0).equals("close server")) {
+                    } else if (!result.isEmpty() && result.get(0).contains("history")) {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
+                                ArrayList<Game> games = new ArrayList<>();
+                                String history = result.get(0);
+                                
+                                System.out.println(history);
+                                if(!history.equals("")){
+                                    String[] arr = history.split(",");
+                                    for (int i = 1; i < arr.length; i++) {
+                                        String[] arr2 = arr[i].split(" ");
+                                        Game game = new Game(arr2[0], arr2[1], arr2[2]);
+                                        games.add(game);
+                                    }
+                                }
+                                try {
+
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
+                                    Parent root = loader.load();
+
+                                    GameHistoryController o = loader.getController();
+                                    o.translate(games, "Online History");
+
+                                    Stage stage = (Stage) btn_back.getScene().getWindow();
+                                    Scene scene = new Scene(root);
+                                    stage.setScene(scene);
+                                    scene.getStylesheets().add("/CSS/Project.css");
+                                    stage.show();
+
+                                } catch (IOException ex) {
+                                    Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+                    } else if (result.isEmpty()) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+
+                                    Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+                                    Scene scene = new Scene(root);
+                                    Stage stage = (Stage) btn_back.getScene().getWindow();
+
+                                    stage.setScene(scene);
+                                    stage.show();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
                                 Dialog<ButtonType> dialog = new Dialog<>();
                                 dialog.setTitle("Sorry");
                                 ButtonType okBtn = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
                                 dialog.setContentText("Sorry, the server is closed we have to logout you!");
                                 dialog.getDialogPane().getButtonTypes().addAll(okBtn);
 
-                                Optional<ButtonType> resultD = dialog.showAndWait();
-
-                                if (resultD.get() == okBtn) {
-                                    try {
-
-                                        Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-                                        Scene scene = new Scene(root);
-                                        Stage stage = (Stage) btn_back.getScene().getWindow();
-
-                                        stage.setScene(scene);
-                                        stage.show();
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-
+                                dialog.showAndWait();
                             }
                         });
-
+                        ServerConnection.running = false;
                     }
 
                     /*try {
@@ -278,45 +319,6 @@ public class ListPlayerViewController implements Initializable {
 
             }
         });
-
-        /*   list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov,
-                    String old_val, String new_val) {
-                try {
-                    if (new_val.contains("In-Game")) {
-                        /*Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.CANCEL);
-                        alert.setTitle("Sorry");
-                        alert.setHeaderText(null);
-                        alert.setContentText("This player is already in running game you cannot play with him before he finishes his game first");
-                        alert.show();
-                    } else {
-                        //Load second scene
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineView.fxml"));
-                        Parent root = loader.load();
-
-                        //Get controller of scene2
-                        OnlineViewController o = loader.getController();
-                        //Pass whatever data you want. You can have multiple method calls here
-                        o.transferMessageNames(name1, new_val);
-
-                        Stage stage = (Stage) (list_persons).getScene().getWindow();
-                        //stage.setScene(new Scene(root));
-
-                        //Show scene 2 in new window            
-                        //  Stage stage = new Stage();
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    }
-
-
-                } catch (IOException ex) {
-                    System.err.println(ex);
-                }
-
-            }
-
-        });*/
     }
 
     void transferMessageName1(String text) {
@@ -343,8 +345,8 @@ public class ListPlayerViewController implements Initializable {
     public void dialog2(String mgs) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Request");
-        ButtonType acceptBtn = new ButtonType("Accept without record", ButtonBar.ButtonData.OK_DONE);
-        ButtonType acceptWithRecordBtn = new ButtonType("Accept with record", ButtonBar.ButtonData.OK_DONE);
+        ButtonType acceptBtn = new ButtonType("Accept", ButtonBar.ButtonData.OK_DONE);
+        ButtonType acceptWithRecordBtn = new ButtonType("Accept&record", ButtonBar.ButtonData.OK_DONE);
         ButtonType refuseBtn = new ButtonType("Refuse", ButtonBar.ButtonData.CANCEL_CLOSE);
         dialog.setContentText(mgs);
         dialog.getDialogPane().getButtonTypes().addAll(acceptBtn, refuseBtn, acceptWithRecordBtn);

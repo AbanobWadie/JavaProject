@@ -121,8 +121,7 @@ public class StartViewController implements Initializable {
     @FXML 
     void playerHistory(ActionEvent event)
     {
-      GamesHistoryProcess history = new GamesHistoryProcess();
-      history.read();
+      GamesHistoryProcess.read();
 
           try {
 
@@ -130,7 +129,7 @@ public class StartViewController implements Initializable {
             Parent root = loader.load();
 
             GameHistoryController o = loader.getController();
-            o.translate(history.games,"Local History");
+            o.translate(GamesHistoryProcess.games,"Local History");
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);

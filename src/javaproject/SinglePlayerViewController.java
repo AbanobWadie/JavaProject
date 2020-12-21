@@ -64,8 +64,8 @@ public class SinglePlayerViewController implements Initializable {
     private Button restartButton;
     private String[][] ticTacToeTable;
     private ArrayList<Button> buttonsList = new ArrayList<>();
-    
-    boolean recflag=true;
+
+    boolean recflag = true;
 
     RadioButton X1 = new RadioButton();
 
@@ -184,7 +184,7 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     void move(Button button) {
-        recflag=true;
+        recflag = true;
         if (button.getText().equals("")) {
             button.setText("");
             if (X1.isSelected()) {
@@ -281,57 +281,27 @@ public class SinglePlayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        if(!winner.equals("AI")){
-           new ShowVideo().video(lbl_player.getText(),true);
-        }else{
-           new ShowVideo().video(lbl_player.getText(),false);
-        }
 
-        
-        //showEndGameAlert(key);
-    }
-
-    void video(){
-         MediaPlayer mediaPlayer;    
-        String vurl = ".";
-        Media media = new Media(vurl);        
-        mediaPlayer = new MediaPlayer(media);        
-        mediaPlayer.play();   
-        Stage dialog = new Stage();
-        dialog.setHeight(370);
-        dialog.setWidth(370);
-        Scene scene = new Scene(new Group(new MediaView(mediaPlayer)));   
-        dialog.setTitle("congaturation");
-        dialog.setResizable(false);
-        dialog.setScene(scene);
-        dialog.show();
-        dialog.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {       
-             mediaPlayer.stop();
-             dialog.close();
-            }
-           
-        });
+        showEndGameAlert(key);
     }
 
 
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (key != "draw") {
-            if (X1.isSelected() && winner == "X") {
+            if (X1.isSelected() && winner.equals("X")) {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + lbl_player.getText() + "\" is winner.");
-            } else if (X1.isSelected() && winner == "O") {
+            } else if (X1.isSelected() && winner.equals("O")) {
                 Game game = new Game(lbl_player.getText(), "AI", "AI");
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + " AI\" is winner.");
-            } else if (O1.isSelected() && winner == "O") {
+            } else if (O1.isSelected() && winner.equals("O")) {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
@@ -360,8 +330,24 @@ public class SinglePlayerViewController implements Initializable {
             recordedGame.save(record);
         }
 
-        endGame.setHeaderText(null);
-        endGame.show();
+        if (!key.equals("draw")) {
+            if (winner.equals("X")) {
+                if(lbl_symbol1.getText().equals("X")){
+                    new ShowVideo().video(lbl_player.getText(), true);
+                }else{
+                    new ShowVideo().video(lbl_player.getText(), false);
+                }
+            } else {
+                if(lbl_symbol1.getText().equals("O")){
+                    new ShowVideo().video(lbl_player.getText(), true);
+                }else{
+                    new ShowVideo().video(lbl_player.getText(), false);
+                }
+            }
+        } else {
+            endGame.setHeaderText(null);
+            endGame.show();
+        }
 
     }
 
@@ -411,10 +397,9 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     public void playController(ArrayList<Button> buttonsList, String[][] ticTacToeTable) {
-
-        easyGameLogic(buttonsList);
-        //return "X";
-
+        //easyGameLogic(buttonsList);
+        mediumGameLogic(buttonsList);
+        //hardGameLogic(buttonsList);
     }
 
     public boolean winningChecker(String[][] ticTacToeTable) {
@@ -422,74 +407,88 @@ public class SinglePlayerViewController implements Initializable {
         //Checking line 0
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[0][i];
-            if (checkVictory(buttonText)) {
-                key = "line 0";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "line 0";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking line 1
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[1][i];
-            if (checkVictory(buttonText)) {
-                key = "line 1";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "line 1";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking line 2
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[2][i];
-            if (checkVictory(buttonText)) {
-                key = "line 2";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "line 2";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking column 0
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][0];
-            if (checkVictory(buttonText)) {
-                key = "column 0";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "column 0";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking column 1
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][1];
-            if (checkVictory(buttonText)) {
-                key = "column 1";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "column 1";
+            return true;
+        }
+
         buttonText = new String[3];
         //Checking column 2
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][2];
-            if (checkVictory(buttonText)) {
-                key = "column 2";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "column 2";
+            return true;
         }
         buttonText = new String[3];
         //main diagonal
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][i];
-            if (checkVictory(buttonText)) {
-                key = "main diagonal";
-                return true;
-            }
+
         }
+        if (checkVictory(buttonText)) {
+            key = "main diagonal";
+            return true;
+        }
+
         buttonText = new String[3];
         //secondary diagonal
         for (int i = 0; i < buttonText.length; i++) {
             int j = buttonText.length - 1 - i;
             buttonText[i] = ticTacToeTable[i][j];
-            if (checkVictory(buttonText)) {
-                key = "secundary diagonal";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "secundary diagonal";
+            return true;
         }
         //draw
         if (checkDraw(ticTacToeTable)) {
@@ -500,11 +499,11 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     public boolean checkVictory(String[] vector) {
-        if (vector[0] == "X" && vector[1] == "X" && vector[2] == "X") {
+        if (vector[0].equals("X") && vector[1].equals("X") && vector[2].equals("X")) {
             winner = "X";
             return true;
 
-        } else if (vector[0] == "O" && vector[1] == "O" && vector[2] == "O") {
+        } else if (vector[0].equals("O") && vector[1].equals("O") && vector[2].equals("O")) {
             winner = "O";
             return true;
         } else {
@@ -515,25 +514,22 @@ public class SinglePlayerViewController implements Initializable {
     public boolean checkDraw(String[][] ticTacToeTable) {
         for (int i = 0; i < ticTacToeTable.length; i++) {
             for (int j = 0; j < ticTacToeTable[0].length; j++) {
-                if (ticTacToeTable[i][j] == "") {
+                if (ticTacToeTable[i][j].equals("")) {
                     return false;
                 }
             }
         }
         return true;
     }
-
-    void easyGameLogic(ArrayList<Button> buttonsList) {
-        Random randomMove = new Random();
-        int temp;
-
+    
+    void mediumGameLogic(ArrayList<Button> buttonsList) {
         String symbol = null;
-       
-
-            temp = (int)(Math.random()*9+1);
+        
+        //while (true) {
+            int temp = mediumAIAlogorithm.getBestPosition(buttonsList, lbl_symbol1.getText(), lbl_symbol2.getText());
             System.out.println(temp);
+            System.out.println(lbl_symbol1.getText());
             if (buttonsList.get(temp).getText().equals("")) {
-
                 if (X1.isSelected()) {
 
                     symbol = "O";
@@ -553,54 +549,141 @@ public class SinglePlayerViewController implements Initializable {
                 switch (temp) {
                     case 1:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 2:
+                    case 2:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 3:
+                    case 3:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 4:
+                    case 4:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 5:
+                    case 5:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 6:
+                    case 6:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 7:
+                    case 7:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 8:
+                    case 8:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                   case 9:
+                    case 9:
                         buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
                         break;
-                        
+                }
+            }
+
+            ///if (!recflag) {
+               // break;
+            //}
+        //}
+    }
+    /*void easyGameLogic(ArrayList<Button> buttonsList) {
+        Random randomMove = new Random();
+        int temp;
+        String symbol = null;
+        temp = (int) (Math.random() * 10) % 9;
+
+        while (true) {
+            temp = (int) (Math.random() * 10) % 9;
+            System.out.println(temp);
+            if (buttonsList.get(temp).getText().equals("")) {
+                if (X1.isSelected()) {
+
+                    symbol = "O";
+
+                    if (recordFlag) {
+                        record.setMove("" + (temp + 1), "O");
+                    }
+
+                } else if (O1.isSelected()) {
+                    symbol = "X";
+
+                    if (recordFlag) {
+                        record.setMove("" + (temp + 1), "X");
+                    }
 
                 }
-                
-               
+                switch (temp) {
+                    case 1:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 2:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 3:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 4:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 5:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 6:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 7:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 8:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 9:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                }
             }
-            else
-            {
-               
-                   easyGameLogic(buttonsList);
-                
+
+            if (!recflag) {
+                break;
             }
-            if(recflag){
-             updateGame();
-             recflag=false;
-            }
-        
-       
-    }
+        }
+    }*/
 
     boolean checkFreeButton(ArrayList<Button> buttonsList) {
         for (int i = 0; i < buttonsList.size(); i++) {
-            if (buttonsList.get(i).getText() == "") {
+            if (buttonsList.get(i).getText().equals("")) {
                 return true;
             }
         }

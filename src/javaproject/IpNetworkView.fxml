@@ -31,7 +31,8 @@
             <Font name="Calisto MT Bold Italic" size="24.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="btn_back" layoutX="13.0" layoutY="21.0" prefHeight="37.0" prefWidth="97.0" text="Back" textFill="#09644f" underline="true">
+
+      <Hyperlink fx:id="btn_back" onAction="#back" layoutX="13.0" layoutY="21.0" prefHeight="23.0" prefWidth="55.0" text="Back">
          <font>
             <Font size="24.0" />
          </font>

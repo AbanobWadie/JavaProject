@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,6 +39,8 @@ public class IpNetworkViewController implements Initializable {
     private Button btn_play;
     @FXML
     private Hyperlink btn_back;
+
+    volatile boolean result = false;
 
     @FXML
     void back(ActionEvent event) {
@@ -68,31 +71,43 @@ public class IpNetworkViewController implements Initializable {
         boolean f;
         f = isNumericAddress(txt_ip.getText());
         if (f) {
-            try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
 
-                ServerConnection con = new ServerConnection();
-                boolean result = con.init(txt_ip.getText());
+                    result = ServerConnection.init(txt_ip.getText());
 
-                if (result) {
-                    Parent root;
-                    root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
-                    Scene scene = new Scene(root);
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    stage.setScene(scene);
-                    stage.show();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                if (result) {
+
+                                    Parent root;
+                                    root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+                                    Scene scene = new Scene(root);
+                                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                    stage.setScene(scene);
+                                    stage.show();
+                                } else {
+                                    showAlert("IP address is not Valid please enter another one");
+                                }
+                            } catch (IOException ex) {
+                                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    });
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }).start();
         } else {
-            showAlert("Not Valid, please enter another one.");
+            showAlert("IP address is not Valid please enter another one");
         }
 
     }
 
     private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
-        alert.setTitle("Succedded");
+        alert.setTitle("Sorry");
         alert.setHeaderText(null);
         alert.setContentText(mess);
         alert.show();
@@ -101,7 +116,7 @@ public class IpNetworkViewController implements Initializable {
     public final static boolean isNumericAddress(String ipaddr) {
 
         //  Check if the string is valid
-        if (ipaddr == null || ipaddr.length() < 7 || ipaddr.length() > 15) {
+        if (ipaddr == null || ipaddr.length() < 9 || ipaddr.length() > 15) {
             return false;
         }
 
@@ -120,7 +135,7 @@ public class IpNetworkViewController implements Initializable {
                     return false;
                 }
             } catch (NumberFormatException ex) {
-               // ex.printStackTrace();
+                // ex.printStackTrace();
                 return false;
 
             }

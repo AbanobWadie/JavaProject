@@ -58,7 +58,7 @@ public class LoginViewController implements Initializable {
             try {
                 String result = ServerConnection.SignIn(txt_name.getText(), txt_pass.getText());
                 if(result.contains("false")){
-                    dialog(result.substring(7));
+                    dialog(result.substring(6));
                 }else if (result.equals("true")) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
                     Parent root = loader.load();

@@ -29,17 +29,17 @@ public class ServerConnection {
     public static boolean init(String ip) {
         try {
             Socket mySocket = new Socket(ip, 5005);
-            in = new BufferedReader(new InputStreamReader(
-                    mySocket.getInputStream()));
-            out = new PrintWriter(
-                    mySocket.getOutputStream());
-
-            return true;
+            if(mySocket.isConnected()){
+                in = new BufferedReader(new InputStreamReader(
+                        mySocket.getInputStream()));
+                out = new PrintWriter(
+                        mySocket.getOutputStream());
+                return true;
+            }
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-
         }
+        return false;
     }
     
 
@@ -103,6 +103,11 @@ public class ServerConnection {
         out.println("play " + name);
         out.flush();        
     }
+    
+    public static void history() {
+        out.println("history");
+        out.flush();        
+    }
 
     public static ArrayList<String> getOnlineUsers() {
         ArrayList<String> arr = new ArrayList<>();
@@ -111,16 +116,11 @@ public class ServerConnection {
             //out.flush();
            
                 String str = in.readLine();
-                System.out.println(str);
-                if(str ==null)
-                {
-                     arr.add("server closed");
+
+                if(str == null){
                      in.close();
                      out.close();
-                     return arr;
-                    
-                }
-                if(str.contains("(online-list)")){
+                }else if(str.contains("(online-list)")){
                     String[] strArr = str.split(" ");
                     
                     for (int i = 1; i < strArr.length; i++) {
@@ -147,6 +147,8 @@ public class ServerConnection {
     public static void no() {
         out.println("no");
         out.flush();
+        out.println("no");
+        out.flush();
     }
 
     public static void sendPlayInPostion(boolean win, boolean draw, String c, String position) {
@@ -166,7 +168,13 @@ public class ServerConnection {
     public static String recivePlayInPostion() {
 
         try {
-            return in.readLine();
+            String str =  in.readLine();
+            if(str == null){
+                in.close();
+                out.close();
+            }else{
+                return str;
+            }
         } catch (IOException ex) {
             Logger.getLogger(ServerConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
