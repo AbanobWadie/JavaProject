@@ -7,20 +7,39 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.SingleViewController">
    <children>
-      <ImageView blendMode="SCREEN" fitHeight="550.0" fitWidth="750.0" layoutX="2.0" pickOnBounds="true">
+      <ImageView fitHeight="550.0" fitWidth="750.0" layoutX="1.0" pickOnBounds="true">
          <image>
-            <Image url="@../Images/wood.png" />
+            <Image url="@../Images/page.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txt_name" layoutX="239.0" layoutY="117.0" prefHeight="41.0" prefWidth="301.0" />
-      <RadioButton fx:id="X" layoutX="306.0" layoutY="200.0" mnemonicParsing="false" text="X" />
-      <RadioButton fx:id="O" layoutX="306.0" layoutY="245.0" mnemonicParsing="false" text="O" />
-      <Label layoutX="140.0" layoutY="129.0" text="Name" />
-      <Button fx:id="btn_play" layoutX="297.0" layoutY="328.0" mnemonicParsing="false" onAction="#play" prefHeight="52.0" prefWidth="209.0" text="play" />
-      <Button fx:id="btn_record" layoutX="50.0" layoutY="492.0" mnemonicParsing="false" text="Record" onAction="#record"/>
-      <Button layoutX="668.0" layoutY="492.0" mnemonicParsing="false" onAction="#back" text="back" />
+      <TextField fx:id="txt_name" layoutX="211.0" layoutY="44.0" opacity="0.47" prefHeight="41.0" prefWidth="301.0" style="-fx-background-radius: 50;" />
+      <RadioButton fx:id="X" layoutX="554.0" layoutY="47.0" mnemonicParsing="false" text="X">
+         <font>
+            <Font size="24.0" />
+         </font></RadioButton>
+      <RadioButton fx:id="O" layoutX="663.0" layoutY="47.0" mnemonicParsing="false" text="O">
+         <font>
+            <Font size="24.0" />
+         </font></RadioButton>
+      <Label layoutX="94.0" layoutY="42.0" text="Name" textFill="#3c3b20fa">
+         <font>
+            <Font name="Bell MT Bold" size="36.0" />
+         </font></Label>
+      <Button fx:id="btn_play" layoutX="283.0" layoutY="438.0" mnemonicParsing="false" onAction="#play" prefHeight="55.0" prefWidth="209.0" style="-fx-background-radius: 100; -fx-background-color: #38c450;" text="play" textFill="WHITE">
+         <font>
+            <Font name="Bell MT Bold" size="36.0" />
+         </font></Button>
+      <Button fx:id="btn_record" layoutX="626.0" layoutY="472.0" mnemonicParsing="false" onAction="#record" prefHeight="44.0" prefWidth="92.0" style="-fx-background-radius: 100; -fx-background-color: #93704a;" text="Record" textFill="WHITE">
+         <font>
+            <Font name="Bookman Old Style" size="18.0" />
+         </font></Button>
+      <Button layoutX="39.0" layoutY="479.0" mnemonicParsing="false" onAction="#back" prefHeight="44.0" prefWidth="92.0" style="-fx-background-radius: 100; -fx-background-color: #93704a;" text="Back" textFill="WHITE">
+         <font>
+            <Font name="Bookman Old Style" size="20.0" />
+         </font></Button>
    </children>
 </AnchorPane>

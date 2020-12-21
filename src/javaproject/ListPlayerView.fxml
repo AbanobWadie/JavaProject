@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,27 +12,28 @@
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.ListPlayerViewController">
    <children>
-      <ImageView fitHeight="550.0" fitWidth="750.0" nodeOrientation="INHERIT" opacity="0.67" pickOnBounds="true" smooth="false">
+      <ImageView fitHeight="550.0" fitWidth="750.0" nodeOrientation="INHERIT" pickOnBounds="true" smooth="false">
          <image>
             <Image url="@../Images/xox.png" />
          </image>
       </ImageView>
       <VBox fx:id="vbox" alignment="TOP_CENTER" layoutX="31.0" layoutY="14.0" prefHeight="500.0" prefWidth="280.0">
          <children>
-            <Text fx:id="txt_list" fill="#182af5" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Online Friends" textAlignment="CENTER">
+            <Text fx:id="txt_list" fill="#cc4848" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Online User" textAlignment="CENTER" wrappingWidth="148.6806640625">
                <font>
-                  <Font size="18.0" />
+                  <Font name="System Bold Italic" size="18.0" />
                </font>
             </Text>
-            <ListView fx:id="list_persons" prefHeight="500.0" prefWidth="280.0" />
+            <ListView fx:id="list_persons" opacity="0.6" prefHeight="500.0" prefWidth="280.0" style="-fx-background-radius: 20;" />
          </children>
       </VBox>
-      <Button fx:id="btn_back" defaultButton="true" layoutX="495.0" layoutY="414.0" mnemonicParsing="false" onAction="#back" text="BACK" textFill="#0d00ff">
+      <Button fx:id="btn_back" defaultButton="true" layoutX="344.0" layoutY="500.0" mnemonicParsing="false" onAction="#back" prefHeight="30.0" prefWidth="80.0" style="-fx-background-radius: 100; -fx-background-color: #cc4848;" text="BACK" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="14.0" />
+            <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="btn_record" layoutX="493.0" layoutY="300.0" mnemonicParsing="false" onAction="#record" prefHeight="30.0" prefWidth="57.0" text="Record" />
-      <Button fx:id="btn_onlineHistory" layoutX="590.0" layoutY="483.0" mnemonicParsing="false" onAction="#playerHistory" text="Online History" />
+      <Button fx:id="btn_onlineHistory" layoutX="609.0" layoutY="499.0" mnemonicParsing="false" onAction="#playerHistory" style="-fx-background-radius: 100; -fx-background-color: #cc4848;" text="Online History" textFill="WHITE" />
+      <ButtonBar layoutX="295.0" layoutY="48.0" prefHeight="40.0" prefWidth="200.0" />
+      <Button fx:id="btn_record" layoutX="441.0" layoutY="33.0" mnemonicParsing="false" onAction="#record" prefHeight="31.0" prefWidth="108.0" style="-fx-background-radius: 100; -fx-background-color: #cc4848;" text="Record" textFill="WHITE" />
    </children>
 </AnchorPane>
