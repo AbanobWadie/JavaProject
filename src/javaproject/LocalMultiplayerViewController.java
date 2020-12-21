@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
+import static javaproject.OnlineMultiplayerViewController.winner;
 import static javaproject.Turn.setTurn;
 import static javaproject.Turn.getTurn;
 
@@ -42,6 +44,11 @@ public class LocalMultiplayerViewController implements Initializable {
     Label s1;
     @FXML
     Label s2;
+
+    private boolean recordFlag;
+    private String moveSymbol;
+    private Record record;
+    private String position;
 
     private String[][] ticTacToeTable;
     private ArrayList<Button> buttonsList = new ArrayList<>();
@@ -72,48 +79,136 @@ public class LocalMultiplayerViewController implements Initializable {
     @FXML
     private Button btn_back;
 
+    boolean recordPageFlag;
+    ArrayList<String> arrMoves;
+
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         //  p10.setSymbol("X");
         //   p20.setSymbol("O");
         loadGame();
+
+    }
+
+    void recordRun() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (String move : arrMoves) {
+                    try {
+                        Thread.sleep(1000l);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    String arr[] = move.split("\\|");
+                    System.out.println(move);
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            switch (arr[0]) {
+                                case "1":
+
+                                    move(b1);
+                                    ChangeTurn();
+                                    break;
+
+                                case "2":
+                                    move(b2);
+                                    ChangeTurn();
+                                    break;
+
+                                case "3":
+                                    move(b3);
+                                    ChangeTurn();
+                                    break;
+
+                                case "4":
+                                    move(b4);
+                                    ChangeTurn();
+                                    break;
+
+                                case "5":
+                                    move(b5);
+                                    ChangeTurn();
+                                    break;
+
+                                case "6":
+                                    move(b6);
+                                    ChangeTurn();
+                                    break;
+
+                                case "7":
+                                    move(b7);
+                                    ChangeTurn();
+                                    break;
+
+                                case "8":
+                                    move(b8);
+                                    ChangeTurn();
+                                    break;
+
+                                case "9":
+                                    move(b9);
+                                    ChangeTurn();
+                                    break;
+                            }
+                        }
+                    });
+
+                }
+
+            }
+        }).start();
+
     }
 
     @FXML
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == b1) {
+            position = "1";
             move(b1);
             ChangeTurn();
         }
         if (e.getSource() == b2) {
+            position = "2";
             move(b2);
             ChangeTurn();
         }
         if (e.getSource() == b3) {
+            position = "3";
             move(b3);
             ChangeTurn();
         }
         if (e.getSource() == b4) {
+            position = "4";
             move(b4);
             ChangeTurn();
         }
         if (e.getSource() == b5) {
+            position = "5";
             move(b5);
             ChangeTurn();
         }
         if (e.getSource() == b6) {
+            position = "6";
             move(b6);
             ChangeTurn();
         }
         if (e.getSource() == b7) {
+            position = "7";
             move(b7);
             ChangeTurn();
         }
         if (e.getSource() == b8) {
+            position = "8";
             move(b8);
             ChangeTurn();
         }
         if (e.getSource() == b9) {
+            position = "9";
             move(b9);
             ChangeTurn();
         }
@@ -121,9 +216,13 @@ public class LocalMultiplayerViewController implements Initializable {
     }
 
     private void move(Button button) {
-        if (button.getText() == "") {
-            if (gameMode == "twoPlayers") {
+        if (button.getText().equals("")) {
+            if (gameMode.equals("twoPlayers")) {
                 button.setText(playController(buttonsList, ticTacToeTable));
+
+                if (recordFlag) {
+                    record.setMove(position, moveSymbol);
+                }
                 updateGame();
 
             }
@@ -137,6 +236,7 @@ public class LocalMultiplayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         disableButtons(false);
+
     }
 
     private void loadButtons() {
@@ -204,21 +304,72 @@ public class LocalMultiplayerViewController implements Initializable {
                 break;
             }
         }
-        disableButtons(true);
-        showEndGameAlert(key);
+        disableButtons(true);  
+         if(winner.equals("X")){
+             if(s1.getText().equals("X")){
+              new ShowVideo().video(lbl_p1.getText(),true);
+             }
+             else{
+                   new ShowVideo().video(lbl_p2.getText(),true);
+             }
+          
+        }else{
+              if(s1.getText().equals("O")){
+              new ShowVideo().video(lbl_p1.getText(),true);
+             }
+             else{
+               new ShowVideo().video(lbl_p2.getText(),true);
+             }
+        }
+       // showEndGameAlert(key);
     }
 
     private void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
-        if (key != "draw") {
+        if (!key.equals("draw")) {
+            if(winner.equals("X"))
+            {
+                if(s1.getText().equals("X"))
+                {
+                    Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p1.getText());
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                }
+                else{
+                    Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p2.getText());
+                    GamesHistoryProcess history = new GamesHistoryProcess();
+                    history.save(game);
+                }
+                
+            }else
+            {
+                if(s1.getText().equals("O"))
+                {
+                    Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p1.getText());
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
+                }
+                else{
+                    Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p2.getText());
+                    GamesHistoryProcess history = new GamesHistoryProcess();
+                    history.save(game);
+                }
+            }
+                
             endGame.setTitle("Victory");
             endGame.setContentText("Player \"" + winner + "\" won.");
         } else {
             endGame.setContentText("The game was a draw.");
             endGame.setTitle("Draw");
+            Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), "draw");
+                GamesHistoryProcess history = new GamesHistoryProcess();
+                history.save(game);
         }
         endGame.setHeaderText(null);
         endGame.show();
+        if (recordFlag) {
+            RecordedGamesProcess.save(record);
+        }
 
     }
 
@@ -273,10 +424,13 @@ public class LocalMultiplayerViewController implements Initializable {
                 if (myTurn) {
 
                     myTurn = !myTurn;
+                    moveSymbol = p10.getSymbol();
+
                     return p10.getSymbol();
 
                 } else {
                     myTurn = !myTurn;
+                    moveSymbol = p20.getSymbol();
                     return p20.getSymbol();
                 }
                 /*  if(myTurn)
@@ -329,74 +483,82 @@ public class LocalMultiplayerViewController implements Initializable {
         //Checking line 0
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[0][i];
-            if (checkVictory(buttonText)) {
-                key = "line 0";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "line 0";
+            return true;
         }
         buttonText = new String[3];
         //Checking line 1
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[1][i];
-            if (checkVictory(buttonText)) {
-                key = "line 1";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "line 1";
+            return true;
         }
         buttonText = new String[3];
         //Checking line 2
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[2][i];
-            if (checkVictory(buttonText)) {
-                key = "line 2";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "line 2";
+            return true;
         }
         buttonText = new String[3];
         //Checking column 0
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][0];
-            if (checkVictory(buttonText)) {
-                key = "column 0";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "column 0";
+            return true;
         }
         buttonText = new String[3];
         //Checking column 1
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][1];
-            if (checkVictory(buttonText)) {
-                key = "column 1";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "column 1";
+            return true;
         }
         buttonText = new String[3];
         //Checking column 2
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][2];
-            if (checkVictory(buttonText)) {
-                key = "column 2";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "column 2";
+            return true;
         }
         buttonText = new String[3];
         //main diagonal
         for (int i = 0; i < buttonText.length; i++) {
             buttonText[i] = ticTacToeTable[i][i];
-            if (checkVictory(buttonText)) {
-                key = "main diagonal";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "main diagonal";
+            return true;
         }
         buttonText = new String[3];
         //secondary diagonal
         for (int i = 0; i < buttonText.length; i++) {
             int j = buttonText.length - 1 - i;
             buttonText[i] = ticTacToeTable[i][j];
-            if (checkVictory(buttonText)) {
-                key = "secundary diagonal";
-                return true;
-            }
+
+        }
+        if (checkVictory(buttonText)) {
+            key = "secundary diagonal";
+            return true;
         }
         //draw
         if (checkDraw(ticTacToeTable)) {
@@ -407,11 +569,11 @@ public class LocalMultiplayerViewController implements Initializable {
     }
 
     public static boolean checkVictory(String[] vector) {
-        if (vector[0] == "X" && vector[1] == "X" && vector[2] == "X") {
+        if (vector[0].equals("X") && vector[1].equals("X") && vector[2].equals("X")) {
             winner = "X";
             return true;
 
-        } else if (vector[0] == "O" && vector[1] == "O" && vector[2] == "O") {
+        } else if (vector[0].equals("O") && vector[1].equals("O") && vector[2].equals("O")) {
             winner = "O";
             return true;
         } else {
@@ -422,7 +584,7 @@ public class LocalMultiplayerViewController implements Initializable {
     public static boolean checkDraw(String[][] ticTacToeTable) {
         for (int i = 0; i < ticTacToeTable.length; i++) {
             for (int j = 0; j < ticTacToeTable[0].length; j++) {
-                if (ticTacToeTable[i][j] == "") {
+                if (ticTacToeTable[i][j].equals("")) {
                     return false;
                 }
             }
@@ -432,7 +594,7 @@ public class LocalMultiplayerViewController implements Initializable {
 
     private static boolean checkFreeButton(ArrayList<Button> buttonsList) {
         for (int i = 0; i < buttonsList.size(); i++) {
-            if (buttonsList.get(i).getText() == "") {
+            if (buttonsList.get(i).getText().equals("")) {
                 return true;
             }
         }
@@ -444,11 +606,19 @@ public class LocalMultiplayerViewController implements Initializable {
         O10 = O1;
         X20 = X2;
         O20 = O2;
+
+    }
+
+    void transferMessageRecordFlag(boolean flag) {
+        recordFlag = flag;
     }
 
     void transferMesssageText(String text, String text0) {
         lbl_p1.setText(text);
         lbl_p2.setText(text0);
+        if (recordFlag) {
+            record = new Record(text, text0);
+        }
 
     }
 
@@ -461,27 +631,44 @@ public class LocalMultiplayerViewController implements Initializable {
 
     @FXML
     void back(ActionEvent event) {
-        try {
+        if (recordPageFlag) {
+            try {
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-            scene.setRoot(root);
-            stage.setScene(scene);
-            stage.show();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = (Scene) ((Node) event.getSource()).getScene();
+                Parent root = FXMLLoader.load(getClass().getResource("SingleRecordView.fxml"));
+                scene.setRoot(root);
+                stage.setScene(scene);
+                stage.show();
 
-        } catch (IOException ex) {
-            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = (Scene) ((Node) event.getSource()).getScene();
+                Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+                scene.setRoot(root);
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
     }
-    
-     @FXML
+
+    @FXML
     void resetButton(ActionEvent event) {
         ((Stage) btn_reset.getScene().getWindow()).close(); // Close the recent window so that there remains only one window
         // Running a new instance of the start method
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlineMultiplayerView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiplayerView.fxml"));
             Parent root = loader.load();
+
 
             /*OnlineMultiplayerViewController o = loader.getController();
 
@@ -503,4 +690,36 @@ public class LocalMultiplayerViewController implements Initializable {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    void transferFlag(boolean flag, Record record) {
+        if (flag) {
+            btn_reset.setVisible(false);
+            this.record = record;
+            recordPageFlag = flag;
+            arrMoves = record.getMoves();
+            System.out.println(recordPageFlag);
+            System.out.println(arrMoves);
+            lbl_p1.setText(record.getPlayer1());
+            lbl_p2.setText(record.getPlayer2());
+            String arr[] = record.getMoves().get(0).split("\\|");
+
+            if (arr[1].equals("X")) {
+                p10.setSymbol("X");
+                p20.setSymbol("O");
+                s1.setText("X");
+                s2.setText("O");
+            } else {
+                p10.setSymbol("O");
+                p20.setSymbol("X");
+                s1.setText("O");
+                s2.setText("X");
+            }
+
+            disableButtons(true);
+            recordRun();
+
+        }
+
+    }
+
 }

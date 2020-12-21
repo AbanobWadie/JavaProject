@@ -11,30 +11,35 @@
 
 <AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="750.0" style="-fx-background-color: #57D1C9;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.IpNetworkViewController">
    <children>
-      <ImageView blendMode="SCREEN" fitHeight="550.0" fitWidth="750.0" pickOnBounds="true">
+      <ImageView fitHeight="550.0" fitWidth="750.0" pickOnBounds="true">
          <image>
-            <Image url="@../Images/xo.png" />
+            <Image url="@../Images/main.png" />
          </image>
       </ImageView>
-      <TextField fx:id="txt_ip" layoutX="220.0" layoutY="178.0" prefHeight="39.0" prefWidth="311.0" promptText="Enter IP">
+      <TextField fx:id="txt_ip" layoutX="226.0" layoutY="249.0" opacity="0.49" prefHeight="39.0" prefWidth="311.0" promptText="Enter Your IP" style="-fx-background-radius: 50;">
          <font>
-            <Font size="14.0" />
+            <Font size="18.0" />
          </font>
       </TextField>
-      <Label layoutX="157.0" layoutY="183.0" text="IP:" textFill="#5e5c5c">
+      <Label layoutX="122.0" layoutY="242.0" prefHeight="53.0" prefWidth="79.0" text="   IP" textFill="#09644f">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="btn_play" layoutX="281.0" layoutY="303.0" mnemonicParsing="false" onAction="#play" prefHeight="44.0" prefWidth="189.0" style="-fx-background-color: #ED5485;" text="Connect" textFill="WHITE">
+      <Button fx:id="btn_play" defaultButton="true" layoutX="287.0" layoutY="383.0" mnemonicParsing="false" onAction="#play" prefHeight="44.0" prefWidth="189.0" style="-fx-background-color: #38c450; -fx-background-radius: 100;" text="Connect" textFill="WHITE">
          <font>
-            <Font name="System Bold Italic" size="20.0" />
+            <Font name="Calisto MT Bold Italic" size="24.0" />
          </font>
       </Button>
-      <Hyperlink fx:id="btn_back" layoutX="13.0" layoutY="21.0" prefHeight="23.0" prefWidth="55.0" text="Back">
+      <Hyperlink fx:id="btn_back" layoutX="13.0" layoutY="21.0" prefHeight="37.0" prefWidth="97.0" text="Back" textFill="#09644f" underline="true">
          <font>
-            <Font name="Berlin Sans FB" size="14.0" />
+            <Font size="24.0" />
          </font>
       </Hyperlink>
+      <ImageView blendMode="DARKEN" fitHeight="150.0" fitWidth="433.0" layoutX="183.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Images/two.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

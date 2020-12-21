@@ -22,7 +22,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 
-public class OnlineMultiplayerViewController implements Initializable{
+public class RecordOnlineViewController implements Initializable{
 
 	
 	private String[][] ticTacToeTable = new String[3][3];
@@ -224,11 +224,11 @@ public class OnlineMultiplayerViewController implements Initializable{
 		if(button.getText().equals("")) {
 			if(gameMode.equals("twoPlayers")) {
 				button.setText(playController(buttonsList, ticTacToeTable));
-				
+				updateGame();
+                                
                                 if(recordFlag){
                                     record.setMove(position, moveSymbol);
                                 }
-                                updateGame();
                         }}
 	}
 	
@@ -238,7 +238,7 @@ public class OnlineMultiplayerViewController implements Initializable{
 		loadButtons();
 		loadTicTacToeTable();
 		myTurn = true;
-                System.out.println("load");
+		disableButtons(false);
 	}
 
 	private void loadButtons() {
@@ -315,23 +315,7 @@ public class OnlineMultiplayerViewController implements Initializable{
             }
         }
         disableButtons(true);
-        //showEndGameAlert(key);
-         if(winner.equals("X")){
-             if(lbl_name1.getText().equals("X")){
-              new ShowVideo().video(lbl_player1.getText(),true);
-             }
-             else{
-                   new ShowVideo().video(lbl_player1.getText(),false);
-             }
-          
-        }else{
-              if(lbl_name1.getText().equals("O")){
-              new ShowVideo().video(lbl_player1.getText(),true);
-             }
-             else{
-               new ShowVideo().video(lbl_player1.getText(),false);
-             }
-        }
+        showEndGameAlert(key);
     }
 
 
@@ -642,24 +626,21 @@ public class OnlineMultiplayerViewController implements Initializable{
         }
     }
 
-    void transferMessageRecordFlag(boolean flag) {
-        recordFlag = flag;
-    }     
-         
     void transferMessageNames(String name1, String get) {
         lbl_player1.setText(name1);
         lbl_player2.setText(get);
-        System.out.println("names");
+        
         if(recordFlag){
             record = new Record(name1, get);
         }
     }
     
-    
+    void transferMessageRecordFlag(boolean flag) {
+        recordFlag = flag;
+    }
     
     void transferMessageSymbol(String s) {
         if (s.equals("X")) {
-            disableButtons(false);
             Turn.setTurn(p1);
             mine = true;
             p1.setSymbol("X");
@@ -668,7 +649,6 @@ public class OnlineMultiplayerViewController implements Initializable{
             lbl_name1.setText("X");
             lbl_name2.setText("O");
         } else {
-            disableButtons(true);
             Turn.setTurn(p2);
             mine = false;
             p1.setSymbol("O");

@@ -1,7 +1,9 @@
 package javaproject;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
@@ -278,7 +280,13 @@ public class SinglePlayerViewController implements Initializable {
             }
         }
         disableButtons(true);
-        video();
+        if(!winner.equals("AI")){
+           new ShowVideo().video(lbl_player.getText(),true);
+        }else{
+           new ShowVideo().video(lbl_player.getText(),false);
+        }
+
+        
         //showEndGameAlert(key);
     }
     void video(){
@@ -305,6 +313,8 @@ public class SinglePlayerViewController implements Initializable {
         });
     }
 
+  
+    
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (key != "draw") {
@@ -519,7 +529,8 @@ public class SinglePlayerViewController implements Initializable {
         String symbol = null;
        
 
-            temp = randomMove.nextInt(9);
+            temp = (int)(Math.random()*9+1);
+            System.out.println(temp);
             if (buttonsList.get(temp).getText().equals("")) {
 
                 if (X1.isSelected()) {

@@ -41,7 +41,7 @@ public class StartViewController implements Initializable {
 
      @FXML
     private Button btn_localHistory;
-
+   
     @FXML 
     void singlePlayer(ActionEvent event)
     {
@@ -100,6 +100,8 @@ public class StartViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        RecordedGamesProcess.read();
+        System.out.println(RecordedGamesProcess.records.get(0).getMoves());
     }    
 
     @FXML
@@ -131,11 +133,13 @@ public class StartViewController implements Initializable {
             o.translate(history.games,"Local History");
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            scene.getStylesheets().add("/CSS/Project.css");
             stage.show();
 
         } catch (IOException ex) {
-            System.err.println(ex);
+                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
