@@ -290,8 +290,7 @@ public class SinglePlayerViewController implements Initializable {
         
         //showEndGameAlert(key);
     }
-  
-    
+
     void video(){
          MediaPlayer mediaPlayer;    
         String vurl = ".";
@@ -315,6 +314,7 @@ public class SinglePlayerViewController implements Initializable {
            
         });
     }
+
 
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);

@@ -29,7 +29,7 @@ public class ShowVideo {
            vurl = "file:/D:/winnervideo.mp4";
            title="congaturation";
        }else{
-            vurl = "file:/D:/videos/winnvideo.mp4";
+            vurl = "file:/D:/videos/loservideo.mp4";
              title="ooh...Game Over";
        }
         Media media = new Media( vurl);
