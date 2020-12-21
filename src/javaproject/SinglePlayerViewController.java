@@ -228,51 +228,51 @@ public class SinglePlayerViewController implements Initializable {
         restartButton.setVisible(true);
         switch (key) {
             case "line 0": {
-                b1.setStyle("-fx-base: #00FF00;");
-                b2.setStyle("-fx-base: #00FF00;");
-                b3.setStyle("-fx-base: #00FF00;");
+                b1.setStyle("-fx-background-color: #00FF00;");
+                b2.setStyle("-fx-background-color: #00FF00;");
+                b3.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "line 1": {
-                b4.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b6.setStyle("-fx-base: #00FF00;");
+                b4.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b6.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "line 2": {
-                b7.setStyle("-fx-base: #00FF00;");
-                b8.setStyle("-fx-base: #00FF00;");
-                b9.setStyle("-fx-base: #00FF00;");
+                b7.setStyle("-fx-background-color: #00FF00;");
+                b8.setStyle("-fx-background-color: #00FF00;");
+                b9.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "column 0": {
-                b1.setStyle("-fx-base: #00FF00;");
-                b4.setStyle("-fx-base: #00FF00;");
-                b7.setStyle("-fx-base: #00FF00;");
+                b1.setStyle("-fx-background-color: #00FF00;");
+                b4.setStyle("-fx-background-color: #00FF00;");
+                b7.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "column 1": {
-                b2.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b8.setStyle("-fx-base: #00FF00;");
+                b2.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b8.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "column 2": {
-                b3.setStyle("-fx-base: #00FF00;");
-                b6.setStyle("-fx-base: #00FF00;");
-                b9.setStyle("-fx-base: #00FF00;");
+                b3.setStyle("-fx-background-color: #00FF00;");
+                b6.setStyle("-fx-background-color: #00FF00;");
+                b9.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "main diagonal": {
-                b1.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b9.setStyle("-fx-base: #00FF00;");
+                b1.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b9.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "secundary diagonal": {
-                b3.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b7.setStyle("-fx-base: #00FF00;");
+                b3.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b7.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "draw": {
@@ -367,7 +367,7 @@ public class SinglePlayerViewController implements Initializable {
 
     void reddeningButtons() {
         for (int i = 0; i < buttonsList.size(); i++) {
-            buttonsList.get(i).setStyle("-fx-base: #FF0000;");
+            buttonsList.get(i).setStyle("-fx-background-color: #FF0000;");
         }
     }
 

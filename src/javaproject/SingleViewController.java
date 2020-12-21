@@ -106,8 +106,10 @@ public class SingleViewController implements Initializable {
                 o.transferMessageButtons(X, O);
                 o.transferMessageRecordFlag(recordFlag);
 
+                Scene scene=new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(root));
+                stage.setScene(scene);
+                 scene.getStylesheets().add("/CSS/Project.css");
                 stage.show();
 
             } catch (IOException ex) {

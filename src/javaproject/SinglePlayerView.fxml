@@ -17,7 +17,7 @@
             <Image url="@../Images/game.png" />
          </image>
       </ImageView>
-      <Label fx:id="lbl_player" layoutX="47.0" layoutY="14.0" text="Player" textFill="#70dd61">
+      <Label fx:id="lbl_player" layoutX="47.0" layoutY="14.0" style="-fx-background-color: #38c450;" text="Player" textFill="#70dd61">
          <font>
             <Font name="Blackadder ITC" size="48.0" />
          </font>
@@ -54,49 +54,49 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="b1" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE">
+            <Button fx:id="b1" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" textFill="WHITE">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b2" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.columnIndex="1">
+            <Button fx:id="b2" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="110.0" prefWidth="193.0" textFill="WHITE" GridPane.columnIndex="1">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b3" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.columnIndex="2">
+            <Button fx:id="b3" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="124.0" prefWidth="118.0" textFill="WHITE" GridPane.columnIndex="2">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b4" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.rowIndex="1">
+            <Button fx:id="b4" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" textFill="WHITE" GridPane.rowIndex="1">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b5" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="b5" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b6" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <Button fx:id="b6" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b7" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.rowIndex="2">
+            <Button fx:id="b7" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" textFill="WHITE" GridPane.rowIndex="2">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b8" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="119.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="b8" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="119.0" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
-            <Button fx:id="b9" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: transparent;" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <Button fx:id="b9" mnemonicParsing="false" onAction="#actionPerformed" prefHeight="120.0" prefWidth="120.0" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
-                  <Font name="Berlin Sans FB Demi Bold" size="56.0" />
+                  <Font name="System Bold" size="41.0" />
                </font>
             </Button>
          </children>
