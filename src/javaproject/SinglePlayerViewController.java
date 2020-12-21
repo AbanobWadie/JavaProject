@@ -395,10 +395,9 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     public void playController(ArrayList<Button> buttonsList, String[][] ticTacToeTable) {
-
-        easyGameLogic(buttonsList);
-        //return "X";
-
+        //easyGameLogic(buttonsList);
+        mediumGameLogic(buttonsList);
+        //hardGameLogic(buttonsList);
     }
 
     public boolean winningChecker(String[][] ticTacToeTable) {
@@ -520,8 +519,86 @@ public class SinglePlayerViewController implements Initializable {
         }
         return true;
     }
+    
+    void mediumGameLogic(ArrayList<Button> buttonsList) {
+        String symbol = null;
+        
+        //while (true) {
+            int temp = mediumAIAlogorithm.getBestPosition(buttonsList, lbl_symbol1.getText(), lbl_symbol2.getText());
+            System.out.println(temp);
+            System.out.println(lbl_symbol1.getText());
+            if (buttonsList.get(temp).getText().equals("")) {
+                if (X1.isSelected()) {
 
-    void easyGameLogic(ArrayList<Button> buttonsList) {
+                    symbol = "O";
+
+                    if (recordFlag) {
+                        record.setMove("" + (temp + 1), "O");
+                    }
+
+                } else if (O1.isSelected()) {
+                    symbol = "X";
+
+                    if (recordFlag) {
+                        record.setMove("" + (temp + 1), "X");
+                    }
+
+                }
+                switch (temp) {
+                    case 1:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 2:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 3:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 4:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 5:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 6:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 7:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 8:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                    case 9:
+                        buttonsList.get(temp).setText(symbol);
+                        updateGame();
+                        recflag = false;
+                        break;
+                }
+            }
+
+            ///if (!recflag) {
+               // break;
+            //}
+        //}
+    }
+    /*void easyGameLogic(ArrayList<Button> buttonsList) {
         Random randomMove = new Random();
         int temp;
         String symbol = null;
@@ -600,7 +677,7 @@ public class SinglePlayerViewController implements Initializable {
                 break;
             }
         }
-    }
+    }*/
 
     boolean checkFreeButton(ArrayList<Button> buttonsList) {
         for (int i = 0; i < buttonsList.size(); i++) {
