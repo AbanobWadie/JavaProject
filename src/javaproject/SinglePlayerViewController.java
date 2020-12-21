@@ -292,6 +292,30 @@ public class SinglePlayerViewController implements Initializable {
     }
   
     
+    void video(){
+         MediaPlayer mediaPlayer;    
+        String vurl = ".";
+        Media media = new Media(vurl);        
+        mediaPlayer = new MediaPlayer(media);        
+        mediaPlayer.play();   
+        Stage dialog = new Stage();
+        dialog.setHeight(370);
+        dialog.setWidth(370);
+        Scene scene = new Scene(new Group(new MediaView(mediaPlayer)));   
+        dialog.setTitle("congaturation");
+        dialog.setResizable(false);
+        dialog.setScene(scene);
+        dialog.show();
+        dialog.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {       
+             mediaPlayer.stop();
+             dialog.close();
+            }
+           
+        });
+    }
+
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (key != "draw") {

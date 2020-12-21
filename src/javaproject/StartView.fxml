@@ -44,6 +44,7 @@
          </font>
       </Button>
       <Button fx:id="btn_localHistory" layoutX="32.0" layoutY="482.0" mnemonicParsing="false" onAction="#playerHistory" prefHeight="31.0" prefWidth="118.0" style="-fx-background-radius: 50; -fx-background-color: #ea0e0e;" text="Local History" textFill="WHITE">
+
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
