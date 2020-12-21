@@ -75,9 +75,9 @@ public class SplashViewController implements Initializable {
         // TODO
          new ShowSplashScreen().start();
         TranslateTransition t=new TranslateTransition();
-        t.setDuration(javafx.util.Duration.seconds(2));
+        t.setDuration(javafx.util.Duration.seconds(4));
         t.setNode(img);
-        t.setToY(-100);
+        t.setToY(-50);
         ScaleTransition s= new ScaleTransition(javafx.util.Duration.seconds(4),img);
         s.setByX(2);
         s.setByY(2);

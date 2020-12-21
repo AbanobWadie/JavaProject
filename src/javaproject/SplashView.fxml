@@ -16,7 +16,7 @@
             <Image url="@../Images/coffee.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="img" fitHeight="260.0" fitWidth="247.0" layoutX="179.0" layoutY="77.0" pickOnBounds="true">
+      <ImageView fx:id="img" fitHeight="128.0" fitWidth="173.0" layoutX="216.0" layoutY="136.0" pickOnBounds="true">
          <image>
             <Image url="@../Images/logo.png" />
          </image>
