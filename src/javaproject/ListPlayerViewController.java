@@ -67,7 +67,7 @@ public class ListPlayerViewController implements Initializable {
     @FXML
     private Button btn_record;
      @FXML
-    private Button btn_onlineHistory;
+    private Button onlineRecord;
 
     @FXML
     void back(ActionEvent event) {
@@ -372,5 +372,9 @@ public class ListPlayerViewController implements Initializable {
         btn_record.setDisable(true);
         recordFlag = true;
 
+    }
+
+    @FXML
+    private void onlineRecord(ActionEvent event) {
     }
 }

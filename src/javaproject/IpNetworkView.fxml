@@ -32,9 +32,9 @@
          </font>
       </Button>
 
-      <Hyperlink fx:id="btn_back" onAction="#back" layoutX="13.0" layoutY="21.0" prefHeight="23.0" prefWidth="55.0" text="Back">
+      <Hyperlink fx:id="btn_back" layoutX="13.0" layoutY="21.0" onAction="#back" prefHeight="23.0" prefWidth="55.0" text="Back" textFill="#a80f0f" underline="true">
          <font>
-            <Font size="24.0" />
+            <Font size="20.0" />
          </font>
       </Hyperlink>
       <ImageView blendMode="DARKEN" fitHeight="150.0" fitWidth="433.0" layoutX="183.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">

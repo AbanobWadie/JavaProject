@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -39,16 +40,16 @@ public class SignUpViewController implements Initializable {
 
     @FXML
     private Button btn_sign;
+    @FXML
+    private Hyperlink link_login;
 
     @FXML
     public void signUP(ActionEvent event) {
-        if (txt_nameS.getText().equals("") || txt_passS.getText().equals("")||
-                 txt_nameS.getText().length()<=20 || txt_passS.getText().length()<=20) {
+        if (txt_nameS.getText().equals("") && txt_passS.getText().equals("")&&
+                 txt_nameS.getText().length()>20 && txt_passS.getText().length()>20) {
             showAlert("Rigistration Failed, Enter all data, please");
 
         } else {
-            showAlert("Rigistration Successeded");
-
             try {
                 boolean result = ServerConnection.SignUp(txt_nameS.getText(), txt_passS.getText());
 
@@ -86,7 +87,6 @@ public class SignUpViewController implements Initializable {
         }
     }
 
-    @FXML
     private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("");
