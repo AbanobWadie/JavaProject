@@ -691,6 +691,7 @@ public class LocalMultiplayerViewController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("SingleRecordView.fxml"));
                 scene.setRoot(root);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
 
             } catch (IOException ex) {
@@ -704,6 +705,7 @@ public class LocalMultiplayerViewController implements Initializable {
                 Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                 scene.setRoot(root);
                 stage.setScene(scene);
+                stage.setResizable(false);
                 stage.show();
 
             } catch (IOException ex) {
@@ -733,6 +735,7 @@ public class LocalMultiplayerViewController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             loadGame();
 

@@ -84,6 +84,7 @@ public class ListPlayerViewController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,6 +181,7 @@ public class ListPlayerViewController implements Initializable {
                                     Stage stage =  (Stage) btn_back.getScene().getWindow();
                                     stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
+                                    stage.setResizable(false);
                                     stage.show();
 
                                 } catch (IOException ex) {
@@ -208,6 +210,7 @@ public class ListPlayerViewController implements Initializable {
                                     Stage stage =  (Stage) btn_back.getScene().getWindow();
                                     stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
+                                    stage.setResizable(false);
                                     stage.show();
                                 } catch (IOException ex) {
                                     System.err.println(ex);
@@ -243,6 +246,7 @@ public class ListPlayerViewController implements Initializable {
                                     Scene scene = new Scene(root);
                                     stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
+                                    stage.setResizable(false);
                                     stage.show();
 
                                 } catch (IOException ex) {
@@ -261,6 +265,7 @@ public class ListPlayerViewController implements Initializable {
                                     Stage stage = (Stage) btn_back.getScene().getWindow();
 
                                     stage.setScene(scene);
+                                    stage.setResizable(false);
                                     stage.show();
                                 } catch (IOException ex) {
                                     Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);

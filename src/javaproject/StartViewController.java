@@ -134,6 +134,7 @@ public class StartViewController implements Initializable {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             scene.getStylesheets().add("/CSS/Project.css");
+            stage.setResizable(false);
             stage.show();
 
         } catch (IOException ex) {
