@@ -97,7 +97,6 @@ public class OnlineMultiplayerViewController implements Initializable {
                                     Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                                     Scene scene = new Scene(root);
                                     Stage stage = (Stage) btn_back.getScene().getWindow();
-
                                     stage.setScene(scene);
                                     stage.setResizable(false);
                                     stage.show();
