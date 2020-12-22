@@ -32,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -68,6 +69,10 @@ public class ListPlayerViewController implements Initializable {
     private Button btn_record;
      @FXML
     private Button onlineRecord;
+    @FXML
+    private Label lbl_name;
+    @FXML
+    private Label lbl_score;
 
     @FXML
     void back(ActionEvent event) {
