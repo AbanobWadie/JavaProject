@@ -57,8 +57,12 @@ public class JavaProject extends Application {
 
     @Override
     public void stop() throws Exception {
-        ServerConnection con = new ServerConnection();
-        con.exit();
+        if(ServerConnection.running)
+        {
+             ServerConnection.exit();
+            
+        }
+        
     }
 
     /**

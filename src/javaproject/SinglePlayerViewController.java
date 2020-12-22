@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -83,6 +85,12 @@ public class SinglePlayerViewController implements Initializable {
     private Label lbl_symbol1;
     @FXML
     private Label lbl_symbol2;
+    @FXML
+    private Label score1;
+    @FXML
+    private Label score2;
+    @FXML
+    private Circle recordSign;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -129,6 +137,7 @@ public class SinglePlayerViewController implements Initializable {
             position = "9";
             move(b9);
         }
+        System.out.println(position);
 
     }
 
@@ -187,8 +196,10 @@ public class SinglePlayerViewController implements Initializable {
         recflag = true;
         if (button.getText().equals("")) {
             button.setText("");
+            System.out.println(position);
             if (X1.isSelected()) {
                 button.setText("X");
+                
                 if (recordFlag) {
                     record.setMove(position, "X");
                 }
@@ -212,6 +223,7 @@ public class SinglePlayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         disableButtons(false);
+        recordSign.setVisible(false);
 
     }
 
@@ -326,8 +338,8 @@ public class SinglePlayerViewController implements Initializable {
         }
 
         if (recordFlag) {
-            RecordedGamesProcess recordedGame = new RecordedGamesProcess();
-            recordedGame.save(record);
+            RecordedGamesProcess.save(record);
+            ServerConnection.running=false;
         }
 
         if (!key.equals("draw")) {
@@ -534,14 +546,14 @@ public class SinglePlayerViewController implements Initializable {
                     symbol = "O";
 
                     if (recordFlag) {
-                        record.setMove("" + (temp), "O");
+                        record.setMove("" + (temp+1), "O");
                     }
 
                 } else if (O1.isSelected()) {
                     symbol = "X";
 
                     if (recordFlag) {
-                        record.setMove("" + (temp), "X");
+                        record.setMove("" + (temp+1), "X");
                     }
 
                 }
@@ -698,6 +710,7 @@ public class SinglePlayerViewController implements Initializable {
     void transferMessageButtons(RadioButton X, RadioButton O) {
         X1 = X;
         O1 = O;
+        
         if (X1.isSelected()) {
             lbl_symbol1.setText(X1.getText());
             lbl_symbol2.setText("O");
@@ -705,6 +718,7 @@ public class SinglePlayerViewController implements Initializable {
             lbl_symbol1.setText("O");
             lbl_symbol2.setText("X");
         }
+        
 
     }
 
@@ -712,6 +726,32 @@ public class SinglePlayerViewController implements Initializable {
         recordFlag = flag;
         if (recordFlag) {
             record = new Record(lbl_player.getText(), "AI");
+            ServerConnection.running = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (ServerConnection.running) {
+                   
+                       
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                recordSign.setVisible(!recordSign.isVisible());
+                                System.out.println("thread");
+                                
+                            }
+                               
+                        });
+                    try {
+                        Thread.sleep(1000l);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        
+
+                }
+            }
+        }).start();
         }
     }
 }

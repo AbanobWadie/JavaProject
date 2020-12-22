@@ -19,10 +19,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import static javaproject.OnlineMultiplayerViewController.winner;
+import static javaproject.SinglePlayerViewController.winner;
 import static javaproject.Turn.setTurn;
 import static javaproject.Turn.getTurn;
 
@@ -81,6 +86,8 @@ public class LocalMultiplayerViewController implements Initializable {
 
     boolean recordPageFlag;
     ArrayList<String> arrMoves;
+    @FXML
+    private Circle recordSign;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -237,13 +244,16 @@ public class LocalMultiplayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         disableButtons(false);
+        recordSign.setVisible(false);
+
 
     }
 
     private void loadButtons() {
         for (int i = 0; i < buttonsList.size(); i++) {
             buttonsList.get(i).setText("");
-            buttonsList.get(i).setStyle("-fx-base: #b6e7c9;");
+            buttonsList.get(i).setStyle("-fx-background-color: transparent;");
+            
         }
         //restartButton.setVisible(false);
     }
@@ -306,23 +316,8 @@ public class LocalMultiplayerViewController implements Initializable {
             }
         }
         disableButtons(true);  
-         if(winner.equals("X")){
-             if(s1.getText().equals("X")){
-              new ShowVideo().video(lbl_p1.getText(),true);
-             }
-             else{
-                   new ShowVideo().video(lbl_p2.getText(),true);
-             }
-          
-        }else{
-              if(s1.getText().equals("O")){
-              new ShowVideo().video(lbl_p1.getText(),true);
-             }
-             else{
-               new ShowVideo().video(lbl_p2.getText(),true);
-             }
-        }
-       // showEndGameAlert(key);
+         
+        showEndGameAlert(key);
     }
 
     private void showEndGameAlert(String key) {
@@ -366,10 +361,29 @@ public class LocalMultiplayerViewController implements Initializable {
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
         }
-        endGame.setHeaderText(null);
-        endGame.show();
+       if (!key.equals("draw")) {
+            if (winner.equals("X")) {
+                if(s1.getText().equals("X")){
+                    new ShowVideo().video(s1.getText(), true);
+                }else{
+                    new ShowVideo().video(s2.getText(), false);
+                }
+            } else {
+                if(s1.getText().equals("O")){
+                    new ShowVideo().video(s1.getText(), true);
+                }else{
+                    new ShowVideo().video(s2.getText(), false);
+                }
+            }
+        } else {
+            endGame.setHeaderText(null);
+            endGame.show();
+        }
+
+        
         if (recordFlag) {
             RecordedGamesProcess.save(record);
+            ServerConnection.running=false;
         }
 
     }
@@ -618,7 +632,34 @@ public class LocalMultiplayerViewController implements Initializable {
         lbl_p1.setText(text);
         lbl_p2.setText(text0);
         if (recordFlag) {
+            
             record = new Record(text, text0);
+            ServerConnection.running = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (ServerConnection.running) {
+                   
+                       
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                recordSign.setVisible(!recordSign.isVisible());
+                                System.out.println("thread");
+                                
+                            }
+                               
+                        });
+                    try {
+                        Thread.sleep(1000l);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        
+
+                }
+            }
+        }).start();
         }
 
     }

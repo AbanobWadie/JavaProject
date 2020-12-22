@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaproject.OnlineMultiplayerViewController">
@@ -117,5 +118,6 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Circle fx:id="recordSign" fill="RED" layoutX="19.0" layoutY="17.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
    </children>
 </AnchorPane>

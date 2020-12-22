@@ -23,6 +23,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 public class OnlineMultiplayerViewController implements Initializable {
@@ -74,6 +75,8 @@ public class OnlineMultiplayerViewController implements Initializable {
     private Label lbl_name2;
     @FXML
     private Button btn_back;
+    @FXML
+    private Circle recordSign;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -263,6 +266,7 @@ public class OnlineMultiplayerViewController implements Initializable {
         loadTicTacToeTable();
         myTurn = true;
         System.out.println("load");
+        recordSign.setVisible(false);
     }
 
     private void loadButtons() {
@@ -277,64 +281,55 @@ public class OnlineMultiplayerViewController implements Initializable {
         reddeningButtons();
         switch (key) {
             case "line 0": {
-                b1.setStyle("-fx-base: #00FF00;");
-                b2.setStyle("-fx-base: #00FF00;");
-                b3.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b1.setStyle("-fx-background-color: #00FF00;");
+                b2.setStyle("-fx-background-color: #00FF00;");
+                b3.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "line 1": {
-                b4.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b6.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b4.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b6.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "line 2": {
-                b7.setStyle("-fx-base: #00FF00;");
-                b8.setStyle("-fx-base: #00FF00;");
-                b9.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b7.setStyle("-fx-background-color: #00FF00;");
+                b8.setStyle("-fx-background-color: #00FF00;");
+                b9.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "column 0": {
-                b1.setStyle("-fx-base: #00FF00;");
-                b4.setStyle("-fx-base: #00FF00;");
-                b7.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b1.setStyle("-fx-background-color: #00FF00;");
+                b4.setStyle("-fx-background-color: #00FF00;");
+                b7.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "column 1": {
-                b2.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b8.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b2.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b8.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "column 2": {
-                b3.setStyle("-fx-base: #00FF00;");
-                b6.setStyle("-fx-base: #00FF00;");
-                b9.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b3.setStyle("-fx-background-color: #00FF00;");
+                b6.setStyle("-fx-background-color: #00FF00;");
+                b9.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "main diagonal": {
-                b1.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b9.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b1.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b9.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "secundary diagonal": {
-                b3.setStyle("-fx-base: #00FF00;");
-                b5.setStyle("-fx-base: #00FF00;");
-                b7.setStyle("-fx-base: #00FF00;");
-                disableButtons(true);
+                b3.setStyle("-fx-background-color: #00FF00;");
+                b5.setStyle("-fx-background-color: #00FF00;");
+                b7.setStyle("-fx-background-color: #00FF00;");
                 break;
             }
             case "draw": {
                 reddeningButtons();
-                disableButtons(true);
                 break;
             }
         }
@@ -369,12 +364,14 @@ public class OnlineMultiplayerViewController implements Initializable {
         disableButtons(true);
         if (recordFlag) {
             RecordedGamesProcess.save(record);
+            ServerConnection.running=false;
+       
         }
     }
 
     private void reddeningButtons() {
         for (int i = 0; i < buttonsList.size(); i++) {
-            buttonsList.get(i).setStyle("-fx-base: #FF0000;");
+            buttonsList.get(i).setStyle("-fx-background-color: #FF0000;");
         }
     }
 
@@ -652,6 +649,7 @@ public class OnlineMultiplayerViewController implements Initializable {
     }
 
     void transferMessageRecordFlag(boolean flag) {
+        
         recordFlag = flag;
     }
 
@@ -661,6 +659,31 @@ public class OnlineMultiplayerViewController implements Initializable {
         System.out.println("names");
         if (recordFlag) {
             record = new Record(name1, get);
+                    ServerConnection.running = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (ServerConnection.running) {
+                   
+                       
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                recordSign.setVisible(!recordSign.isVisible());
+                                
+                            }
+                               
+                        });
+                    try {
+                        Thread.sleep(1000l);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                        
+
+                }
+            }
+        }).start();
         }
     }
 

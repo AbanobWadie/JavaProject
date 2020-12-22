@@ -170,8 +170,11 @@ public class ListPlayerViewController implements Initializable {
 
                                     o.transferMessageSymbol("X");
 
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
-                                    stage.setScene(new Scene(root));
+                                  
+                                     Scene scene=new Scene(root);
+                                    Stage stage =  (Stage) btn_back.getScene().getWindow();
+                                    stage.setScene(scene);
+                                    scene.getStylesheets().add("/CSS/Project.css");
                                     stage.show();
 
                                 } catch (IOException ex) {
@@ -196,10 +199,11 @@ public class ListPlayerViewController implements Initializable {
 
                                     o.transferMessageSymbol("O");
 
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
-                                    stage.setScene(new Scene(root));
+                                    Scene scene=new Scene(root);
+                                    Stage stage =  (Stage) btn_back.getScene().getWindow();
+                                    stage.setScene(scene);
+                                    scene.getStylesheets().add("/CSS/Project.css");
                                     stage.show();
-
                                 } catch (IOException ex) {
                                     System.err.println(ex);
                                 }
