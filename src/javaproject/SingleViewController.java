@@ -54,6 +54,7 @@ public class SingleViewController implements Initializable {
     @FXML
     private ToggleButton btn_hard;
 
+    String levels; 
     /**
      * Initializes the controller class.
      */
@@ -117,7 +118,7 @@ public class SingleViewController implements Initializable {
                 //Pass whatever data you want. You can have multiple method calls here
                 o.transferMesssageText(txt_name.getText());
                 o.transferMessageButtons(X, O);
-                o.transferMessageRecordFlag(recordFlag);
+                o.transferMessageRecordFlag(recordFlag,levels);
 
                 Scene scene=new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -147,14 +148,17 @@ public class SingleViewController implements Initializable {
 
     @FXML
     private void easy(ActionEvent event) {
+        levels="1";
     }
 
     @FXML
     private void meduim(ActionEvent event) {
+        levels="2";
     }
 
     @FXML
     private void hard(ActionEvent event) {
+        levels="3";
     }
 
 }

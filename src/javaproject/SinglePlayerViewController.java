@@ -69,6 +69,7 @@ public class SinglePlayerViewController implements Initializable {
     private String[][] ticTacToeTable;
     private ArrayList<Button> buttonsList = new ArrayList<>();
 
+    String levels;
     boolean recflag = true;
 
     RadioButton X1 = new RadioButton();
@@ -96,7 +97,6 @@ public class SinglePlayerViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        
 
         loadGame();
     }
@@ -201,7 +201,7 @@ public class SinglePlayerViewController implements Initializable {
             System.out.println(position);
             if (X1.isSelected()) {
                 button.setText("X");
-                
+
                 if (recordFlag) {
                     record.setMove(position, "X");
                 }
@@ -299,7 +299,6 @@ public class SinglePlayerViewController implements Initializable {
         showEndGameAlert(key);
     }
 
-
     void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (!key.equals("draw")) {
@@ -341,7 +340,7 @@ public class SinglePlayerViewController implements Initializable {
 
         if (recordFlag) {
             RecordedGamesProcess.save(record);
-            ServerConnection.running=false;
+            ServerConnection.running = false;
         }
 
         if (!key.equals("draw")) {
@@ -411,9 +410,15 @@ public class SinglePlayerViewController implements Initializable {
     }
 
     public void playController(ArrayList<Button> buttonsList, String[][] ticTacToeTable) {
-        //easyGameLogic(buttonsList);
-        //mediumGameLogic(buttonsList);
-        hardGameLogic(buttonsList);
+        if (levels.equals("1")) {
+            easyGameLogic(buttonsList);
+        } else if (levels.equals("2")) {
+            mediumGameLogic(buttonsList);
+        } else {
+            hardGameLogic(buttonsList);
+
+        }
+
     }
 
     public boolean winningChecker(String[][] ticTacToeTable) {
@@ -536,7 +541,6 @@ public class SinglePlayerViewController implements Initializable {
         return true;
     }
 
-
     void hardGameLogic(ArrayList<Button> buttonsList) {
         String symbol = null;
         char board[][] = new char[3][3];
@@ -594,7 +598,7 @@ public class SinglePlayerViewController implements Initializable {
                     case 1:
                         temp = 7;
                         break;
-                   
+
                     case 2:
                         temp = 8;
                         break;
@@ -842,7 +846,7 @@ public class SinglePlayerViewController implements Initializable {
     void transferMessageButtons(RadioButton X, RadioButton O) {
         X1 = X;
         O1 = O;
-        
+
         if (X1.isSelected()) {
             lbl_symbol1.setText(X1.getText());
             lbl_symbol2.setText("O");
@@ -850,40 +854,39 @@ public class SinglePlayerViewController implements Initializable {
             lbl_symbol1.setText("O");
             lbl_symbol2.setText("X");
         }
-        
 
     }
 
-    void transferMessageRecordFlag(boolean flag) {
+    void transferMessageRecordFlag(boolean flag, String l) {
+        levels = l;
+
         recordFlag = flag;
         if (recordFlag) {
             record = new Record(lbl_player.getText(), "AI");
             ServerConnection.running = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (ServerConnection.running) {
-                   
-                       
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (ServerConnection.running) {
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
                                 recordSign.setVisible(!recordSign.isVisible());
                                 System.out.println("thread");
-                                
-                            }
-                               
-                        });
-                    try {
-                        Thread.sleep(1000l);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                        
 
+                            }
+
+                        });
+                        try {
+                            Thread.sleep(1000l);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
                 }
-            }
-        }).start();
+            }).start();
         }
     }
 }

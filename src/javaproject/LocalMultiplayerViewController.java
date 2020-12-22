@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import static javaproject.OnlineMultiplayerViewController.winner;
@@ -88,6 +89,8 @@ public class LocalMultiplayerViewController implements Initializable {
     ArrayList<String> arrMoves;
     @FXML
     private Circle recordSign;
+    @FXML
+    private GridPane grid;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -243,7 +246,14 @@ public class LocalMultiplayerViewController implements Initializable {
         loadButtons();
         loadTicTacToeTable();
         myTurn = true;
-        disableButtons(false);
+        if(recordPageFlag)
+        {
+            grid.setMouseTransparent(true);
+        }else
+        {
+           disableButtons(false);
+
+        }
         recordSign.setVisible(false);
 
 
