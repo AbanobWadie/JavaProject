@@ -52,6 +52,7 @@ public class StartViewController implements Initializable {
              Scene scene = new Scene(root);
              Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
              stage.setScene(scene);
+             stage.setResizable(false);
              stage.show();
         } catch (IOException ex) {
             Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,6 +68,7 @@ public class StartViewController implements Initializable {
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
+                 stage.setResizable(false);
                  stage.show();
                  
             } catch (IOException ex) {
@@ -82,6 +84,7 @@ public class StartViewController implements Initializable {
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
+                 stage.setResizable(false);
                  stage.show();
                  
             } catch (IOException ex) {
@@ -111,6 +114,7 @@ public class StartViewController implements Initializable {
                  Scene scene = new Scene(root);
                  Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
                  stage.setScene(scene);
+                 stage.setResizable(false);
                  stage.show();
                  
             } catch (IOException ex) {
