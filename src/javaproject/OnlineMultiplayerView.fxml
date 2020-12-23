@@ -80,11 +80,11 @@
       </GridPane>
       <Label fx:id="lbl_player1" alignment="CENTER" contentDisplay="CENTER" layoutX="36.0" layoutY="23.0" prefHeight="39.0" prefWidth="119.0" style="-fx-background-color: #38c450; -fx-background-radius: 100;" text="Player1" textFill="WHITE">
          <font>
-            <Font name="Blackadder ITC" size="25.0" />
+            <Font name="Book Antiqua Bold Italic" size="24.0" />
          </font></Label>
       <Label fx:id="lbl_player2" alignment="CENTER" contentDisplay="CENTER" layoutX="567.0" layoutY="23.0" prefHeight="42.0" prefWidth="118.0" style="-fx-background-color: #38c450; -fx-background-radius: 100;" text="Player2" textFill="WHITE">
          <font>
-            <Font name="Blackadder ITC" size="25.0" />
+            <Font name="Book Antiqua Bold Italic" size="24.0" />
          </font></Label>
       <Label fx:id="lbl_name1" layoutX="172.0" layoutY="25.0" text="0" textFill="WHITE">
          <font>
