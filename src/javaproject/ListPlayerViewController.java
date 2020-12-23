@@ -76,7 +76,6 @@ public class ListPlayerViewController implements Initializable {
     @FXML
     private Label lbl_score;
 
-    Stage stage1;
 
     @FXML
     void back(ActionEvent event) {
@@ -85,11 +84,11 @@ public class ListPlayerViewController implements Initializable {
 
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            StageView.st.setScene(scene);
+            StageView.st.setResizable(false);
+           StageView.st.show();
         } catch (IOException ex) {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,7 +96,7 @@ public class ListPlayerViewController implements Initializable {
 
     @FXML
     void historyAction(ActionEvent event) {
-        stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
         ServerConnection.history();
     }
 
@@ -192,10 +191,10 @@ public class ListPlayerViewController implements Initializable {
                                     o.transferMessageSymbol("X");
 
                                     Scene scene = new Scene(root);
-                                    stage1.setScene(scene);
+                                    StageView.st.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    stage1.setResizable(false);
-                                    stage1.show();
+                                    StageView.st.setResizable(false);
+                                   StageView.st.show();
 
                                 } catch (IOException ex) {
                                     System.err.println(ex);
@@ -221,11 +220,11 @@ public class ListPlayerViewController implements Initializable {
                                     o.transferMessageSymbol("O");
 
                                     Scene scene = new Scene(root);
-                                    Stage stage = (Stage) btn_record.getScene().getWindow();
-                                    stage.setScene(scene);
+                                    
+                                    StageView.st.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    stage.setResizable(false);
-                                    stage.show();
+                                    StageView.st.setResizable(false);
+                                    StageView.st.show();
                                 } catch (IOException ex) {
                                     System.err.println(ex);
                                 }
@@ -258,10 +257,10 @@ public class ListPlayerViewController implements Initializable {
 
                                     Scene scene = new Scene(root);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    System.out.println(stage1);
-                                    stage1.setScene(scene);
-                                    stage1.setResizable(false);
-                                    stage1.show();
+                                   
+                                    StageView.st.setScene(scene);
+                                    StageView.st.setResizable(false);
+                                    StageView.st.show();
 
                                 } catch (IOException ex) {
                                     Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -299,8 +298,8 @@ public class ListPlayerViewController implements Initializable {
                                     o.translate();
 
                                     Scene scene = new Scene(root);
-                                    stage1.setScene(scene);
-                                    stage1.show();
+                                    StageView.st.setScene(scene);
+                                    StageView.st.show();
 
                                 } catch (IOException ex) {
                                     Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -317,9 +316,9 @@ public class ListPlayerViewController implements Initializable {
                                     Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                                     Scene scene = new Scene(root);
 
-                                    stage1.setScene(scene);
-                                    stage1.setResizable(false);
-                                    stage1.show();
+                                    StageView.st.setScene(scene);
+                                    StageView.st.setResizable(false);
+                                    StageView.st.show();
                                 } catch (IOException ex) {
                                     Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -364,7 +363,7 @@ public class ListPlayerViewController implements Initializable {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
 
-                stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                
                 for (int i = 0; i < list.size(); i++) {
                     if (list_persons.getSelectionModel().getSelectedIndex() == i) {
                         ServerConnection.playWith(list_persons.getItems().get(i));
@@ -430,7 +429,7 @@ public class ListPlayerViewController implements Initializable {
 
     @FXML
     private void onlineRecord(ActionEvent event) {
-        stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
+       
         ServerConnection.onlineRecords();
     }
 }

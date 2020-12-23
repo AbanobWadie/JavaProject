@@ -51,6 +51,7 @@ public class SplashViewController implements Initializable {
                
                 Platform.runLater(() -> {
                     Stage stage = new Stage();
+                    StageView.st=stage;
                     Parent root = null;
                     try {
                         root = FXMLLoader.load(getClass().getResource("StartView.fxml"));

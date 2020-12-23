@@ -100,10 +100,10 @@ public class OnlineMultiplayerViewController implements Initializable {
 
                                     Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                                     Scene scene = new Scene(root);
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
-                                    stage.setScene(scene);
-                                    stage.setResizable(false);
-                                    stage.show();
+                                    
+                                    StageView.st.setScene(scene);
+                                    StageView.st.setResizable(false);
+                                    StageView.st.show();
                                 } catch (IOException ex) {
                                     Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -651,10 +651,9 @@ public class OnlineMultiplayerViewController implements Initializable {
             //Pass whatever data you want. You can have multiple method calls here
             o.transferMessageName1(lbl_player1.getText());
 
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            stage.setScene(new Scene(root));
-            stage.show();
+            
+            StageView.st.setScene(new Scene(root));
+            StageView.st.show();
 
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
