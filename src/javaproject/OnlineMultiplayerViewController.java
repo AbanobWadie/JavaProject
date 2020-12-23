@@ -98,6 +98,7 @@ public class OnlineMultiplayerViewController implements Initializable {
                                     Scene scene = new Scene(root);
                                     Stage stage = (Stage) btn_back.getScene().getWindow();
                                     stage.setScene(scene);
+                                    stage.setResizable(false);
                                     stage.show();
                                 } catch (IOException ex) {
                                     Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);

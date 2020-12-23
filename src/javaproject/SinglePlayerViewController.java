@@ -176,6 +176,7 @@ public class SinglePlayerViewController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             loadGame();
 

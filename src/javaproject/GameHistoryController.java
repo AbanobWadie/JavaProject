@@ -65,6 +65,7 @@ public class GameHistoryController implements Initializable {
              Scene scene = new Scene(root);
              Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
              stage.setScene(scene);
+             stage.setResizable(false);
              stage.show();
         } catch (IOException ex) {
             Logger.getLogger(GameHistoryController.class.getName()).log(Level.SEVERE, null, ex);

@@ -38,6 +38,7 @@ public class JavaProject extends Application {
         stage.initStyle(StageStyle.TRANSPARENT);
         
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         } catch (IOException ex) {
             Logger.getLogger(JavaProject.class.getName()).log(Level.SEVERE, null, ex);

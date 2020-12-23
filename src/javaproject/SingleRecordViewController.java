@@ -42,34 +42,35 @@ public class SingleRecordViewController implements Initializable {
     boolean f;
     static ArrayList<Record> records;
     static String titleFlag;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
     @FXML
     void back(ActionEvent event) {
         try {
             Parent root;
-             if(titleFlag.equals("offline")){
-                 root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-             }else{
-                 root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
-             }
-             Scene scene = new Scene(root);
-             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-             stage.setScene(scene);
-             stage.show();
+            if (titleFlag.equals("offline")) {
+                root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+            } else {
+                root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+            }
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
 
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void fillTable(){
+    public void fillTable() {
         ObservableList recp1 = FXCollections.observableArrayList();
 
         for (int i = 0; i < records.size(); i++) {
@@ -105,6 +106,7 @@ public class SingleRecordViewController implements Initializable {
 
                             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                             stage.setScene(new Scene(root));
+                            stage.setResizable(false);
                             stage.show();
 
                         } catch (IOException ex) {
@@ -118,8 +120,9 @@ public class SingleRecordViewController implements Initializable {
             }
         });
     }
-    
-    void translate(){
+
+    void translate() {
         fillTable();
     }
+
 }

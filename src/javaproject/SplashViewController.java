@@ -60,6 +60,7 @@ public class SplashViewController implements Initializable {
                     Scene scene = new Scene(root);
                   //  stage.initStyle(StageStyle.TRANSPARENT);
                     stage.setScene(scene);
+                    stage.setResizable(false);
                     stage.show();
                     ap.getScene().getWindow().hide();
                 });                
@@ -81,11 +82,9 @@ public class SplashViewController implements Initializable {
         ScaleTransition s= new ScaleTransition(javafx.util.Duration.seconds(4),img);
         s.setByX(2);
         s.setByY(2);
-        RotateTransition r=new RotateTransition(javafx.util.Duration.seconds(4),img);
-       
         t.play();
         s.play();
-       // r.play();
+       
     }    
     
 }

@@ -45,7 +45,7 @@ public class SingleViewController implements Initializable {
     private RadioButton O;
 
     final ToggleGroup group = new ToggleGroup();
-    final ToggleGroup groupLevels = new ToggleGroup();
+    //final ToggleGroup groupLevels = new ToggleGroup();
     private boolean recordFlag;
     @FXML
     private ToggleButton btn_easy;
@@ -54,7 +54,9 @@ public class SingleViewController implements Initializable {
     @FXML
     private ToggleButton btn_hard;
 
-    String levels; 
+    String levels="1"; 
+    @FXML
+    private ToggleGroup groupLevels;
     /**
      * Initializes the controller class.
      */
@@ -68,7 +70,9 @@ public class SingleViewController implements Initializable {
         btn_easy.setToggleGroup(groupLevels);
         btn_meduim.setToggleGroup(groupLevels);
         btn_hard.setToggleGroup(groupLevels);
-
+        
+    
+        
         recordFlag = false;
 
     }
@@ -93,6 +97,7 @@ public class SingleViewController implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             scene.setRoot(root);
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
 
         } catch (IOException ex) {
@@ -124,6 +129,7 @@ public class SingleViewController implements Initializable {
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene);
                 scene.getStylesheets().add("/CSS/Project.css");
+                stage.setResizable(false);
                 stage.show();
 
             } catch (IOException ex) {
@@ -148,16 +154,32 @@ public class SingleViewController implements Initializable {
 
     @FXML
     private void easy(ActionEvent event) {
+         
+       
+        btn_easy.setStyle("-fx-background-color: #00FF00; -fx-background-radius: 100;");
+        btn_hard.setStyle("-fx-background-color:  #57D1C9; -fx-background-radius: 100;");
+        btn_meduim.setStyle("-fx-background-color: #FFE869; -fx-background-radius: 100;");
+       
         levels="1";
     }
 
     @FXML
     private void meduim(ActionEvent event) {
+        
+         btn_easy.setStyle("-fx-background-color: #ED5485; -fx-background-radius: 100;");
+        btn_hard.setStyle("-fx-background-color:  #57D1C9; -fx-background-radius: 100;");
+        btn_meduim.setStyle("-fx-background-color: #00FF00; -fx-background-radius: 100;");
+        
         levels="2";
     }
 
     @FXML
     private void hard(ActionEvent event) {
+        
+         btn_easy.setStyle("-fx-background-color: #ED5485; -fx-background-radius: 100;");
+        btn_hard.setStyle("-fx-background-color:  #00FF00; -fx-background-radius: 100;");
+        btn_meduim.setStyle("-fx-background-color: #FFE869; -fx-background-radius: 100;");
+        
         levels="3";
     }
 
