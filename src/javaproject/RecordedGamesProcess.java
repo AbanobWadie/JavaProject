@@ -116,9 +116,8 @@ public class RecordedGamesProcess {
         }
     }
     
-     static void clear(){
+    static void clear() {
         records.clear();
-        
     }
 }
 

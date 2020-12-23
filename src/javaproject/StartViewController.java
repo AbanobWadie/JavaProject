@@ -128,6 +128,7 @@ public class StartViewController implements Initializable {
 
     @FXML
     void playerHistory(ActionEvent event) {
+        GamesHistoryProcess.clear();
         GamesHistoryProcess.read();
 
         try {

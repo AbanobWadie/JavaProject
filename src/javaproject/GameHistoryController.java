@@ -80,7 +80,6 @@ public class GameHistoryController implements Initializable {
     }
     
     public void fillTable(){
-        System.out.println(game.get(0));
         ObservableList hisP1 = FXCollections.observableArrayList();
         ObservableList hisP2 = FXCollections.observableArrayList();
         ObservableList hisW = FXCollections.observableArrayList();

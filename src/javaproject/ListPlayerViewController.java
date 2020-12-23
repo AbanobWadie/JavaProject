@@ -75,6 +75,8 @@ public class ListPlayerViewController implements Initializable {
     @FXML
     private Label lbl_score;
 
+    Stage stage1;
+
     @FXML
     void back(ActionEvent event) {
         try {
@@ -94,6 +96,7 @@ public class ListPlayerViewController implements Initializable {
 
     @FXML
     void historyAction(ActionEvent event) {
+        stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ServerConnection.history();
     }
 
@@ -122,7 +125,7 @@ public class ListPlayerViewController implements Initializable {
 
                     ArrayList<String> result = ServerConnection.getOnlineUsers();
 
-                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o") && !result.get(0).contains("history")) {
+                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o") && !result.get(0).contains("history") && !result.get(0).contains("records")) {
                         list = FXCollections.observableArrayList(result);
 
                         Platform.runLater(new Runnable() {
@@ -179,11 +182,10 @@ public class ListPlayerViewController implements Initializable {
                                     o.transferMessageSymbol("X");
 
                                     Scene scene = new Scene(root);
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
-                                    stage.setScene(scene);
+                                    stage1.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    stage.setResizable(false);
-                                    stage.show();
+                                    stage1.setResizable(false);
+                                    stage1.show();
 
                                 } catch (IOException ex) {
                                     System.err.println(ex);
@@ -208,11 +210,10 @@ public class ListPlayerViewController implements Initializable {
                                     o.transferMessageSymbol("O");
 
                                     Scene scene = new Scene(root);
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
-                                    stage.setScene(scene);
+                                    stage1.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    stage.setResizable(false);
-                                    stage.show();
+                                    stage1.setResizable(false);
+                                    stage1.show();
                                 } catch (IOException ex) {
                                     System.err.println(ex);
                                 }
@@ -243,12 +244,12 @@ public class ListPlayerViewController implements Initializable {
                                     GameHistoryController o = loader.getController();
                                     o.translate(games, "Online History");
 
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
                                     Scene scene = new Scene(root);
-                                    stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    stage.setResizable(false);
-                                    stage.show();
+                                    System.out.println(stage1);
+                                    stage1.setScene(scene);
+                                    stage1.setResizable(false);
+                                    stage1.show();
 
                                 } catch (IOException ex) {
                                     Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,7 +263,6 @@ public class ListPlayerViewController implements Initializable {
                                 ArrayList<Record> records = new ArrayList<>();
                                 String recordStr = result.get(0);
 
-                                System.out.println("dfb");
                                 if (!recordStr.equals("")) {
                                     String[] arr = recordStr.split(",");
                                     for (int i = 1; i < arr.length; i++) {
@@ -285,11 +285,10 @@ public class ListPlayerViewController implements Initializable {
                                     SingleRecordViewController.records = records;
                                     SingleRecordViewController.titleFlag = "online";
                                     o.translate();
-                                    
+
                                     Scene scene = new Scene(root);
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
-                                    stage.setScene(scene);
-                                    stage.show();
+                                    stage1.setScene(scene);
+                                    stage1.show();
 
                                 } catch (IOException ex) {
                                     Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -305,11 +304,10 @@ public class ListPlayerViewController implements Initializable {
 
                                     Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
                                     Scene scene = new Scene(root);
-                                    Stage stage = (Stage) btn_back.getScene().getWindow();
 
-                                    stage.setScene(scene);
-                                    stage.setResizable(false);
-                                    stage.show();
+                                    stage1.setScene(scene);
+                                    stage1.setResizable(false);
+                                    stage1.show();
                                 } catch (IOException ex) {
                                     Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -361,11 +359,18 @@ public class ListPlayerViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         loadData();
+        list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
+                stage1 = (Stage) list_persons.getScene().getWindow();
+            }
 
+        });
         list_persons.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
 
+                stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 for (int i = 0; i < list.size(); i++) {
                     if (list_persons.getSelectionModel().getSelectedIndex() == i) {
                         ServerConnection.playWith(list_persons.getItems().get(i));
@@ -429,6 +434,7 @@ public class ListPlayerViewController implements Initializable {
 
     @FXML
     private void onlineRecord(ActionEvent event) {
+        stage1 = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ServerConnection.onlineRecords();
     }
 }
