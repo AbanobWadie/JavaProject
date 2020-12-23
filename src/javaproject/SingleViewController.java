@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -38,7 +39,7 @@ public class SingleViewController implements Initializable {
     @FXML
     private Button btn_play;
     @FXML
-    private Button btn_record;
+    private CheckBox btn_record;
     @FXML
     private RadioButton X;
     @FXML
@@ -138,11 +139,6 @@ public class SingleViewController implements Initializable {
         }
     }
     
-    @FXML
-    void record(ActionEvent event) {
-        btn_record.setDisable(true);
-        recordFlag = true;
-    }
 
     void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
@@ -181,6 +177,17 @@ public class SingleViewController implements Initializable {
         btn_meduim.setStyle("-fx-background-color: #FFE869; -fx-background-radius: 100;");
         
         levels="3";
+    }
+
+    @FXML
+    private void record(ActionEvent event) {
+        // btn_record.setDisable(true);
+        if(btn_record.isSelected()){
+         recordFlag = true;
+    }else
+        {
+         recordFlag = false;
+        }
     }
 
 }

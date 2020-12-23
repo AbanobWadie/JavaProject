@@ -31,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -47,9 +48,7 @@ import static javaproject.RecordedGamesProcess.records;
  */
 public class ListPlayerViewController implements Initializable {
 
-    /* ObservableList list = FXCollections.observableArrayList("soha", "shimaa", "abanob", "ahmed",
-            "soha", "shimaa", "abanob", "ahmed",
-            "soha", "shimaa", "abanob", "ahmed");*/
+    
     @FXML
     private VBox vbox;
     @FXML
@@ -66,9 +65,11 @@ public class ListPlayerViewController implements Initializable {
     String player2;
     String playerRequest;
     boolean recordFlag;
+
     @FXML
-    private Button btn_record;
-    @FXML
+
+    private CheckBox btn_record;
+     @FXML
     private Button onlineRecord;
     @FXML
     private Label lbl_name;
@@ -334,27 +335,13 @@ public class ListPlayerViewController implements Initializable {
                         });
                         ServerConnection.running = false;
                     }
-
-                    /*try {
-                        Thread.sleep(3000L);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ListPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
                 }
             }
         }).start();
 
     }
 
-    /*  public void displayed(MouseEvent event)
-    {
-        String person=list_persons.getSelectionModel().getSelectedItem();
-        if(person==null||person.isEmpty())
-        {
-           showAlert("Cell is Empty.");
-        }
-        
-    }*/
+    
     private void showAlert(String mess) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, mess, ButtonType.CANCEL);
         alert.setTitle("Succedded");
@@ -431,12 +418,14 @@ public class ListPlayerViewController implements Initializable {
             recordFlag = true;
         }
     }
-
-    @FXML
+  @FXML
     private void record(ActionEvent event) {
-        btn_record.setDisable(true);
-        recordFlag = true;
-
+        if(btn_record.isSelected()){
+         recordFlag = true;
+    }else
+        {
+         recordFlag = false;
+        }
     }
 
     @FXML

@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -37,7 +38,7 @@ public class LocalViewController implements Initializable {
     @FXML
     private Button btn_play;
     @FXML
-    private Button btn_record;
+    private CheckBox btn_record;
 
     final ToggleGroup group1 = new ToggleGroup();
     final ToggleGroup group2 = new ToggleGroup();
@@ -214,10 +215,14 @@ public class LocalViewController implements Initializable {
     }
 
     @FXML
-    void record(ActionEvent event)
-    {
-         btn_record.setDisable(true);
-        recordFlag = true;
+    private void record(ActionEvent event) {
+        // btn_record.setDisable(true);
+        if(btn_record.isSelected()){
+         recordFlag = true;
+    }else
+        {
+         recordFlag = false;
+        }
     }
   
 

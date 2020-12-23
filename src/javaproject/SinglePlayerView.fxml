@@ -20,7 +20,7 @@
       </ImageView>
       <Label fx:id="lbl_player" alignment="CENTER" contentDisplay="CENTER" layoutX="42.0" layoutY="26.0" prefHeight="39.0" prefWidth="104.0" style="-fx-background-color: #38c450; -fx-background-radius: 100;" text="Player" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Blackadder ITC" size="24.0" />
+            <Font name="Book Antiqua Bold Italic" size="24.0" />
          </font>
       </Label>
       <Label fx:id="lbl_symbol1" layoutX="163.0" layoutY="27.0" text="0" textFill="WHITE">
@@ -104,7 +104,7 @@
       </GridPane>
       <Label fx:id="lbl_AI" alignment="CENTER" layoutX="609.0" layoutY="26.0" prefHeight="41.0" prefWidth="104.0" style="-fx-background-color: #38c450; -fx-background-radius: 100;" text="AI" textFill="WHITE">
          <font>
-            <Font name="Blackadder ITC" size="24.0" />
+            <Font name="Book Antiqua Bold Italic" size="24.0" />
          </font>
       </Label>
       <Label fx:id="lbl_symbol2" layoutX="577.0" layoutY="27.0" text="0" textFill="WHITE">
