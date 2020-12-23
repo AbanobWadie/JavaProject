@@ -146,7 +146,7 @@ public class SinglePlayerViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         try {
-
+            ServerConnection.running = false;
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));

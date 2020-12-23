@@ -113,13 +113,17 @@ public class ServerConnection {
         out.println("records");
         out.flush();        
     }
+    
+    public static void saveRecord(String record) {
+        out.println("save" + record);
+        out.flush();        
+    }
 
     public static ArrayList<String> getOnlineUsers() {
         ArrayList<String> arr = new ArrayList<>();
         try {
             //out.println("ready");
             //out.flush();
-           
                 String str = in.readLine();
 
                 if(str == null){
@@ -132,7 +136,7 @@ public class ServerConnection {
                         String newStr = strArr[i].replace(",", " ");
                         arr.add(newStr);
                     }
-                    arr.add(" ");
+                    
                 }else {
                     arr.add(str);
                 }

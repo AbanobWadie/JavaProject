@@ -91,6 +91,8 @@ public class LocalMultiplayerViewController implements Initializable {
     private Circle recordSign;
     @FXML
     private GridPane grid;
+    
+    Thread re;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -101,7 +103,7 @@ public class LocalMultiplayerViewController implements Initializable {
     }
 
     void recordRun() {
-        new Thread(new Runnable() {
+        re = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -171,7 +173,8 @@ public class LocalMultiplayerViewController implements Initializable {
                 }
 
             }
-        }).start();
+        });
+        re.start();
 
     }
 
@@ -645,7 +648,6 @@ public class LocalMultiplayerViewController implements Initializable {
                             public void run() {
                                 recordSign.setVisible(!recordSign.isVisible());
                                 System.out.println("thread");
-
                             }
 
                         });
@@ -671,6 +673,8 @@ public class LocalMultiplayerViewController implements Initializable {
 
     @FXML
     void back(ActionEvent event) {
+        ServerConnection.running = false;
+        re.stop();
         if (recordPageFlag) {
             try {
 

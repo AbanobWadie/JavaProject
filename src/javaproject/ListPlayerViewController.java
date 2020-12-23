@@ -124,17 +124,24 @@ public class ListPlayerViewController implements Initializable {
                 while (ServerConnection.running) {
 
                     ArrayList<String> result = ServerConnection.getOnlineUsers();
-
-                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).equals("x") && !result.get(0).equals("o") && !result.get(0).contains("history") && !result.get(0).contains("records")) {
+                    //System.out.println(result.get(0));
+                    if (!result.isEmpty() && !result.get(0).contains("play request from") && !result.get(0).contains("playx") && !result.get(0).contains("playo") && !result.get(0).contains("history") && !result.get(0).contains("records")) {
+                        String score = result.remove(result.size() - 1);
+                        //System.out.println(score);
                         list = FXCollections.observableArrayList(result);
 
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
+                                String[] arr = score.split("\\|");
+                                if(arr.length > 0){
+                                    lbl_name.setText(arr[1]);
+                                    lbl_score.setText(arr[2]);
+                                }
                                 list_persons.setItems(list);
                             }
                         });
-                    } else if (!result.isEmpty() && result.get(0).contains("play request from")) {
+                    }else if (!result.isEmpty() && result.get(0).contains("play request from")) {
                         timer();
                         System.out.println("req");
                         String[] arr = result.get(0).split(" ");
@@ -164,7 +171,7 @@ public class ListPlayerViewController implements Initializable {
                                 dialog.showAndWait();
                             }
                         });
-                    } else if (!result.isEmpty() && result.get(0).equals("x")) {
+                    } else if (!result.isEmpty() && result.get(0).contains("playx")) {
 
                         Platform.runLater(new Runnable() {
                             @Override
@@ -177,7 +184,9 @@ public class ListPlayerViewController implements Initializable {
                                     OnlineMultiplayerViewController o = loader.getController();
 
                                     o.transferMessageRecordFlag(recordFlag);
-                                    o.transferMessageNames(name1, player2);
+                                    String[] arr = result.get(0).split(" ");
+                                    String[] p2 = player2.split(" ");
+                                    o.transferMessageNames(name1, lbl_score.getText() , p2[0], arr[1]);
 
                                     o.transferMessageSymbol("X");
 
@@ -194,7 +203,7 @@ public class ListPlayerViewController implements Initializable {
                         });
 
                         break;
-                    } else if (!result.isEmpty() && result.get(0).equals("o")) {
+                    } else if (!result.isEmpty() && result.get(0).contains("playo")) {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -205,15 +214,17 @@ public class ListPlayerViewController implements Initializable {
 
                                     OnlineMultiplayerViewController o = loader.getController();
                                     o.transferMessageRecordFlag(recordFlag);
-                                    o.transferMessageNames(name1, playerRequest);
+                                    String[] arr = result.get(0).split(" ");
+                                    o.transferMessageNames(name1, lbl_score.getText(), playerRequest, arr[1]);
 
                                     o.transferMessageSymbol("O");
 
                                     Scene scene = new Scene(root);
-                                    stage1.setScene(scene);
+                                    Stage stage = (Stage) btn_record.getScene().getWindow();
+                                    stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
-                                    stage1.setResizable(false);
-                                    stage1.show();
+                                    stage.setResizable(false);
+                                    stage.show();
                                 } catch (IOException ex) {
                                     System.err.println(ex);
                                 }
@@ -355,17 +366,13 @@ public class ListPlayerViewController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         loadData();
-        list_persons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> ov, String old_val, String new_val) {
-                stage1 = (Stage) list_persons.getScene().getWindow();
-            }
-
-        });
+        
         list_persons.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {

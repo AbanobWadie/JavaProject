@@ -77,6 +77,10 @@ public class OnlineMultiplayerViewController implements Initializable {
     private Button btn_back;
     @FXML
     private Circle recordSign;
+    @FXML
+    private Label lbl_p1_score;
+    @FXML
+    private Label lbl_p2_score;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -365,7 +369,7 @@ public class OnlineMultiplayerViewController implements Initializable {
         if (recordFlag) {
             RecordedGamesProcess.save(record);
             ServerConnection.running=false;
-       
+            
         }
     }
 
@@ -629,7 +633,16 @@ public class OnlineMultiplayerViewController implements Initializable {
     void back(ActionEvent event) {
         try {
             ServerConnection.back();
-
+            ServerConnection.running = false;
+            
+            if(recordFlag){
+                String value = record.getPlayer1() + " " + record.getPlayer2();
+                for (String move : record.getMoves()) {
+                    value += " " + move;
+                }
+                ServerConnection.saveRecord(value);
+            }
+            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ListPlayerView.fxml"));
             Parent root = loader.load();
 
@@ -653,9 +666,11 @@ public class OnlineMultiplayerViewController implements Initializable {
         recordFlag = flag;
     }
 
-    void transferMessageNames(String name1, String get) {
+    void transferMessageNames(String name1, String p1Score, String get, String p2Score) {
         lbl_player1.setText(name1);
         lbl_player2.setText(get);
+        lbl_p1_score.setText(p1Score);
+        lbl_p2_score.setText(p2Score);
         System.out.println("names");
         if (recordFlag) {
             record = new Record(name1, get);
