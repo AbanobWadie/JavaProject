@@ -229,7 +229,7 @@ public class LocalMultiplayerViewController implements Initializable {
         if (button.getText().equals("")) {
             if (gameMode.equals("twoPlayers")) {
                 String s = playController(buttonsList, ticTacToeTable);
-                if(button.getText().equals("")){
+                if (button.getText().equals("")) {
                     button.setText(s);
                     if (recordFlag) {
                         record.setMove(position, moveSymbol);
@@ -246,16 +246,13 @@ public class LocalMultiplayerViewController implements Initializable {
         loadButtons();
         loadTicTacToeTable();
         myTurn = true;
-        if(recordPageFlag)
-        {
+        if (recordPageFlag) {
             grid.setMouseTransparent(true);
-        }else
-        {
-           disableButtons(false);
+        } else {
+            disableButtons(false);
 
         }
         recordSign.setVisible(false);
-
 
     }
 
@@ -263,7 +260,7 @@ public class LocalMultiplayerViewController implements Initializable {
         for (int i = 0; i < buttonsList.size(); i++) {
             buttonsList.get(i).setText("");
             buttonsList.get(i).setStyle("-fx-background-color: transparent;");
-            
+
         }
         //restartButton.setVisible(false);
     }
@@ -272,7 +269,7 @@ public class LocalMultiplayerViewController implements Initializable {
         reddeningButtons();
         //	restartButton.setVisible(true);
         switch (key) {
-             case "line 0": {
+            case "line 0": {
                 b1.setStyle("-fx-background-color: #00FF00;");
                 b2.setStyle("-fx-background-color: #00FF00;");
                 b3.setStyle("-fx-background-color: #00FF00;");
@@ -325,63 +322,57 @@ public class LocalMultiplayerViewController implements Initializable {
                 break;
             }
         }
-        disableButtons(true);  
-         
+        disableButtons(true);
+
         showEndGameAlert(key);
     }
 
     private void showEndGameAlert(String key) {
         Alert endGame = new Alert(AlertType.INFORMATION);
         if (!key.equals("draw")) {
-            if(winner.equals("X"))
-            {
-                if(s1.getText().equals("X"))
-                {
+            if (winner.equals("X")) {
+                if (s1.getText().equals("X")) {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p1.getText());
-                GamesHistoryProcess history = new GamesHistoryProcess();
-                history.save(game);
-                }
-                else{
+                    GamesHistoryProcess history = new GamesHistoryProcess();
+                    history.save(game);
+                } else {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p2.getText());
                     GamesHistoryProcess history = new GamesHistoryProcess();
                     history.save(game);
                 }
-                
-            }else
-            {
-                if(s1.getText().equals("O"))
-                {
+
+            } else {
+                if (s1.getText().equals("O")) {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p1.getText());
-                GamesHistoryProcess history = new GamesHistoryProcess();
-                history.save(game);
-                }
-                else{
+                    GamesHistoryProcess history = new GamesHistoryProcess();
+                    history.save(game);
+                } else {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p2.getText());
                     GamesHistoryProcess history = new GamesHistoryProcess();
                     history.save(game);
                 }
             }
-                
+
             endGame.setTitle("Victory");
             endGame.setContentText("Player \"" + winner + "\" won.");
         } else {
             endGame.setContentText("The game was a draw.");
             endGame.setTitle("Draw");
             Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), "draw");
-                GamesHistoryProcess history = new GamesHistoryProcess();
-                history.save(game);
+            GamesHistoryProcess history = new GamesHistoryProcess();
+            history.save(game);
         }
-       if (!key.equals("draw")) {
+        if (!key.equals("draw")) {
             if (winner.equals("X")) {
-                if(s1.getText().equals("X")){
+                if (s1.getText().equals("X")) {
                     new ShowVideo().video(s1.getText(), true);
-                }else{
+                } else {
                     new ShowVideo().video(s2.getText(), false);
                 }
             } else {
-                if(s1.getText().equals("O")){
+                if (s1.getText().equals("O")) {
                     new ShowVideo().video(s1.getText(), true);
-                }else{
+                } else {
                     new ShowVideo().video(s2.getText(), false);
                 }
             }
@@ -390,10 +381,9 @@ public class LocalMultiplayerViewController implements Initializable {
             endGame.show();
         }
 
-        
         if (recordFlag) {
             RecordedGamesProcess.save(record);
-            ServerConnection.running=false;
+            ServerConnection.running = false;
         }
 
     }
@@ -642,34 +632,32 @@ public class LocalMultiplayerViewController implements Initializable {
         lbl_p1.setText(text);
         lbl_p2.setText(text0);
         if (recordFlag) {
-            
+
             record = new Record(text, text0);
             ServerConnection.running = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (ServerConnection.running) {
-                   
-                       
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (ServerConnection.running) {
+
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
                                 recordSign.setVisible(!recordSign.isVisible());
                                 System.out.println("thread");
-                                
-                            }
-                               
-                        });
-                    try {
-                        Thread.sleep(1000l);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                        
 
+                            }
+
+                        });
+                        try {
+                            Thread.sleep(1000l);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                    }
                 }
-            }
-        }).start();
+            }).start();
         }
 
     }
@@ -686,10 +674,15 @@ public class LocalMultiplayerViewController implements Initializable {
         if (recordPageFlag) {
             try {
 
+                
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("SingleRecordView.fxml"));
+                Parent root = loader.load();
+
+                SingleRecordViewController o = loader.getController();
+                o.translate();
+            
+                Scene scene = new Scene(root);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = (Scene) ((Node) event.getSource()).getScene();
-                Parent root = FXMLLoader.load(getClass().getResource("SingleRecordView.fxml"));
-                scene.setRoot(root);
                 stage.setScene(scene);
                 stage.show();
 

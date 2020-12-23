@@ -108,6 +108,11 @@ public class ServerConnection {
         out.println("history");
         out.flush();        
     }
+    
+    public static void onlineRecords() {
+        out.println("records");
+        out.flush();        
+    }
 
     public static ArrayList<String> getOnlineUsers() {
         ArrayList<String> arr = new ArrayList<>();
@@ -124,7 +129,8 @@ public class ServerConnection {
                     String[] strArr = str.split(" ");
                     
                     for (int i = 1; i < strArr.length; i++) {
-                        arr.add(strArr[i]);
+                        String newStr = strArr[i].replace(",", " ");
+                        arr.add(newStr);
                     }
                     arr.add(" ");
                 }else {

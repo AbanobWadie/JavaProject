@@ -34,98 +34,92 @@ public class SingleRecordViewController implements Initializable {
 
     @FXML
     private ListView<String> listRecord;
-    
+
     @FXML
-   private Button btn_back;
-   String p1=new String();
-   String p2= new String();
-   boolean f;
-  
+    private Button btn_back;
+    String p1 = new String();
+    String p2 = new String();
+    boolean f;
+    static ArrayList<Record> records;
+    static String titleFlag;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        RecordedGamesProcess recG=new RecordedGamesProcess();
-        recG.clear();
-         recG.read();
-         ObservableList recp1=FXCollections.observableArrayList();
-         ObservableList recp2=FXCollections.observableArrayList();
-       
+        
+    }
 
-                for (int i = 0; i <recG.records.size() ; i++) {
-                    String p1=recG.records.get(i).getPlayer1();
-                    String p2=recG.records.get(i).getPlayer2();
-                    System.out.println(recG.records.get(i).getMoves());
-                    
-                    recp1.add(p1+" vs "+p2);
-                   // recp2.add(p2);
-                    
-                    listRecord.getItems();   
+    @FXML
+    void back(ActionEvent event) {
+        try {
+            Parent root;
+             if(titleFlag.equals("offline")){
+                 root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
+             }else{
+                 root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
+             }
+             Scene scene = new Scene(root);
+             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+             stage.setScene(scene);
+             stage.show();
 
-                }
-                //listRecord.setItems(recp1);
-                listRecord.setItems(recp1);
-                
-                 listRecord.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+        } catch (IOException ex) {
+            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void fillTable(){
+        ObservableList recp1 = FXCollections.observableArrayList();
+
+        for (int i = 0; i < records.size(); i++) {
+            String p1 = records.get(i).getPlayer1();
+            String p2 = records.get(i).getPlayer2();
+            System.out.println(records.get(i).getMoves());
+
+            recp1.add(p1 + " vs " + p2);
+
+            listRecord.getItems();
+
+        }
+        listRecord.setItems(recp1);
+
+        listRecord.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
             @Override
             public void handle(javafx.scene.input.MouseEvent event) {
 
                 for (int i = 0; i < recp1.size(); i++) {
                     if (listRecord.getSelectionModel().getSelectedIndex() == i) {
-                        
+
                         try {
                             //  player2 = listRecord.getItems().get(i);
-                             System.out.println(i);
-                            
+                            System.out.println(i);
+
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("LocalMultiplayerView.fxml"));
                             Parent root = loader.load();
-                            
+
                             LocalMultiplayerViewController l = loader.getController();
-                          
-                             LocalMultiplayerViewController.gameMode = "twoPlayers"; 
-                            l.transferFlag(true,recG.records.get(i));
-               
-        
-                            
+
+                            LocalMultiplayerViewController.gameMode = "twoPlayers";
+                            l.transferFlag(true, records.get(i));
+
                             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                             stage.setScene(new Scene(root));
                             stage.show();
-                            
+
                         } catch (IOException ex) {
                             Logger.getLogger(SingleRecordViewController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                      
+
                     }
 
                 }
 
             }
         });
-
-
-            }
-       
-    
-
-    @FXML
-    void back(ActionEvent event) {
-        try {
-
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = (Scene) ((Node) event.getSource()).getScene();
-            Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
-            scene.setRoot(root);
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (IOException ex) {
-            Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
-    
-    
-
+    void translate(){
+        fillTable();
+    }
 }

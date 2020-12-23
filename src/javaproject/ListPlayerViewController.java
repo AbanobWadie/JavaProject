@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import static javaproject.RecordedGamesProcess.records;
 
 /**
  * FXML Controller class
@@ -67,7 +68,7 @@ public class ListPlayerViewController implements Initializable {
     boolean recordFlag;
     @FXML
     private Button btn_record;
-     @FXML
+    @FXML
     private Button onlineRecord;
     @FXML
     private Label lbl_name;
@@ -95,19 +96,20 @@ public class ListPlayerViewController implements Initializable {
         ServerConnection.history();
     }
 
-    private void timer(){
+    private void timer() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                     Thread.sleep(6000l);
-                     ServerConnection.no();
+                    Thread.sleep(6000l);
+                    ServerConnection.no();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ListPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-       }).start();
+        }).start();
     }
+
     private void loadData() {
         new Thread(new Runnable() {
             @Override
@@ -175,9 +177,8 @@ public class ListPlayerViewController implements Initializable {
 
                                     o.transferMessageSymbol("X");
 
-                                  
-                                     Scene scene=new Scene(root);
-                                    Stage stage =  (Stage) btn_back.getScene().getWindow();
+                                    Scene scene = new Scene(root);
+                                    Stage stage = (Stage) btn_back.getScene().getWindow();
                                     stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
                                     stage.show();
@@ -204,8 +205,8 @@ public class ListPlayerViewController implements Initializable {
 
                                     o.transferMessageSymbol("O");
 
-                                    Scene scene=new Scene(root);
-                                    Stage stage =  (Stage) btn_back.getScene().getWindow();
+                                    Scene scene = new Scene(root);
+                                    Stage stage = (Stage) btn_back.getScene().getWindow();
                                     stage.setScene(scene);
                                     scene.getStylesheets().add("/CSS/Project.css");
                                     stage.show();
@@ -221,9 +222,9 @@ public class ListPlayerViewController implements Initializable {
                             public void run() {
                                 ArrayList<Game> games = new ArrayList<>();
                                 String history = result.get(0);
-                                
+
                                 System.out.println(history);
-                                if(!history.equals("")){
+                                if (!history.equals("")) {
                                     String[] arr = history.split(",");
                                     for (int i = 1; i < arr.length; i++) {
                                         String[] arr2 = arr[i].split(" ");
@@ -250,6 +251,48 @@ public class ListPlayerViewController implements Initializable {
                                 }
                             }
                         });
+                    } else if (!result.isEmpty() && result.get(0).contains("records")) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                ArrayList<Record> records = new ArrayList<>();
+                                String recordStr = result.get(0);
+
+                                System.out.println("dfb");
+                                if (!recordStr.equals("")) {
+                                    String[] arr = recordStr.split(",");
+                                    for (int i = 1; i < arr.length; i++) {
+                                        String[] arr2 = arr[i].split(" ");
+                                        Record record = new Record(arr2[0], arr2[1]);
+
+                                        for (int j = 2; j < arr2.length; j++) {
+                                            String[] arr3 = arr2[j].split("\\|");
+                                            record.setMove(arr3[0], arr3[1]);
+                                        }
+                                        records.add(record);
+                                    }
+                                }
+                                try {
+
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("SingleRecordView.fxml"));
+                                    Parent root = loader.load();
+
+                                    SingleRecordViewController o = loader.getController();
+                                    SingleRecordViewController.records = records;
+                                    SingleRecordViewController.titleFlag = "online";
+                                    o.translate();
+                                    
+                                    Scene scene = new Scene(root);
+                                    Stage stage = (Stage) btn_back.getScene().getWindow();
+                                    stage.setScene(scene);
+                                    stage.show();
+
+                                } catch (IOException ex) {
+                                    Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+
                     } else if (result.isEmpty()) {
                         Platform.runLater(new Runnable() {
                             @Override
@@ -265,7 +308,7 @@ public class ListPlayerViewController implements Initializable {
                                 } catch (IOException ex) {
                                     Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                                
+
                                 Dialog<ButtonType> dialog = new Dialog<>();
                                 dialog.setTitle("Sorry");
                                 ButtonType okBtn = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
@@ -381,5 +424,6 @@ public class ListPlayerViewController implements Initializable {
 
     @FXML
     private void onlineRecord(ActionEvent event) {
+        ServerConnection.onlineRecords();
     }
 }

@@ -26,71 +26,66 @@ import javafx.stage.Stage;
  * @author SoHa
  */
 public class StartViewController implements Initializable {
-    
-     
+
     @FXML
     private Button btn_singlePlayer;
-    
+
     @FXML
     private Button btn_localMultiplayer;
-    
+
     @FXML
     private Button btn_onlineMultiplayer;
     @FXML
     private Button btn_record;
 
-     @FXML
+    @FXML
     private Button btn_localHistory;
-   
-    @FXML 
-    void singlePlayer(ActionEvent event)
-    {
-        
+
+    @FXML
+    void singlePlayer(ActionEvent event) {
+
         try {
-             Parent root;
-             root = FXMLLoader.load(getClass().getResource("SingleView.fxml"));
-             Scene scene = new Scene(root);
-             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-             stage.setScene(scene);
-             stage.show();
+            Parent root;
+            root = FXMLLoader.load(getClass().getResource("SingleView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException ex) {
             Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-                 
+
     }
-    
+
     @FXML
-    void online(ActionEvent event)
-    {
-        try {            
-                 Parent root = FXMLLoader.load(getClass().getResource("IpNetworkView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-                 
-            } catch (IOException ex) {
-                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    void online(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("IpNetworkView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     @FXML
-     void localPlayer(ActionEvent event)
-    {
-          try {            
-                 Parent root = FXMLLoader.load(getClass().getResource("LocalView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-                 
-            } catch (IOException ex) {
-                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    void localPlayer(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("LocalView.fxml"));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
-      public void exit(ActionEvent event)
-    {
+
+    public void exit(ActionEvent event) {
         System.exit(0);
     }
 
@@ -100,35 +95,44 @@ public class StartViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-       
-    }    
+
+    }
 
     @FXML
     private void record(ActionEvent event) {
-        
-         try {            
-                 Parent root = FXMLLoader.load(getClass().getResource("SingleRecordView.fxml"));
-                 Scene scene = new Scene(root);
-                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-                 stage.setScene(scene);
-                 stage.show();
-                 
-            } catch (IOException ex) {
-                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
-    @FXML 
-    void playerHistory(ActionEvent event)
-    {
-      GamesHistoryProcess.read();
 
-          try {
+        try {
+            RecordedGamesProcess.clear();
+            RecordedGamesProcess.read();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SingleRecordView.fxml"));
+            Parent root = loader.load();
+
+            SingleRecordViewController o = loader.getController();
+            SingleRecordViewController.records = RecordedGamesProcess.records;
+            SingleRecordViewController.titleFlag = "offline";
+            o.translate();
+            
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException ex) {
+            Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    void playerHistory(ActionEvent event) {
+        GamesHistoryProcess.read();
+
+        try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("GameHistory.fxml"));
             Parent root = loader.load();
 
             GameHistoryController o = loader.getController();
-            o.translate(GamesHistoryProcess.games,"Local History");
+            o.translate(GamesHistoryProcess.games, "Local History");
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -137,9 +141,9 @@ public class StartViewController implements Initializable {
             stage.show();
 
         } catch (IOException ex) {
-                Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
+
 }
