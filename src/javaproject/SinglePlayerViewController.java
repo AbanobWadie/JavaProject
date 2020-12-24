@@ -71,6 +71,8 @@ public class SinglePlayerViewController implements Initializable {
 
     String levels;
     boolean recflag = true;
+    static int scoreP1;
+    static int scoreP2;
 
     RadioButton X1 = new RadioButton();
 
@@ -97,7 +99,7 @@ public class SinglePlayerViewController implements Initializable {
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-
+        
         loadGame();
     }
 
@@ -146,6 +148,8 @@ public class SinglePlayerViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         try {
+            scoreP1 = 0;
+            scoreP2 = 0;
             ServerConnection.running = false;
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
@@ -227,7 +231,8 @@ public class SinglePlayerViewController implements Initializable {
         myTurn = true;
         disableButtons(false);
         recordSign.setVisible(false);
-
+        score1.setText(""+scoreP1);
+        score2.setText(""+scoreP2);
     }
 
     private void loadButtons() {
@@ -309,26 +314,32 @@ public class SinglePlayerViewController implements Initializable {
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + lbl_player.getText() + "\" is winner.");
+                scoreP1++;
+                score1.setText(""+scoreP1);
             } else if (X1.isSelected() && winner.equals("O")) {
                 Game game = new Game(lbl_player.getText(), "AI", "AI");
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + " AI\" is winner.");
+                scoreP2++;
+                score2.setText(""+scoreP2);
             } else if (O1.isSelected() && winner.equals("O")) {
                 Game game = new Game(lbl_player.getText(), "AI", lbl_player.getText());
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + lbl_player.getText() + "\" is winner.");
-
+                scoreP1++;
+                score1.setText(""+scoreP1);
             } else {
                 Game game = new Game(lbl_player.getText(), "AI", "AI");
                 GamesHistoryProcess history = new GamesHistoryProcess();
                 history.save(game);
                 endGame.setTitle("Winner");
                 endGame.setContentText("\"" + " AI\" is winner.");
-
+                scoreP2++;
+                score2.setText(""+scoreP2);
             }
         } else {
             Game game = new Game(lbl_player.getText(), "AI", "draw");

@@ -121,6 +121,9 @@ public class SingleViewController implements Initializable {
 
                 //Get controller of scene2
                 SinglePlayerViewController o = loader.getController();
+                o.scoreP1 = 0;
+                o.scoreP2 = 0;
+
                 //Pass whatever data you want. You can have multiple method calls here
                 o.transferMesssageText(txt_name.getText());
                 o.transferMessageButtons(X, O);
