@@ -138,14 +138,12 @@ public class ListPlayerViewController implements Initializable {
                                     lbl_name.setText(arr[1]);
                                     lbl_score.setText(arr[2]);
                                 }
-                                list_persons.setItems(list);
+                                
+                                if(list_persons.getItems().hashCode() != list.hashCode()){
+                                    list_persons.setItems(list);
+                                }
                             }
                         });
-                        try {
-                            Thread.sleep(1500l);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(ListPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
                     }else if (!result.isEmpty() && result.get(0).contains("play request from")) {
                         timer();
                         System.out.println("req");
