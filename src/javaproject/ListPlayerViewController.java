@@ -141,6 +141,11 @@ public class ListPlayerViewController implements Initializable {
                                 list_persons.setItems(list);
                             }
                         });
+                        try {
+                            Thread.sleep(1500l);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(ListPlayerViewController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }else if (!result.isEmpty() && result.get(0).contains("play request from")) {
                         timer();
                         System.out.println("req");
