@@ -31,7 +31,7 @@ public class ShowVideo {
            vurl = "/video/winnervideo.mp4";
            title="congaturation";
        }else{
-            vurl = "/video/losers.mp4";
+            vurl = "/video/loservideo.mp4";
              title="Game Over";
        }
         Media media = new Media(getClass().getResource(vurl).toExternalForm());
