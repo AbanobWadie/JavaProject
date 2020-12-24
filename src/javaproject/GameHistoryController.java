@@ -63,9 +63,10 @@ public class GameHistoryController implements Initializable {
                  root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
              }
              Scene scene = new Scene(root);
-             StageView.st.setScene(scene);
-             StageView.st.setResizable(false);
-             StageView.st.show();
+             Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+             stage.setScene(scene);
+             stage.setResizable(false);
+             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(GameHistoryController.class.getName()).log(Level.SEVERE, null, ex);
         }                

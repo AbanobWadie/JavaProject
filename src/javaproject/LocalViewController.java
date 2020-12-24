@@ -175,11 +175,11 @@ public class LocalViewController implements Initializable {
               
 
                 Scene scene=new Scene(root);
-                
-                StageView.st.setScene(scene);
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setScene(scene);
                 scene.getStylesheets().add("/CSS/Project.css");
-                StageView.st.setResizable(false);
-                StageView.st.show();
+                stage.setResizable(false);
+                stage.show();
 
             } catch (IOException ex) {
                 Logger.getLogger(LocalViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -201,13 +201,13 @@ public class LocalViewController implements Initializable {
     void back(ActionEvent event) {
         try {
 
-            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             scene.setRoot(root);
-            StageView.st.setScene(scene);
-            StageView.st.setResizable(false);
-            StageView.st.show();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
 
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);

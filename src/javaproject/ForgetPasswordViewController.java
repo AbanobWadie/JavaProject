@@ -49,8 +49,9 @@ public class ForgetPasswordViewController implements Initializable {
                 
                  Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
                  Scene scene = new Scene(root);
-                 StageView.st.setScene(scene);
-                 StageView.st.show();
+                 Stage stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+                 stage.setScene(scene);
+                 stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
             }  
@@ -72,9 +73,10 @@ public class ForgetPasswordViewController implements Initializable {
                 if (result) {
                     Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
                     Scene scene = new Scene(root);
-                    StageView.st.setScene(scene);
-                    StageView.st.setResizable(false);
-                    StageView.st.show();
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);

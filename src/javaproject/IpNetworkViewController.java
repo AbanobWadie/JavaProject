@@ -49,9 +49,10 @@ public class IpNetworkViewController implements Initializable {
             Parent root;
             root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             Scene scene = new Scene(root);
-            StageView.st.setScene(scene);
-            StageView.st.setResizable(false);
-            StageView.st.show();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
         } catch (IOException ex) {
             Logger.getLogger(IpNetworkViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -86,9 +87,10 @@ public class IpNetworkViewController implements Initializable {
                                     Parent root;
                                     root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
                                     Scene scene = new Scene(root);
-                                    StageView.st.setScene(scene);
-                                    StageView.st.setResizable(false);
-                                    StageView.st.show();
+                                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                    stage.setScene(scene);
+                                    stage.setResizable(false);
+                                    stage.show();
                                 } else {
                                     showAlert("IP address is not Valid please enter another one");
                                 }

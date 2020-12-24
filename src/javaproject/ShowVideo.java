@@ -28,7 +28,7 @@ public class ShowVideo {
         String title;
 
        if(flag){
-           vurl = "/video/winner.mp4";
+           vurl = "/video/winnervideo.mp4";
            title="congaturation";
        }else{
             vurl = "/video/losers.mp4";
