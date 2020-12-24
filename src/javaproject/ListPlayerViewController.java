@@ -186,7 +186,7 @@ public class ListPlayerViewController implements Initializable {
                                     o.transferMessageRecordFlag(recordFlag);
                                     String[] arr = result.get(0).split(" ");
                                     String[] p2 = player2.split(" ");
-                                    o.transferMessageNames(name1, lbl_score.getText() , p2[0], arr[1]);
+                                    o.transferMessageNames(lbl_name.getText(), lbl_score.getText() , p2[0], arr[1]);
 
                                     o.transferMessageSymbol("X");
 
