@@ -62,11 +62,10 @@ public class SignUpViewController implements Initializable {
                     o.transferMessageName1(txt_nameS.getText());
                             
                     Scene scene = new Scene(root);
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                    
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    stage.show();
+                    StageView.st.setScene(scene);
+                    StageView.st.setResizable(false);
+                    StageView.st.show();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(StartViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,10 +79,9 @@ public class SignUpViewController implements Initializable {
 
             Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
             Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            StageView.st.setScene(scene);
+            StageView.st.setResizable(false);
+            StageView.st.show();
         } catch (IOException ex) {
             Logger.getLogger(SignUpViewController.class.getName()).log(Level.SEVERE, null, ex);
         }

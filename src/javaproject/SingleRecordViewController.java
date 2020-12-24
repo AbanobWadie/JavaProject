@@ -61,9 +61,8 @@ public class SingleRecordViewController implements Initializable {
                 root = FXMLLoader.load(getClass().getResource("ListPlayerView.fxml"));
             }
             Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
+            StageView.st.setScene(scene);
+            StageView.st.show();
 
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,10 +103,9 @@ public class SingleRecordViewController implements Initializable {
                             LocalMultiplayerViewController.gameMode = "twoPlayers";
                             l.transferFlag(true, records.get(i));
 
-                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            stage.setScene(new Scene(root));
-                            stage.setResizable(false);
-                            stage.show();
+                            StageView.st.setScene(new Scene(root));
+                            StageView.st.setResizable(false);
+                            StageView.st.show();
 
                         } catch (IOException ex) {
                             Logger.getLogger(SingleRecordViewController.class.getName()).log(Level.SEVERE, null, ex);

@@ -93,13 +93,12 @@ public class SingleViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         try {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = (Scene) ((Node) event.getSource()).getScene();
             Parent root = FXMLLoader.load(getClass().getResource("StartView.fxml"));
             scene.setRoot(root);
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            StageView.st.setScene(scene);
+            StageView.st.setResizable(false);
+            StageView.st.show();
 
         } catch (IOException ex) {
             Logger.getLogger(LocalMultiplayerViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -127,11 +126,10 @@ public class SingleViewController implements Initializable {
                 o.transferMessageRecordFlag(recordFlag,levels);
 
                 Scene scene=new Scene(root);
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene);
+                StageView.st.setScene(scene);
                 scene.getStylesheets().add("/CSS/Project.css");
-                stage.setResizable(false);
-                stage.show();
+                StageView.st.setResizable(false);
+                StageView.st.show();
 
             } catch (IOException ex) {
                 Logger.getLogger(SingleViewController.class.getName()).log(Level.SEVERE, null, ex);

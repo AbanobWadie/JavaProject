@@ -67,13 +67,10 @@ public class LoginViewController implements Initializable {
                     ListPlayerViewController o = loader.getController();
                     //Pass whatever data you want. You can have multiple method calls here
                     o.transferMessageName1(txt_name.getText());
-                    
-
-                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    
-                    stage.setScene(new Scene(root));
-                    stage.setResizable(false);
-                    stage.show();
+                                        
+                    StageView.st.setScene(new Scene(root));
+                    StageView.st.setResizable(false);
+                    StageView.st.show();
                 }
 
             } catch (IOException ex) {
@@ -91,10 +88,9 @@ public class LoginViewController implements Initializable {
 
             Parent root = FXMLLoader.load(getClass().getResource("SignUpView.fxml"));
             Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            StageView.st.setScene(scene);
+            StageView.st.setResizable(false);
+            StageView.st.show();
         } catch (IOException ex) {
             Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -105,10 +101,10 @@ public class LoginViewController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("ForgetPasswordView.fxml"));
             Scene scene = new Scene(root);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
+            
+            StageView.st.setScene(scene);
+            StageView.st.setResizable(false);
+            StageView.st.show();
         } catch (IOException ex) {
             Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
