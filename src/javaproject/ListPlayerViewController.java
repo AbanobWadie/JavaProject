@@ -310,7 +310,7 @@ public class ListPlayerViewController implements Initializable {
                             }
                         });
 
-                    } else if (result.isEmpty()) {
+                    } /*else if (result.isEmpty()) {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -337,7 +337,7 @@ public class ListPlayerViewController implements Initializable {
                         });
                         ServerConnection.running = false;
                         break;
-                    }
+                    }*/
                 }
             }
         }).start();
