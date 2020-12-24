@@ -134,7 +134,7 @@ public class ListPlayerViewController implements Initializable {
                             @Override
                             public void run() {
                                 String[] arr = score.split("\\|");
-                                if(arr.length > 0){
+                                if(arr.length > 2){
                                     lbl_name.setText(arr[1]);
                                     lbl_score.setText(arr[2]);
                                 }
@@ -149,11 +149,11 @@ public class ListPlayerViewController implements Initializable {
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
-                                if (recordFlag) {
+                                /*if (recordFlag) {
                                     dialog(result.get(0));
-                                } else {
-                                    dialog2(result.get(0));
-                                }
+                                } else {*/
+                                    dialog(result.get(0));
+                                //}
 
                             }
                         });
@@ -333,6 +333,7 @@ public class ListPlayerViewController implements Initializable {
                             }
                         });
                         ServerConnection.running = false;
+                        break;
                     }
                 }
             }

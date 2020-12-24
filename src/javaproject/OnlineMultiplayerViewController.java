@@ -45,6 +45,7 @@ public class OnlineMultiplayerViewController implements Initializable {
     private boolean recordFlag;
     private Record record;
     private boolean mine;
+    private boolean end = false;
 
     @FXML
     private Button b1;
@@ -369,7 +370,7 @@ public class OnlineMultiplayerViewController implements Initializable {
         if (recordFlag) {
             RecordedGamesProcess.save(record);
             ServerConnection.running=false;
-            
+            end = true;
         }
     }
 
@@ -635,7 +636,7 @@ public class OnlineMultiplayerViewController implements Initializable {
             ServerConnection.back();
             ServerConnection.running = false;
             
-            if(recordFlag){
+            if(end && recordFlag){
                 String value = record.getPlayer1() + " " + record.getPlayer2();
                 for (String move : record.getMoves()) {
                     value += " " + move;

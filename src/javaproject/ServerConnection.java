@@ -127,8 +127,7 @@ public class ServerConnection {
                 String str = in.readLine();
 
                 if(str == null){
-                     in.close();
-                     out.close();
+                     return arr;
                 }else if(str.contains("(online-list)")){
                     String[] strArr = str.split(" ");
                     

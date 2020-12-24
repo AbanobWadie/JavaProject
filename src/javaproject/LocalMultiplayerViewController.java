@@ -674,11 +674,11 @@ public class LocalMultiplayerViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         ServerConnection.running = false;
-        re.stop();
+        
         if (recordPageFlag) {
+            re.stop();
             try {
 
-                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("SingleRecordView.fxml"));
                 Parent root = loader.load();
 
