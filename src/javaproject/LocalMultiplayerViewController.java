@@ -93,6 +93,12 @@ public class LocalMultiplayerViewController implements Initializable {
     private GridPane grid;
     
     Thread re;
+    static int scoreP1;
+    static int scoreP2;
+    @FXML
+    private Label score1;
+    @FXML
+    private Label score2;
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -256,6 +262,8 @@ public class LocalMultiplayerViewController implements Initializable {
 
         }
         recordSign.setVisible(false);
+        score1.setText(""+scoreP1);
+        score2.setText(""+scoreP2);
 
     }
 
@@ -338,10 +346,14 @@ public class LocalMultiplayerViewController implements Initializable {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p1.getText());
                     GamesHistoryProcess history = new GamesHistoryProcess();
                     history.save(game);
+                    scoreP1++;
+                    score1.setText(""+scoreP1);
                 } else {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p2.getText());
                     GamesHistoryProcess history = new GamesHistoryProcess();
                     history.save(game);
+                    scoreP2++;
+                    score2.setText(""+scoreP2);
                 }
 
             } else {
@@ -349,10 +361,14 @@ public class LocalMultiplayerViewController implements Initializable {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p1.getText());
                     GamesHistoryProcess history = new GamesHistoryProcess();
                     history.save(game);
+                    scoreP1++;
+                    score1.setText(""+scoreP1);
                 } else {
                     Game game = new Game(lbl_p1.getText(), lbl_p2.getText(), lbl_p2.getText());
                     GamesHistoryProcess history = new GamesHistoryProcess();
                     history.save(game);
+                    scoreP2++;
+                    score2.setText(""+scoreP2);
                 }
             }
 
@@ -368,15 +384,15 @@ public class LocalMultiplayerViewController implements Initializable {
         if (!key.equals("draw")) {
             if (winner.equals("X")) {
                 if (s1.getText().equals("X")) {
-                    new ShowVideo().video(s1.getText(), true);
+                    new ShowVideo().video(lbl_p1.getText(), true);
                 } else {
-                    new ShowVideo().video(s2.getText(), false);
+                    new ShowVideo().video(lbl_p2.getText(), true);
                 }
             } else {
                 if (s1.getText().equals("O")) {
-                    new ShowVideo().video(s1.getText(), true);
+                    new ShowVideo().video(lbl_p1.getText(), true);
                 } else {
-                    new ShowVideo().video(s2.getText(), false);
+                    new ShowVideo().video(lbl_p2.getText(), true);
                 }
             }
         } else {
@@ -674,6 +690,8 @@ public class LocalMultiplayerViewController implements Initializable {
     @FXML
     void back(ActionEvent event) {
         ServerConnection.running = false;
+        scoreP1 = 0;
+        scoreP2 = 0;
         
         if (recordPageFlag) {
             re.stop();

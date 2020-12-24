@@ -215,7 +215,7 @@ public class ListPlayerViewController implements Initializable {
                                     OnlineMultiplayerViewController o = loader.getController();
                                     o.transferMessageRecordFlag(recordFlag);
                                     String[] arr = result.get(0).split(" ");
-                                    o.transferMessageNames(name1, lbl_score.getText(), playerRequest, arr[1]);
+                                    o.transferMessageNames(lbl_name.getText(), lbl_score.getText(), playerRequest, arr[1]);
 
                                     o.transferMessageSymbol("O");
 

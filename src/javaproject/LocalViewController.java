@@ -164,6 +164,8 @@ public class LocalViewController implements Initializable {
 
                 //Get controller of scene2
                 LocalMultiplayerViewController o = loader.getController();
+                o.scoreP1 = 0;
+                o.scoreP2 = 0;
                 //Pass whatever data you want. You can have multiple method calls here
                  o.transferMessageRecordFlag(recordFlag);
                 o.transferMesssageText(txt_name1.getText(),txt_name2.getText());
